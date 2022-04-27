@@ -1,0 +1,45 @@
+import React from "react";
+import { useHistory } from "react-router-dom";
+
+import "../css/modal.css";
+import styled from "styled-components";
+import { Text, Grid, Input, Button } from "../elements/index";
+
+const Modal = (props) => {
+  const history = useHistory();
+  const { open, close } = props;
+  return (
+    <>
+      <div className={open ? "openModal modal" : "modal"}>
+        {open ? (
+          <Grid is_flex>
+            <main
+              style={{
+                flexDirection: "column",
+                display: "flex",
+                border: "1px solid red",
+                width: "40vw",
+                padding: "100px",
+              }}
+            >
+              <InputTitle placeholder="제목을 입력하세요.." />
+              <textarea placeholder="내용을 입력하세요.." rows="20" />
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div onClick={close}>취소</div>
+                <button onClick={() => history.push("/mypage")}>
+                  등록하기
+                </button>
+              </div>
+            </main>
+          </Grid>
+        ) : null}
+      </div>
+    </>
+  );
+};
+
+export default Modal;
+
+const InputTitle = styled.input`
+  width: 39vw;
+`;
