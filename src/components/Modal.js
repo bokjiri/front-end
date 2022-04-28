@@ -20,13 +20,15 @@ const Modal = (props) => {
                 border: "1px solid red",
                 width: "40vw",
                 padding: "100px",
+                backgroundColor: "#eeeeee",
               }}
             >
+              <h3>맞지 않는 정책이 있다면 알려주세요!!</h3>
               <InputTitle placeholder="제목을 입력하세요.." />
               <textarea placeholder="내용을 입력하세요.." rows="20" />
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div onClick={close}>취소</div>
-                <button onClick={() => history.push("/mypage")}>
+                <button onClick={() => history.push("/detail")}>
                   등록하기
                 </button>
               </div>
