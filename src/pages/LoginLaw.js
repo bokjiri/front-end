@@ -481,7 +481,7 @@ return(
     </LawCont>
 
     <Grid is_flex>
-        <Button width="300px" _onClick={()=>{history.goBack();}}>이전으로</Button>
+        <BackButton onClick={()=>{history.goBack();}}>이전으로</BackButton>
     </Grid>
 
 </LawWarp>
@@ -510,20 +510,34 @@ const LawCont = styled.div`
 `;
 
 const LawTitle = styled.h3`
-    margin: 0 0 4rem;
-    
-
+    margin-bottom : 20px;
 `
 
 const MainTerms = styled.div`
     position: static;
     display: inline-block;
-    width: 100%;
+    width : 786px;
+    height : 280px;
     height: 50vh;
     overflow-y: scroll;
 
     .gtit{
         margin: 2rem 0;
+    }
+`;
 
+const BackButton = styled.button`
+    width : 100px;
+    height : 40px;
+    background-color : lightgrey;
+    text-align : center;
+    border : none;
+    border-radius : 5px;
+    color : darkgrey;
+    font-weight : 700;
+    &:hover{
+        cursor : pointer;
+        background-color : #0361FB;
+        color : white;
     }
 `;
