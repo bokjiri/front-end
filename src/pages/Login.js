@@ -14,48 +14,57 @@ const Login = () => {
     setState(!state);
   };
 
-
   return (
     <React.Fragment>
-      <Grid height="100vh" is_flex flexDirection="column" margin="0 auto">
-        <Grid
-          width="500px"
-          bg="#72A8FE"
-          height="400px"
-          is_flex
-          flexDirection="column"
-        >
-          <Text size="32px" bold>
-            복지리
-          </Text>
-          <Text>서비스 이용을 위해 로그인이 필요합니다!</Text>
-          <img
-            src={kakaoBtn}
-            alt="kakaoLogin"
-            onClick={() => {
-              if(state === false){
-                alert("정보 약관 동의는 필수입니다!");
-                return;
-              }
-              history.push("/main");
-            }}
-            style={{ width: "300px" }}
-          />
+      <Grid is_flex>
+        {/* 이미지? 왼쪽 섹션 */}
+        <Grid width="400px" height="400px" bg="silver">
+          이미지?
+        </Grid>
 
-          <LoginTerms>
-            <input
-              onChange={onChangeState}
-              id="lawStatus"
-              type="checkbox"
-              className="check-int"
+        <Grid height="100vh" is_flex flexDirection="column" margin="0 auto">
+          <Grid width="500px" height="400px" is_flex flexDirection="column">
+            <Text size="32px" bold>
+              복지리
+            </Text>
+            {/* <Text>서비스 이용을 위해 로그인이 필요합니다!</Text> */}
+            <img
+              src={kakaoBtn}
+              alt="kakaoLogin"
+              onClick={() => {
+                if (state === false) {
+                  alert("정보 약관 동의는 필수입니다!");
+                  return;
+                }
+                history.push("/main");
+              }}
+              style={{ width: "300px" }}
             />
-            <label key="lawStatus" className="check-label"></label>
-            <span className="check-box"></span>
-            <Link to="/law">
-              <span>디지털콘텐츠 이용</span>, <span>개인정보 이용 약관</span>
-              <span>내용을 확인하였고 동의합니다.</span>
-            </Link>
-          </LoginTerms>
+
+            <LoginTerms>
+              <input
+                onChange={onChangeState}
+                id="lawStatus"
+                type="checkbox"
+                className="check-int"
+              />
+              <label key="lawStatus" className="check-label"></label>
+              <span className="check-box"></span>
+              {state === true ? (
+                <Link to="/law" style={{ color: "#0361FB" }}>
+                  <span>디지털콘텐츠 이용</span>,{" "}
+                  <span>개인정보 이용 약관</span>
+                  <span>내용을 확인하였고 동의합니다.</span>
+                </Link>
+              ) : (
+                <Link to="/law">
+                  <span>디지털콘텐츠 이용</span>,{" "}
+                  <span>개인정보 이용 약관</span>
+                  <span>내용을 확인하였고 동의합니다.</span>
+                </Link>
+              )}
+            </LoginTerms>
+          </Grid>
         </Grid>
       </Grid>
     </React.Fragment>
@@ -80,9 +89,6 @@ const LoginTerms = styled.div`
     }
   }
 
-  a:hover {
-    color: red;
-  }
 `;
 
 //체크박스

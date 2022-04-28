@@ -55,9 +55,9 @@ Button.defaultProps = {
   width: "100px",
   padding: "12px 0px",
   disabled: false,
-  backgroundColor: "#4B7BE5",
+  backgroundColor: "lightgrey",
   height: "50px",
-  color: "white",
+  color: "grey",
 };
 
 

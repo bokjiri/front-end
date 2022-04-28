@@ -1,149 +1,212 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import {Text, Grid, Button} from "../elements/index";
+import { Text, Grid, Button } from "../elements/index";
 
 const AddInfo = () => {
-    return(
-        <MainWrap>
-            <Text size="32px" bold>정보 입력</Text>
 
-            <Container>
-                <Grid>
-                    <Text bold>성별</Text>
-                    <Button width="250px">남성</Button>
-                    <Button width="250px">여성</Button>
-                </Grid>
+  const [color, setColor] = useState("silver");
 
-                <Grid>
-                    <Text bold>나이</Text>
-                    <Button width="250px">0 ~ 9세</Button>
-                    <Button width="250px">10 ~ 19세</Button>
-                    <Button width="250px">20 ~ 29세</Button>
-                    <Button width="250px">30 ~ 39세</Button>
-                    <Button width="250px">40 ~ 49세</Button>
-                    <Button width="250px">50 ~ 59세</Button>
-                    <Button width="250px">60 ~ 64세</Button>
-                    <Button width="250px">65세 이상</Button>
-                </Grid>
 
-                <Grid>
-                    <Text bold>대상특성</Text>
-                    <Button width="250px">일반</Button>
-                    <Button width="250px">장애인</Button>
-                    <Button width="250px">국가유공자 등 보훈대상</Button>
-                    <Button width="250px">의사상자</Button>
-                    <Button width="250px">신용불량자</Button>
-                    <Button width="250px">무주택자</Button>
-                    <Button width="250px">임산부</Button>
-                    <Button width="250px">난임.불임 부부</Button>
-                    <Button width="250px">독거노인</Button>
-                    <Button width="250px">노숙인</Button>
-                    <Button width="250px">저소득층</Button>
-                    <Button width="250px">취약계층</Button>
-                    <Button width="250px">실업자(취업희망자)</Button>
-                    <Button width="250px">저소득근로자</Button>
-                    <Button width="250px">영세자영업(창업)자</Button>
-                    <Button width="250px">농어업인</Button>
-                    <Button width="250px">학생(초등)</Button>
-                    <Button width="250px">학생(중고등학교)</Button>
-                    <Button width="250px">학생(대학생 이상)</Button>
-                    <Button width="250px">미취학</Button>
-                    <Button width="250px">한부모가구</Button>
-                    <Button width="250px">소년소녀가장가구</Button>
-                    <Button width="250px">다문화가구</Button>
-                    <Button width="250px">입양가구</Button>
-                    <Button width="250px">조손가구</Button>
-                    <Button width="250px">다자녀가구</Button>
-                    <Button width="250px">새터민 가구</Button>
-                    <Button width="250px">아동위탁가정</Button>
-                </Grid>
+  const age1 = ["영유아", "아동", "청소년", "청년"];
 
-                <Grid>
-                    <Text bold>장애유형</Text>
-                    <Button width="250px">지체(전환대상)</Button>
-                    <Button width="250px">지체(상지절단)</Button>
-                    <Button width="250px">지체(하지절단)</Button>
-                    <Button width="250px">지체(상지관절)</Button>
-                    <Button width="250px">지체(하지관절)</Button>
-                    <Button width="250px">지체(상지기능)</Button>
-                    <Button width="250px">지체(하지기능)</Button>
-                    <Button width="250px">지체(척추)</Button>
-                    <Button width="250px">지체(변형)</Button>
-                    <Button width="250px">시각</Button>
-                    <Button width="250px">청각(전환대상)</Button>
-                    <Button width="250px">청각(청력)</Button>
-                    <Button width="250px">청각(평형기능)</Button>
-                    <Button width="250px">언어</Button>
-                    <Button width="250px">지적장애</Button>
-                    <Button width="250px">뇌병변</Button>
-                    <Button width="250px">자폐성장애</Button>
-                    <Button width="250px">정신</Button>
-                    <Button width="250px">신장</Button>
-                    <Button width="250px">심장</Button>
-                    <Button width="250px">호흡기</Button>
-                    <Button width="250px">간</Button>
-                    <Button width="250px">안면</Button>
-                    <Button width="250px">장루.요루</Button>
-                    <Button width="250px">뇌전증</Button>
-                    <Button width="250px">기타</Button>
-                </Grid>
+  const subject1 = [
+    "일반",
+    "장애인",
+    "국가유공자 등 보훈대상",
+    "의사상자",
+    "신용불량자",
+    "무주택자",
+    "임산부",
+    "난임.불임 부부",
+    "독거노인",
+    "노숙인",
+    "여성",
+    "저소득층",
+    "취약계층",
+    "실업자(취업희망자)",
+    "저소득근로자",
+    "영세자영업(창업)자",
+    "농어업인",
+    "학생(초등)",
+    "학생(중고등학교)",
+    "학생(대학생이상)",
+    "미취학",
+    "한부모가구",
+    "소년소녀가장가구",
+    "다문화가구",
+    "입양가구",
+    "조손가구",
+    "다자녀가구",
+    "새터민가구",
+    "아동위탁가정",
+  ];
 
-                <Grid>
-                    <Text bold>장애정도</Text>
-                    <Button width="250px">장애 미해당</Button>
-                    <Button width="250px">심한 장애</Button>
-                    <Button width="250px">심하지 않은 장애</Button>
-                    <Button width="250px">결정보류</Button>
-                    <Button width="250px">확인불가</Button>
-                </Grid>
+  const subject2 = [
+    "지체(전환대상)",
+    "지체(상지절단)",
+    "지체(하지절단)",
+    "지체(상지관절)",
+    "지체(하지관절)",
+    "지체(상지기능)",
+    "지체(하지기능)",
+    "지체(척추)",
+    "지체(변형)",
+    "시각",
+    "청각(전환대상)",
+    "청각(청력)",
+    "청각(평형기능)",
+    "언어",
+    "지적장애",
+    "뇌병변",
+    "자폐성장애",
+    "정신",
+    "신장",
+    "심장",
+    "호흡기",
+    "간",
+    "안면",
+    "장루.요루",
+  ];
 
-                <Grid>
-                    <Text bold>가구유형</Text>
-                    <Button width="250px">다북화.탈북민</Button>
-                    <Button width="250px">다자녀</Button>
-                    <Button width="250px">보훈대상자</Button>
-                    <Button width="250px">장애인</Button>
-                    <Button width="250px">저소득</Button>
-                    <Button width="250px">한부모.조손</Button>
-                </Grid>
+  const subject3 = ["다북화.탈북민", "다자녀", "보훈대상자", "장애인"];
 
-                <Grid>
-                    <Text bold>사업목적</Text>
-                    <Button width="250px">일자리</Button>
-                    <Button width="250px">주거</Button>
-                    <Button width="250px">일상생활</Button>
-                    <Button width="250px">신체건강 및 보건의료</Button>
-                    <Button width="250px">정신건강 및 심리정서</Button>
-                    <Button width="250px">보호 및 돌봄.요양</Button>
-                    <Button width="250px">보육 및 교육</Button>
-                    <Button width="250px">문화 및 여가</Button>
-                    <Button width="250px">안전 및 권익보장</Button>
-                </Grid>
-            </Container>
-            <Button margin="20px 0 20px 0" radius="5px" backgroundColor="silver">완료</Button>
+  return (
+    <MainWrap>
+      <Grid>
+        <Text size="26px" bold>
+          정보 입력
+        </Text>
+      </Grid>
 
-        </MainWrap>
+      <Container>
+        <Grid>
+          <Text bold margin="20px">
+            생애주기
+          </Text>
+          <CategoryBox>
+            {age1.map((item, idx) => (
+            //   <Button key={idx} width="175px" margin="10px 0" radius="5px"  backgroundColor={color} _onClick={()=>{console.log(item)}}>
+            <Button key={idx} width="175px" margin="10px 0" radius="5px"  backgroundColor={color}>
+                {item}
+              </Button>
+            ))}
+          </CategoryBox>
 
-    );
-}
+          <Grid is_flex margin="10px 0">
+            <Btn value="중장년" onClick={(e)=>{console.log(e.target.value)}} >
+              중장년
+            </Btn>
+            <Btn width="175px" margin="0 20px 0 0" radius="5px">
+              노년
+            </Btn>
+            <Btn width="175px" radius="5px">
+              임신.출산
+            </Btn>
+          </Grid>
+        </Grid>
+
+        <Grid>
+          <Text bold margin="20px">
+            대상특성
+          </Text>
+          <CategoryBox>
+            {subject1.map((item) => (
+              <Btn width="175px" margin="10px 0" radius="5px">
+                {item}
+              </Btn>
+            ))}
+          </CategoryBox>
+        </Grid>
+
+        <Grid>
+          <Text bold margin="20px">
+            장애유형
+          </Text>
+          <CategoryBox>
+            {subject2.map((item) => (
+              <Btn width="175px" margin="10px 0" radius="5px">
+                {item}
+              </Btn>
+            ))}
+          </CategoryBox>
+          <Grid is_flex margin="10px 0">
+            <Btn width="175px" margin="0 20px 0 0" radius="5px">
+              뇌전증
+            </Btn>
+            <Btn width="175px" radius="5px">
+              기타
+            </Btn>
+          </Grid>
+        </Grid>
+
+        <Grid>
+          <Text bold margin="20px">
+            가구유형
+          </Text>
+          <CategoryBox>
+            {subject3.map((item) => (
+              <Btn width="175px" margin="10px 0" radius="5px">
+                {item}
+              </Btn>
+            ))}
+          </CategoryBox>
+          <Grid is_flex margin="10px 0">
+            <Btn width="175px" margin="0 20px 0 0" radius="5px">
+              저소득
+            </Btn>
+            <Btn width="175px" radius="5px">
+              한부모.조손
+            </Btn>
+          </Grid>
+        </Grid>
+      </Container>
+      <Btn
+        margin="20px 0 20px 0"
+        radius="5px"
+        width="170px"
+        color="white"
+        backgroundColor="silver"
+      >
+        완료
+      </Btn>
+    </MainWrap>
+  );
+};
 
 export default AddInfo;
 
 const MainWrap = styled.div`
-    margin : 0 auto;
-    display : flex;
-    align-items : center;
-    justify-content : center;
-    flex-direction : column;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 const Container = styled.div`
-    width : 500px;
-    height : 100%;
-    display : flex;
-    flex-direction : column;
-    align-items : center;
-    justify-content : center;
-    border : 1px solid silver;
+  width: 800px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  margin: 10px;
+  box-shadow: 0px 0px 20px 5px #f7f5f2;
+  border-radius: 7px;
+`;
+
+const CategoryBox = styled.div`
+  padding: 0 20px;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Btn = styled.button`
+    width : 175px;
+    margin : 0 20px 0 0;
+    border-radius : 5px;
+    border : none;
 `;
