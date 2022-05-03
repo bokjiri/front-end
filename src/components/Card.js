@@ -38,7 +38,7 @@ export default function BasicCard() {
         <Button size="small">
           <ReactIcon.BsBookmarkCheck />
         </Button>
-        <button onClick={() => history.push("detail")}> 모달 </button>
+        <button onClick={() => history.push("/detail")}> 모달 </button>
       </CardActions>
     </Card>
   );

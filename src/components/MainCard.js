@@ -1,8 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import post, { actionCreators as postActions } from "../redux/modules/post";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { Text } from "../elements/index";
+import { ReactIcon } from "../Icons/Icon";
+import ShareIcon from "@mui/icons-material/Share";
 
 import { history } from "../redux/configureStore";
 
@@ -17,117 +22,127 @@ import "../css/mainCard.css";
 import { Grid, Pagination } from "swiper";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { HistoryOutlined } from "@mui/icons-material";
 
-export default function MainCard() {
-
+export default function MainCard(props) {
+  console.log(props);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const isPc = useMediaQuery({
-    query : "(min-width:767px)"
+    query: "(min-width:767px)",
   });
 
   const isMobile = useMediaQuery({
-    query : "(max-width:767px)"
+    query: "(max-width:767px)",
   });
 
-
+  const [bookMark, setbookMark] = useState(false);
 
   return (
     <>
-    
+      {isPc && (
+        <Container>
+          <Swiper
+            slidesPerView={3}
+            grid={{
+              rows: 2,
+            }}
+            spaceBetween={30}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[Grid, Pagination]}
+            className="mySwiper"
+            // breakpoints={{
+            //   400: {
+            //     slidesPerView: 1,
+            //   },
+            // }}
+          >
+            {/* map */}
+            {props.post_list.map((x, idx) => {
+              return (
+                <SwiperSlide>
+                  <CardBox key={idx}>
+                    <Text>{x.title}</Text>
+                    <span
+                      onClick={() => {
+                        history.push(`/detail/${x.id}`);
+                      }}
+                    >
+                      {x.desc}
+                    </span>
+                    <p>
+                      <button onClick={() => setbookMark(!bookMark)}>
+                        {bookMark === true ? (
+                          <ReactIcon.BsBookmarkCheckFill />
+                        ) : (
+                          <ReactIcon.BsBookmarkCheck />
+                        )}
+                      </button>
 
-{
-  isPc &&
+                      <ShareIcon />
+                    </p>
+                  </CardBox>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </Container>
+      )}
 
-  <Container>
-      <Swiper
-        slidesPerView={3}
-        grid={{
-          rows: 2,
-        }}
-        spaceBetween={30}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Grid, Pagination]}
-        className="mySwiper"
-        // breakpoints={{
-        //   400: {
-        //     slidesPerView: 1,
-        //   },
-        // }}
-      >
-
-          {/* map */}
-        <SwiperSlide>
-            <CardBox>
+      {isMobile && (
+        <Container>
+          <Swiper
+            slidesPerView={1}
+            grid={{
+              rows: 2,
+            }}
+            spaceBetween={30}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[Grid, Pagination]}
+            className="mySwiper"
+          >
+            {/* map */}
+            <SwiperSlide>
+              <CardBox>
                 <Text>맞춤 정책 제목1</Text>
                 <span>간략내용1</span>
-            </CardBox>
-        </SwiperSlide>
-        <SwiperSlide onClick={()=>{history.push("/login")}}>맞춤 정책 2</SwiperSlide>
-        <SwiperSlide>맞춤 정책 3</SwiperSlide>
-        <SwiperSlide>맞춤 정책 4</SwiperSlide>
-        <SwiperSlide>맞춤 정책 5</SwiperSlide>
-        <SwiperSlide>맞춤 정책 6</SwiperSlide>
-        <SwiperSlide>맞춤 정책 7</SwiperSlide>
-        <SwiperSlide>맞춤 정책 8</SwiperSlide>
-        <SwiperSlide>맞춤 정책 9</SwiperSlide>
-        <SwiperSlide>맞춤 정책 10</SwiperSlide>
-      </Swiper>
-    </Container>
-
-}
-      
-    
-
-    {
-      isMobile && 
-      <Container>
-      <Swiper
-        slidesPerView={1}
-        grid={{
-          rows: 2,
-        }}
-        spaceBetween={30}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Grid, Pagination]}
-        className="mySwiper"
-      >
-
-          {/* map */}
-       <SwiperSlide>
-            <CardBox>
-                <Text>맞춤 정책 제목1</Text>
-                <span>간략내용1</span>
-            </CardBox>
-        </SwiperSlide>
-        <SwiperSlide onClick={()=>{history.push("/login")}}>맞춤 정책 2</SwiperSlide>
-        <SwiperSlide>맞춤 정책 3</SwiperSlide>
-        <SwiperSlide>맞춤 정책 4</SwiperSlide>
-        <SwiperSlide>맞춤 정책 5</SwiperSlide>
-        <SwiperSlide>맞춤 정책 6</SwiperSlide>
-        <SwiperSlide>맞춤 정책 7</SwiperSlide>
-        <SwiperSlide>맞춤 정책 8</SwiperSlide>
-        <SwiperSlide>맞춤 정책 9</SwiperSlide>
-        <SwiperSlide>맞춤 정책 10</SwiperSlide>
-      </Swiper>
-    </Container>
-    } 
-   
-
+              </CardBox>
+            </SwiperSlide>
+            <SwiperSlide
+              onClick={() => {
+                history.push("/login");
+              }}
+            >
+              맞춤 정책 2
+            </SwiperSlide>
+            <SwiperSlide>맞춤 정책 3</SwiperSlide>
+            <SwiperSlide>맞춤 정책 4</SwiperSlide>
+            <SwiperSlide>맞춤 정책 5</SwiperSlide>
+            <SwiperSlide>맞춤 정책 6</SwiperSlide>
+            <SwiperSlide>맞춤 정책 7</SwiperSlide>
+            <SwiperSlide>맞춤 정책 8</SwiperSlide>
+            <SwiperSlide>맞춤 정책 9</SwiperSlide>
+            <SwiperSlide>맞춤 정책 10</SwiperSlide>
+          </Swiper>
+        </Container>
+      )}
     </>
   );
 }
 
 const Container = styled.div`
-    background: #eee;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #000;
-    padding: 10px;
-
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  padding: 10px;
 `;
 
 // const MobileContainer = styled.div`
@@ -145,10 +160,9 @@ const Container = styled.div`
 //     padding: 10px;
 // `;
 
-
 const CardBox = styled.div`
-    display : flex;
-    flex-direction : column;
-    justify-content : center;
-    align-items : center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
