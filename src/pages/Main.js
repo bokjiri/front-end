@@ -9,6 +9,7 @@ import MainCard from "../components/MainCard";
 import { actionCreators as infoActions } from "../redux/modules/info";
 
 import { actionCreators as postActions } from "../redux/modules/post";
+
 import Like from "../components/Like";
 import DndShop from "../components/DndShop";
 
@@ -20,13 +21,15 @@ const Main = () => {
   const dispatch = useDispatch();
   
   const info_list = useSelector((state) => state.info.list);
-  const post_list = useSelector((state)=>state.post.post);
+  const policy_list = useSelector((state) => state.info.policyList);
+  console.log(policy_list);
+
 
   console.log("인포", info_list);
 
   useEffect(() => {
     dispatch(infoActions.getInfoDB(userId));
-    dispatch(postActions.getPostFB());
+    dispatch(infoActions.getPolicyDB(userId));
   }, []);
   
   if (cookies.get("userToken")) {
@@ -63,9 +66,9 @@ const Main = () => {
         </Button>
       </CategoryBox>
       
-      <DndShop post_list={post_list} />
+      {/* <DndShop post_list={post_list} />
       <MainCard post_list={post_list} />
-      <Like post_list={post_list} />
+      <Like post_list={post_list} /> */}
     </Container>
   
   )}

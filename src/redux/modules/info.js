@@ -4,12 +4,14 @@ import { apis } from "../../shared/axios";
 
 //1. actions
 const SET_INFO = "SET_INFO";
+const SET_POLICY = "SET_POLICY";
 const ADD_INFO = "ADD_INFO";
 const EDIT_INFO = "EDIT_INFO";
 //const DELETE_USER = "DELETE_USER";
 
 //2. initialState
 const initialState = {
+  policyList : [],
   list : [],
   lifeCycle : [],
   obstacle : [],
@@ -24,6 +26,7 @@ const initialInfo = {
 
 //3. Action Create
 const setInfo = createAction(SET_INFO, (info_list) => ({ info_list }));
+const setPolicy = createAction(SET_POLICY, (policy_list) => ({ policy_list }));
 const addInfo = createAction(ADD_INFO, (info) => ({ info }));
 // const editInfo = createAction(EDIT_INFO, (email, post_list) => ({
 //   email,
@@ -79,8 +82,8 @@ export const getPolicyDB =
   async (dispatch, getState, { history }) => {
     try {
       const { data } = await apis.policyGet(userId);
-      console.log(data);
-      //dispatch(setInfo(data.data));
+      dispatch(setPolicy(data.checkedData));
+      //console.log(data.checkedData);
     } catch (err) {
       console.log(err);
     }
@@ -89,9 +92,15 @@ export const getPolicyDB =
 
 //5. reducer
 export default handleActions({
+
   [SET_INFO]: (state, action) =>  produce(state, (draft) => {
     draft.list = action.payload.info_list;
   }),
+
+  [SET_POLICY] : (state, action) => produce(state, (draft) => {
+    draft.policyList = action.payload.policy_list;
+  }),
+
 
   [ADD_INFO]: (state, action) => produce(state, (draft) => {
     draft.list.unshift(action.payload.info);
