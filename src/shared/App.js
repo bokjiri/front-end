@@ -5,6 +5,9 @@ import { ConnectedRouter } from "connected-react-router";
 
 import Login from "../pages/Login";
 import LoginLaw from "../pages/LoginLaw";
+
+import OAuthRedirect from "../components/OAuthRedirect";
+
 import AddInfo from "../pages/AddInfo";
 import Main from "../pages/Main";
 import Search from "../pages/Search";
@@ -24,12 +27,14 @@ function App() {
         <Route path="/" exact component={Login} />
         <Route path="/law" exact component={LoginLaw} />
 
+        <Route path="/api/users/kakao/callback" exact component={OAuthRedirect}></Route>
+
         <Route path="/addinfo" exact component={AddInfo} />
         <Route path="/main" exact component={Main} />
 
         <Route path="/search" exact component={Search} />
 
-        <Route path="/detail" exact component={Detail} />
+        <Route path="/detail/:id" exact component={Detail} />
         <Route path="/header" exact component={Header} />
         <Route path="/footer" exact component={Footer} />
         <Route path="/modal" exact component={Modal} />

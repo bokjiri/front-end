@@ -5,6 +5,7 @@
 // import { auth } from "../../shared/firebase";
 // import { browserSessionPersistence, createUserWithEmailAndPassword, setPersistence, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 
+///////////////////////////////////**회원탈퇴 & 로그아웃**
 
 // //1. Action
 // // const LOG_IN = "LOG_IN";
