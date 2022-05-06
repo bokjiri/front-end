@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Grid, Button } from "../elements/index";
 import { history } from "../redux/configureStore";
@@ -8,9 +8,7 @@ import MainCard from "../components/MainCard";
 
 import { actionCreators as infoActions } from "../redux/modules/info";
 
-import { actionCreators as postActions } from "../redux/modules/post";
-
-import Like from "../components/Like";
+import News from "../components/News";
 import DndShop from "../components/DndShop";
 
 import Cookies from "universal-cookie";
@@ -18,12 +16,21 @@ const cookies = new Cookies();
 
 const Main = () => {
   const userId = localStorage.getItem("userId");
+  console.log(userId);
   const dispatch = useDispatch();
-  
+
   const info_list = useSelector((state) => state.info.list);
   const policy_list = useSelector((state) => state.info.policyList);
   console.log(policy_list);
-
+  const [category, setCategory] = useState([
+    "전체",
+    "📄 일자리",
+    "🏠 주거 및 일상생활",
+    "💪🏻 건강",
+    "👪 교육 및 돌봄",
+    "⛑ 안전 및 권익보장",
+    "기타",
+  ]);
 
   console.log("인포", info_list);
 
@@ -31,49 +38,107 @@ const Main = () => {
     dispatch(infoActions.getInfoDB(userId));
     dispatch(infoActions.getPolicyDB(userId));
   }, []);
-  
-  if (cookies.get("userToken")) {
-  return (
-    <Container>
-      <SearchContainer>
-        <SearchButton
-          onClick={() => {
-            history.push("/search");
-          }}
-        >
-          <SearchBox>
-            <BiSearchAlt size="20px" />
-            <span>&nbsp;&nbsp;정책을 검색해보세요!</span>
-          </SearchBox>
-        </SearchButton>
-      </SearchContainer>
 
-      <CategoryBox>
-        <Button backgroundColor="#eee" color="black" width="150px">
-          주거
-        </Button>
-        <Button backgroundColor="#eee" color="black" width="150px">
-          생계
-        </Button>
-        <Button backgroundColor="#eee" color="black" width="150px">
-          취업
-        </Button>
-        <Button backgroundColor="#eee" color="black" width="150px">
-          가족
-        </Button>
-        <Button backgroundColor="#eee" color="black" width="150px">
-          건강
-        </Button>
-      </CategoryBox>
-      
-      {/* <DndShop post_list={post_list} />
-      <MainCard post_list={post_list} />
-      <Like post_list={post_list} /> */}
-    </Container>
-  
-  )}
-  else {
-      history.replace("/");
+  if (cookies.get("userToken")) {
+    return (
+      <Container>
+        <SearchContainer>
+          <SearchButton
+            onClick={() => {
+              history.push("/search");
+            }}
+          >
+            <SearchBox>
+              <BiSearchAlt size="20px" />
+              <span>&nbsp;&nbsp;정책을 검색해보세요!</span>
+            </SearchBox>
+          </SearchButton>
+        </SearchContainer>
+        <h4>나에게 맞는 정책을 확인해보세요!</h4>
+        <CategoryBox>
+          {category.map((table, index) => (
+            <Button
+              key={index}
+              backgroundColor="#ffffff"
+              box-shadow="0 4px 14px rgba(0,0,0,0.1)"
+              color="#999999"
+              width="171px"
+              border-radius="10px"
+              margin="10px"
+            >
+              {table}
+            </Button>
+          ))}
+          {/* <Button
+            backgroundColor="#ffffff"
+            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
+            color="#999999"
+            width="171px"
+            border-radius="10px"
+            margin="10px"
+          >
+            📄 일자리
+          </Button>
+          <Button
+            backgroundColor="#ffffff"
+            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
+            color="#999999"
+            width="171px"
+            border-radius="10px"
+            margin="10px"
+          >
+            🏠 주거 및 일상생활
+          </Button>
+          <Button
+            backgroundColor="#ffffff"
+            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
+            color="#999999"
+            width="171px"
+            border-radius="10px"
+            margin="10px"
+          >
+            💪🏻 건강
+          </Button>
+          <Button
+            backgroundColor="#ffffff"
+            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
+            color="#999999"
+            width="171px"
+            border-radius="10px"
+            margin="10px"
+          >
+            👪 교육 및 돌봄
+          </Button>
+          <Button
+            backgroundColor="#ffffff"
+            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
+            color="#999999"
+            width="171px"
+            border-radius="10px"
+            margin="10px"
+          >
+            ⛑ 안전 및 권익보장
+          </Button>
+          <Button
+            backgroundColor="#ffffff"
+            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
+            color="#999999"
+            width="171px"
+            border-radius="10px"
+            margin="10px"
+          >
+            기타
+          </Button> */}
+        </CategoryBox>
+        <DndShop policyList={policy_list} userId={userId} />
+        <MainCard policyList={policy_list} />
+        <h4>새로운 복지 뉴스를 확인해보세요!</h4>
+        <News />
+        {/* <Like policyList={policy_list} /> */}
+      </Container>
+    );
+  } else {
+    history.replace("/");
   }
   return null;
 };
@@ -143,6 +208,8 @@ const SearchBox = styled.div`
 `;
 
 const CategoryBox = styled.div`
+  background: rgba(114, 168, 254, 0.1);
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 50px;
@@ -150,12 +217,13 @@ const CategoryBox = styled.div`
   min-width: 800px;
 
   @media screen and (max-width: 767px) {
+    background: rgba(114, 168, 254, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
 
     button {
-      width : 100px;
+      width: 100px;
     }
   }
 `;

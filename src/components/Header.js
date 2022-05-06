@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import smallLogo from "../imgs/Group 10.png";
 
 import { Text, Grid, Input, Button } from "../elements/index";
 import { ReactIcon } from "../Icons/Icon";
@@ -7,17 +8,20 @@ import { ReactIcon } from "../Icons/Icon";
 const Header = () => {
   return (
     <Contain>
-      <div>복지리</div>
+      <img
+        src={smallLogo}
+        style={{ width: "170px", height: "44px", margin: "18px 0 18px 363px" }}
+      />
       <Nav>
-        <div style={{ margin: "20px" }}>
+        <div>
           <ReactIcon.AiOutlineSearch />
           검색
         </div>
-        <div style={{ margin: "20px" }}>
+        <div>
           <ReactIcon.CgProfile />
           나의 정책
         </div>
-        <div style={{ margin: "20px" }}>
+        <div>
           <ReactIcon.MdLogout />
           로그아웃
         </div>
@@ -32,10 +36,12 @@ const Contain = styled.div`
   border: 1px solid gray;
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  height: 50px;
+  width: 100vw;
+  right: 0;
+  height: 80px;
 `;
 
 const Nav = styled.div`
   display: flex;
+  margin: 28px 363px 29px 0;
 `;
