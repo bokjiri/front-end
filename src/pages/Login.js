@@ -28,7 +28,7 @@ const Login = () => {
   if (!cookies.get("userToken")) {
     return (
       <React.Fragment>
-        <Grid is_flex width="1920px">
+        <Grid is_flex width="100vw">
           {/* 이미지? 왼쪽 섹션 */}
           <Grid width="480px" height="625px" bg="silver" margin="0">
             이미지?
@@ -37,7 +37,7 @@ const Login = () => {
           <Grid height="100vh" width="480px" is_flex flexDirection="column" margin="0 30px">
             <LoginBox>
               <Grid width="300px" height="90px" is_flex bg="silver" margin="0 0 50px 0">
-                복지리
+                복세편살
               </Grid>
               {/* <Text>서비스 이용을 위해 로그인이 필요합니다!</Text> */}
               <img
@@ -64,13 +64,13 @@ const Login = () => {
                 <span className="check-box"></span>
                 {state === true ? (
                   <Link to="/law" style={{ color: "#0361FB" }}>
-                    <span>디지털콘텐츠 이용</span>
+                    <span>디지털콘텐츠 이용 및 </span>
                     <span>개인정보 이용 약관</span>
                     <span>내용을 확인하였고 동의합니다.</span>
                   </Link>
                 ) : (
                   <Link to="/law">
-                    <span>디지털콘텐츠 이용</span>
+                    <span>디지털콘텐츠 이용 및 </span>
                     <span>개인정보 이용 약관</span>
                     <span>내용을 확인하였고 동의합니다.</span>
                   </Link>
@@ -97,7 +97,7 @@ const LoginTerms = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   margin-top: 20px;
 
   a {

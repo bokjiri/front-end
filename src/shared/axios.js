@@ -66,13 +66,28 @@ export const apis = {
   kakaoGet: (code) => instance.get(`api/users/kakao/callback?code=${code}`),
   tokenTest: () => instance.get(`api/users/me`),
 
+  userDelete: (userId) => instance.delete(`/api/users/${userId}`),
 
   infoGet: (userId) => instance.get(`/api/users/${userId}`),
-  infoAdd: (userId, lifeCycle, obstacle, target) =>
-    instance.put(`/api/users/${userId}`, {lifeCycle : lifeCycle, obstacle : obstacle, target : target}),
+  infoAdd: (userId, lifeCycle, gender, region, disability, obstacle) =>
+    instance.put(`/api/users/${userId}`, {
+      age: lifeCycle,
+      gender: gender,
+      region: region,
+      disability: disability,
+      obstacle: obstacle,
+    }),
 
   policyGet: (userId) => instance.get(`/api/main/${userId}`),
 
+  detailGet: (dataId) => instance.get(`/api/detail/${dataId}`),
+  bookGet: (userId) => instance.get(`/api/marks/${userId}`),
+  bookAdd: (userId, dataId) =>
+    instance.put(`/api/marks/${userId}`, {
+      dataId: dataId,
+    }),
+  bookdelete: (dataId) => instance.delete(`/api/marks/${dataId}`),
+  newsGet: () => instance.get(`/api/news/`),
 
   //   postGet: () => instance.get("/api/posts"),
 

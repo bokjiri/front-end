@@ -42,8 +42,20 @@ const Search = () => {
       console.log(err);
     });
 
+
     dispatch(infoActions.getPolicyDB(userId));
   }, []);
+
+  useEffect(() => {
+    apis
+    .newsGet()
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err)=>{
+      console.log(err);
+    });
+  })
 
     return(
             <Container>

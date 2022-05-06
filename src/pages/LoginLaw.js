@@ -491,6 +491,7 @@ return(
 export default LoginLaw;
 
 const LawWarp = styled.div`
+    width : 100vw;
     margin : 0 auto;
     padding: 5rem 0;
     div+div{
@@ -509,17 +510,23 @@ const LawCont = styled.div`
     }
 `;
 
-const LawTitle = styled.h3`
+const LawTitle = styled.p`
+    margin-top : 40px;
     margin-bottom : 20px;
+    font-size : 34px;
+    font-weight : 700;
 `
 
 const MainTerms = styled.div`
     position: static;
     display: inline-block;
-    width : 786px;
+    width : 846px;
     height : 280px;
     height: 50vh;
     overflow-y: scroll;
+    ::-webkit-scrollbar{
+        display : none;
+    }
 
     .gtit{
         margin: 2rem 0;
@@ -535,9 +542,16 @@ const BackButton = styled.button`
     border-radius : 5px;
     color : darkgrey;
     font-weight : 700;
+
     &:hover{
         cursor : pointer;
+        background-color : #72A8FE;
+        color : #FFFFFF;
+        transparent : 80%;
+    }
+
+    &:foucs{
         background-color : #0361FB;
-        color : white;
+        color : #FFFFFF;
     }
 `;

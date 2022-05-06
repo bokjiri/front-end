@@ -32,15 +32,15 @@ const OAuthRedirect = () => {
         let userId = userInfo.userId;
         let userEmail = decodeURIComponent(userInfo.email);  //decodeURIComponent : 특수문자, 한글깨짐 해결
         let userNickname = decodeURIComponent(userInfo.nickname);
+        let profileUrl = userInfo.profileUrl;
         localStorage.setItem("userEmail", userEmail);
         localStorage.setItem("nickName", userNickname);
         localStorage.setItem("userId", userId);
+        localStorage.setItem("profileUrl", profileUrl);
         
-        //프로필 사진(추가 정보)
-        //let profileUrl = userInfo.profileUrl;
-        //localStorage.setItem("profileUrl", profileUrl);
 
-        history.replace("/addinfo");
+        //history.replace("/addinfo");
+        window.location.replace("/addinfo");
       })
       .catch((err) => {
         console.log("로그인 get 에러발생", err);
