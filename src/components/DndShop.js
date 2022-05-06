@@ -1,56 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
-//dnd
+import { actionCreators as markActions } from "../redux/modules/bookMark";
 
 const DndShop = (props) => {
-  const [cardId, updateCardId] = useState(props.post_list);
-  React.useEffect(() => {
-    updateCardId(props.post_list);
-  }, [props.post_list]);
-  function handleOnDragEnd(result) {
-    console.log(result);
-    if (!result.destination) return;
-    const items = Array.from(cardId);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    updateCardId(items);
-  }
-
+  const dispatch = useDispatch();
+  const userId = props.userId;
+  // const mark_post = useSelector((state) => state);
+  // console.log(mark_post);
+  useEffect(() => {
+    dispatch(markActions.getBookFB(userId));
+  }, []);
   return (
     <div>
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="cardId">
-          {(provided) => {
-            return (
-              <DndBox
-                className="cardId"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                <div>나의 정책 </div>
-                {cardId.map((x, index) => (
-                  <Draggable key={index} draggableId={x.title} index={index}>
-                    {(provided) => (
-                      <div
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                      >
-                        <CardBox>{x.title}</CardBox>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </DndBox>
-            );
-          }}
-        </Droppable>
-      </DragDropContext>
+      <DndBox className="dataId">
+        <div>나의 정책 </div>
+        <div>
+          <CardBox>
+            <CateBox>안전 및 권익 보장</CateBox>
+            <div>text text text text text text</div>
+          </CardBox>
+        </div>
+      </DndBox>
     </div>
   );
 };
@@ -73,4 +46,18 @@ const CardBox = styled.div`
   height: 120px;
   background: rgba(255, 169, 90, 0.5);
   border-radius: 10px;
+  margin: 59px 15px 0 15px;
+`;
+
+const CateBox = styled.div`
+  width: 100px;
+  height: 25px;
+  border-radius: 4px;
+  margin: 10px 10px 0 10px;
+  padding: 4px 8px 4px 8px;
+  background: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 17.38px;
+  color: #ffa95a;
 `;

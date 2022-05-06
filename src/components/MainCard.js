@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import post, { actionCreators as postActions } from "../redux/modules/post";
+import post, { actionCreators as bookActions } from "../redux/modules/bookMark";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 // Import Swiper React components
@@ -27,10 +27,17 @@ import { useHistory } from "react-router-dom";
 import { HistoryOutlined } from "@mui/icons-material";
 
 export default function MainCard(props) {
-  console.log(props);
+  const userId = localStorage.getItem("userId");
+  console.log("maincard의", props);
+  const dataId = 52;
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const add = () => {
+    dispatch(bookActions.addBookFB(userId, dataId));
+  };
+  const bookdelete = () => {
+    dispatch(bookActions.deleteBookFB(dataId));
+  };
   const isPc = useMediaQuery({
     query: "(min-width:767px)",
   });
@@ -45,6 +52,8 @@ export default function MainCard(props) {
     <>
       {isPc && (
         <Container>
+          <button onClick={add}>여기</button>
+          <button onClick={bookdelete}>삭제</button>
           <Swiper
             slidesPerView={3}
             grid={{
@@ -63,17 +72,17 @@ export default function MainCard(props) {
             // }}
           >
             {/* map */}
-            {props.post_list.map((x, idx) => {
+            {props.policyList.map((x, idx) => {
               return (
                 <SwiperSlide>
                   <CardBox key={idx}>
-                    <Text>{x.title}</Text>
+                    <Text>{x.obstacle}</Text>
                     <span
                       onClick={() => {
-                        history.push(`/detail/${x.id}`);
+                        history.push(`/detail/${x.dataId}`);
                       }}
                     >
-                      {x.desc}
+                      {x.target}
                     </span>
                     <p>
                       <button onClick={() => setbookMark(!bookMark)}>
@@ -138,7 +147,6 @@ export default function MainCard(props) {
 }
 
 const Container = styled.div`
-  background: #eee;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #000;

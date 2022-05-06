@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,19 +6,23 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "../components/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import ShareIcon from "@mui/icons-material/Share";
-import { actionCreators as postActions } from "../redux/modules/post";
+import post, { actionCreators as postActions } from "../redux/modules/post";
 
 import { Text, Grid, Input, Button } from "../elements/index";
 
 const Detail = (props) => {
-  const dispatch = useDispatch();
-  // const userCode = localStorage.getItem("userId")
-
-  const dataId = useParams();
-  console.log(dataId);
-  const post_list = useSelector((state) => state.post.post.id);
-  console.log(post_list);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const userId = localStorage.getItem("userId");
+  const params = useParams();
+  const dataId = params.dataId;
+  console.log(params);
+  const detail_post = useSelector((state) => state.post.detail_post);
+  useEffect(() => {
+    dispatch(postActions.getDetailFB(dataId));
+  }, []);
+  console.log(detail_post);
+
   // const [modalOpen, setModalOpen] = useState(false);
   // const openModal = () => {
   //   setModalOpen(true);
@@ -35,19 +39,23 @@ const Detail = (props) => {
           </button>
           <h1>정책 세부 내용</h1>
           {/* onClick={openModal} */}
-          <ModalGo onClick={() => dispatch(postActions.addBugFB(dataId))}>
+          <ModalGo
+            onClick={() => dispatch(postActions.addBugFB(dataId, userId))}
+          >
             맞지 않는 정책이 있다면 알려주세요!!
           </ModalGo>
-          <InfoBox1></InfoBox1>
-          <InfoBox1>생애주기 :</InfoBox1>
-          <InfoBox1>급여 서비스 내용 :</InfoBox1>
-          <InfoBox1>서비스 이용 및 신청 방법 : </InfoBox1>
+          <InfoBox1>서비스명:{detail_post.name}</InfoBox1>
+          <InfoBox1>생애주기 :{detail_post.lifeCycle} </InfoBox1>
+          <InfoBox1>급여 서비스 내용 : {detail_post.summary}</InfoBox1>
+          <InfoBox1>서비스 이용 및 신청 방법 : 이미지 추가</InfoBox1>
 
           {/* <Modal open={modalOpen} close={closeModal} /> */}
         </div>
         <div>
           <ShareIcon />
-          <button>자세히 보기</button>
+          <a style={{ cursor: "pointer" }} href={detail_post.link}>
+            자세히 보기
+          </a>
         </div>
       </ModalBox>
     </ModalBack>
@@ -88,6 +96,4 @@ const ModalGo = styled.div`
 const InfoBox1 = styled.div`
   background-color: #eeeeee;
   margin-bottom: 30px;
-  width: 300px;
-  height: 100px;
 `;
