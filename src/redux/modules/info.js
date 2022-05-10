@@ -5,11 +5,10 @@ import { apis } from "../../shared/axios";
 //1. actions
 const SET_INFO = "SET_INFO";
 const ADD_INFO = "ADD_INFO";
-const EDIT_INFO = "EDIT_INFO";
-//const DELETE_USER = "DELETE_USER";
 
 //2. initialState
 const initialState = {
+  policyList: [],
   list: {
     lifeCycle: [],
     gender: [],
@@ -34,13 +33,7 @@ const initialInfo = {
 
 //3. Action Create
 const setInfo = createAction(SET_INFO, (info_list) => ({ info_list }));
-//const addInfo = createAction(ADD_INFO, (one, two, three, four) => ({ one, two, three, four }));
 const addInfo = createAction(ADD_INFO, (one) => ({ one }));
-// const editInfo = createAction(EDIT_INFO, (email, post_list) => ({
-//   email,
-//   post_list,
-// }));
-//const deleteUser = createAction(DELETE_USER, () => ({}));
 
 //4. middleware
 //User 입력 정보 GET
@@ -49,7 +42,6 @@ export const getInfoDB =
   async (dispatch, getState, { history }) => {
     try {
       const { data } = await apis.infoGet(userId);
-      //console.log(data.data);
       dispatch(setInfo(data.data));
     } catch (err) {
       console.log(err);
@@ -57,49 +49,57 @@ export const getInfoDB =
   };
 
 //User 정보 입력 POST
-const addInfoDB = (userId, lifeCycle, gender, region, disability, obstacle) => {
+const addInfoDB = (
+  userId,
+  lifeCycle,
+  gender,
+  region,
+  obstacleYN,
+  obstacle,
+  scholarship,
+  job,
+  married,
+  target,
+  newIncome
+) => {
   return function (dispatch, getState, { history }) {
     const _info = {
       ...initialInfo,
       lifeCycle: lifeCycle,
       gender: gender,
       region: region,
-      disability: disability,
+      disability: obstacleYN,
       obstacle: obstacle,
+      scholarship: scholarship,
+      job: job,
+      married: married,
+      target: target,
+      newIncome: newIncome,
     };
 
-    console.log(_info);
-
-    // console.log(_info.lifeCycle);
-    // console.log(_info.obstacle);
-    // console.log(_info.obstacleYN);
-    // console.log(_info.target);
-
-    // Object.entries(_info.lifeCycle).map((item, idx) => {
-    //   return(
-
-    //   );
-    // })
-
     apis
-      .infoAdd(userId, lifeCycle, gender, region, disability, obstacle)
+      .infoAdd(
+        userId,
+        lifeCycle,
+        gender,
+        region,
+        obstacleYN,
+        obstacle,
+        scholarship,
+        job,
+        married,
+        target,
+        newIncome
+      )
       .then((res) => {
-        console.log(res);
-        //dispatch(addInfo(_info.lifeCycle, _info.obstacle, _info.obstacleYN, _info.target));
         dispatch(addInfo(_info));
-        //dispatch(_info.obstacleYN[0]);
-
-        //history.replace("/main");
+        history.replace("/main");
       })
       .catch((err) => {
         console.log("infoAdd 실패", err);
       });
   };
 };
-
-//User 정보 수정 PUT
-
-//User 맞춤 정책 GET
 
 //5. reducer
 export default handleActions(
@@ -111,15 +111,8 @@ export default handleActions(
 
     [ADD_INFO]: (state, action) =>
       produce(state, (draft) => {
-        //  draft.list.unshift(action.payload.one);
-        //  draft.list.unshift(action.payload.two);
-        //  draft.list.unshift(action.payload.three);
-        //  draft.list.unshift(action.payload.four);
-        // draft.list.unshift(action.payload.one);
         draft.list = { ...action.payload.one };
       }),
-
-    [EDIT_INFO]: (state, action) => produce(state, (draft) => {}),
   },
   initialState
 );
@@ -129,8 +122,6 @@ const actionCreators = {
   addInfo,
   addInfoDB,
   setInfo,
-  //editInfo,
-  //deleteUser,
 };
 
 export { actionCreators };

@@ -98,11 +98,13 @@ const Search = () => {
 export default Search;
 
 const Container = styled.div`
+  margin-top : 100px;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+
   flex-direction: column;
+  height : 100%;
 
   @media screen and (max-width: 767px) {
     width: 100%;
