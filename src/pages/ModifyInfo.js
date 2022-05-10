@@ -43,12 +43,43 @@ const AddInfo = () => {
   console.log("주소지", region);
   console.log("장애여부", obstacleYN);
   console.log("장애유형", obstacle);
-  console.log("학력", scholarship);
-  console.log("취업 여부", job);
-  console.log("결혼 여부", married);
   console.log("가구유형", target);
-  console.log("월 소득", newIncome);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await apis.infoGet(userId);
+      const data = result.data.data;
+      console.log(data);
+
+      setYear(data.age.toString().substring(0,4));
+      setMonth(data.age.toString().substring(4,6));
+      setDate(data.age.toString().substring(6,8));
+      setObstacle(data.obstacle);
+      setGender(data.gender);
+      setObstacleYN(data.disability);
+      setObstacle(data.obstacle);
+      setTarget(data.target);
+      if (data.region[0].split(" ").length > 2) {
+        setCity(data.region[0].split(" ")[0]);
+        setTown(
+          data.region[0].split(" ")[1] +
+            " " +
+            data.region[0].split(" ")[2] +
+            " " +
+            data.region[0].split(" ")[3]
+        );
+      } else {
+        setCity(data.region[0].split(" ")[0]);
+        setTown(data.region[0].split(" ")[1]);
+      }
+      setScholarship(data.scholarship);
+      setJob(data.job);
+      setIncome(data.salary);
+      setMarried(data.marriage);
+
+    };
+    fetchData();
+  }, []);
 
   const [open_select_city, setOpenSelectCity] = useState(false);
   const [open_select, setOpenSelect] = useState(false);
@@ -104,6 +135,7 @@ const AddInfo = () => {
     } else {
       setTarget(target.filter((t) => t !== item));
     }
+
     return;
   };
 
@@ -130,6 +162,7 @@ const AddInfo = () => {
     if (item === "없음") {
       setObstacle([]);
     }
+
     return;
   };
 
@@ -169,20 +202,6 @@ const AddInfo = () => {
   const CreateIncome = (e) => {
     setIncome(e.target.value);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await apis.infoGet(userId);
-      const data = result.data.data;
-
-      if(data.age){
-        history.replace("/main");
-      }
-    };
-    fetchData();
-  }, []);
-
-
 
   const categoryList = {
     // lifeCycle: [
@@ -985,6 +1004,7 @@ const AddInfo = () => {
           <Text size="20px" bold margin="40px 0 8px 8px">
             장애유형
           </Text>
+
           <CategoryBox>
             {obstacleYN[0] === "있음"
               ? Object.entries(categoryList.obstacle).map((item, idx) => {
@@ -1121,6 +1141,7 @@ const AddInfo = () => {
               defaultValue={income}
             ></IncomeInput>
             </CategoryBox>
+
         </Grid>
       </Container>
 
@@ -1135,7 +1156,7 @@ const AddInfo = () => {
       ) : (
         <CompleteBtn
           onClick={() => {
-            //console.log("생년월이리ㅣㅣㅣㅣㅣㅣㅣ", lifeCycle);
+            //console.log("생년월일ㅣㅣㅣㅣㅣ",lifeCycle);
             dispatch(
               infoActions.addInfoDB(
                 userId,
@@ -1224,12 +1245,6 @@ const CategoryBox = styled.div`
   }
 `;
 
-const IncomeInput = styled.input`
-  width: 500px!important;
-  margin-bottom : 30px!important;
-
-`;
-
 const Btn = styled.button`
   width: ${(props) => props.width};
   height: 50px;
@@ -1269,6 +1284,12 @@ const CompleteBtn = styled.button`
     background-color: #0361fb;
     color: #ffffff;
   }
+`;
+
+const IncomeInput = styled.input`
+  width: 500px!important;
+  margin-bottom : 30px!important;
+
 `;
 
 const TextBox = styled.div`

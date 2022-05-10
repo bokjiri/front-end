@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { instance } from "../shared/axios";
 import { apis } from "../shared/axios";
 
+import { ReactComponent as LoginLogo } from "../imgs/login_logo.svg";
+
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -24,69 +26,76 @@ const Login = () => {
     setState(!state);
   };
 
-
   if (!cookies.get("userToken")) {
     return (
       <React.Fragment>
         <Grid is_flex width="100vw">
-          {/* 이미지? 왼쪽 섹션 */}
-          <Grid width="480px" height="625px" bg="silver" margin="0">
+          {/* <Grid height="100vh" width="480px" is_flex flexDirection="column" margin="0 30px"> */}
+
+            {/* 이미지? 왼쪽 섹션 */}
+            {/* <Grid width="480px" height="625px" bg="silver" margin="100px 0 0 0">
             이미지?
-          </Grid>
+          </Grid> */}
+        <Container>
+            <LoginLogo />
 
-          <Grid height="100vh" width="480px" is_flex flexDirection="column" margin="0 30px">
+
             <LoginBox>
-              <Grid width="300px" height="90px" is_flex bg="silver" margin="0 0 50px 0">
-                복세편살
-              </Grid>
-              {/* <Text>서비스 이용을 위해 로그인이 필요합니다!</Text> */}
-              <img
-                src={kakaoBtn}
-                alt="kakaoLogin"
-                onClick={() => {
-                  if (state === false) {
-                    alert("정보 약관 동의는 필수입니다!");
-                    return;
-                  }
-                  window.location.href = kakaoUrl;
-                }}
-                style={{ width: "300px", margin : "0 0 40px 0"}}
-              />
+            <Grid
+              width="300px"
+              height="90px"
+              is_flex
+              bg="none"
+              margin="0 0 20px 0"
+            >
+              <GridText>로그인</GridText>
+            </Grid>
+            {/* <Text>서비스 이용을 위해 로그인이 필요합니다!</Text> */}
+            <img
+              src={kakaoBtn}
+              alt="kakaoLogin"
+              onClick={() => {
+                if (state === false) {
+                  alert("정보 약관 동의는 필수입니다!");
+                  return;
+                }
+                window.location.href = kakaoUrl;
+              }}
+              style={{ width: "300px", margin: "0 0 40px 0" }}
+            />
 
-              <LoginTerms>
-                <input
-                  onChange={onChangeState}
-                  id="lawStatus"
-                  type="checkbox"
-                  className="check-int"
-                />
-                <label key="lawStatus" className="check-label"></label>
-                <span className="check-box"></span>
-                {state === true ? (
-                  <Link to="/law" style={{ color: "#0361FB" }}>
-                    <span>디지털콘텐츠 이용 및 </span>
-                    <span>개인정보 이용 약관</span>
-                    <span>내용을 확인하였고 동의합니다.</span>
-                  </Link>
-                ) : (
-                  <Link to="/law">
-                    <span>디지털콘텐츠 이용 및 </span>
-                    <span>개인정보 이용 약관</span>
-                    <span>내용을 확인하였고 동의합니다.</span>
-                  </Link>
-                )}
-              </LoginTerms>
-            </LoginBox>
-          </Grid>
+            <LoginTerms>
+              <input
+                onChange={onChangeState}
+                id="lawStatus"
+                type="checkbox"
+                className="check-int"
+              />
+              <label key="lawStatus" className="check-label"></label>
+              <span className="check-box"></span>
+              {state === true ? (
+                <Link to="/law" style={{ color: "#0361FB" }}>
+                  <span>디지털콘텐츠 이용 및 </span>
+                  <span>개인정보 이용 약관</span>
+                  <span>내용을 확인하였고 동의합니다.</span>
+                </Link>
+              ) : (
+                <Link to="/law">
+                  <span>디지털콘텐츠 이용 및 </span>
+                  <span>개인정보 이용 약관</span>
+                  <span>내용을 확인하였고 동의합니다.</span>
+                </Link>
+              )}
+            </LoginTerms>
+          </LoginBox>
+          </Container>
+          {/* </Grid> */}
         </Grid>
       </React.Fragment>
     );
   } else {
-      history.replace("/addinfo") 
-      
-    }
-    
-    
+    history.replace("/addinfo");
+  }
 
   return null;
 };
@@ -111,15 +120,31 @@ const LoginTerms = styled.div`
 `;
 
 const LoginBox = styled.div`
-  width : 480px;
-  height : 625px;
-  display : flex;
-  justify-content : center;
-  align-items : center;
-  flex-direction : column;
-  background-color : white;
-  box-shadow: 0px 0px 20px 5px #f7f5f2;
-  border-radius : 7px;
+  width: 390px;
+  height: 625px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const GridText = styled.p`
+  font-weight: 900;
+  font-size: 30px;
+`;
+
+const Container = styled.div`
+  margin-top: 100px;
+  width: 990px;
+  height: 625px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  background-color: white;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+
 `;
 
 //체크박스

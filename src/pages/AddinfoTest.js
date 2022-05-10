@@ -9,49 +9,45 @@ import { history } from "../redux/configureStore";
 import { actionCreators as infoActions } from "../redux/modules/info";
 
 import { birthYear, birthMonth, birthDate } from "../shared/Validation";
-import { apis } from "../shared/axios";
 
 const AddInfo = () => {
-
+  const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
 
-  const userId = localStorage.getItem("userId");
-
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [date, setDate] = useState("");
-  let lifeCycle = Number(year + month + date);
+  const info_list = useSelector((state) => state.info.list);
+  console.log("이용자 정보", info_list);
 
   const [obstacle, setObstacle] = useState([]);
-  const [gender, setGender] = useState([]);
-  const [obstacleYN, setObstacleYN] = useState([]);
-  const [city, setCity] = useState("시·도를 선택해 주세요");
-  const [town, setTown] = useState("시·군을 선택해 주세요");
-  let region = city + " " + town;
-
-  const [scholarship, setScholarship] = useState([]);
-  const [job, setJob] = useState([]);
-  const [married, setMarried] = useState([]);
-
   const [target, setTarget] = useState([]);
 
-  const [income, setIncome] = useState("");
-  let newIncome = Number(income);
-
-  console.log("생년월일", lifeCycle);
-  console.log("성별", gender);
-  console.log("주소지", region);
-  console.log("장애여부", obstacleYN);
-  console.log("장애유형", obstacle);
-  console.log("학력", scholarship);
-  console.log("취업 여부", job);
-  console.log("결혼 여부", married);
-  console.log("가구유형", target);
-  console.log("월 소득", newIncome);
-
+  const [gender, setGender] = useState([]);
+  const [obstacleYN, setObstacleYN] = useState([]);
 
   const [open_select_city, setOpenSelectCity] = useState(false);
   const [open_select, setOpenSelect] = useState(false);
+
+  //생년월일
+  //const [year, setYear] = useState("");
+  const [year, setYear] = useState(info_list.lifeCycle[0]?.substring(0,4));
+  const [month, setMonth] = useState("");
+  const [date, setDate] = useState("");
+
+  //지역 시.도 선택
+  const [city, setCity] = useState("시·도를 선택해 주세요");
+  console.log("도시", city);
+  const [town, setTown] = useState("시·군을 선택해 주세요");
+  console.log("도시2", town);
+
+
+  console.log("장애유형", obstacle);
+  console.log("가구유형", target);
+  console.log("성별", gender);
+  console.log("장애여부", obstacleYN);
+  console.log("생년", year);
+
+  // const [region, setRegion] = useState([]);
+  let region = city + " " + town;
+  console.log("최종 지역", region);
 
   const click_city = (value) => {
     // if(value === "-------"){
@@ -64,12 +60,8 @@ const AddInfo = () => {
   };
 
   const click_select = (value) => {
-    if (value === null) {
-      setTown(" ");
-    } else {
-      setTown(value);
-      setOpenSelect(false);
-    }
+    setTown(value);
+    setOpenSelect(false);
   };
 
   const infoYear = (e) => {
@@ -84,6 +76,15 @@ const AddInfo = () => {
     setDate(e.target.value);
   };
 
+  let lifeCycle = Number(year + month + date);
+  console.log("생년월일", lifeCycle);
+
+  useEffect(() => {
+    dispatch(infoActions.getInfoDB(userId));
+    //dispatch(infoActions.setInfo(info_list.target));
+  }, [year]);
+
+  //////////////////////////////////////////////////////////////
   const CreateObstacle = (e, item) => {
     let newObstacle = obstacle.findIndex((i) => i === item);
 
@@ -98,12 +99,30 @@ const AddInfo = () => {
   const CreateTarget = (e, item) => {
     console.log(item);
     let newTarget = target.findIndex((i) => i === item);
+    // let newInfoTarget = info_list.target.findIndex((i) => i === item);
+
+    // if (newTarget === -1) {
+    //   setTarget([...target, item]);
+    // } else if(newInfoTarget === -1){
+    //     setTarget([...info_list.target, item]);
+    // } else if(newTarget !== -1){
+    //   setTarget(target.filter((t) => t !== item));
+    // } else {
+    //   setTarget(info_list.target.filter((t) => t !== item));
+    // }
+    // if(info_list && info_list.target){
+    //   if(info_list.target.filter((t) => t !== item)){
+    //     // setTarget(...target, item)
+    //     console.log(item)
+    //   }
+    // }
 
     if (newTarget === -1) {
       setTarget([...target, item]);
     } else {
       setTarget(target.filter((t) => t !== item));
     }
+
     return;
   };
 
@@ -130,59 +149,9 @@ const AddInfo = () => {
     if (item === "없음") {
       setObstacle([]);
     }
+
     return;
   };
-
-  const CreateScholarship = (e, item) => {
-    let newscholarship = scholarship.findIndex((i) => i === item);
-
-    if (newscholarship === -1) {
-      setScholarship([item]);
-    } else {
-      setScholarship(scholarship.filter((g) => g !== item));
-    }
-    return;
-  };
-
-  const CreateJob = (e, item) => {
-    let newJob = job.findIndex((i) => i === item);
-
-    if (newJob === -1) {
-      setJob([item]);
-    } else {
-      setJob(job.filter((g) => g !== item));
-    }
-    return;
-  };
-
-  const Createmarried = (e, item) => {
-    let newMarried = married.findIndex((i) => i === item);
-
-    if (newMarried === -1) {
-      setMarried([item]);
-    } else {
-      setMarried(married.filter((g) => g !== item));
-    }
-    return;
-  };
-
-  const CreateIncome = (e) => {
-    setIncome(e.target.value);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await apis.infoGet(userId);
-      const data = result.data.data;
-
-      if(data.age){
-        history.replace("/main");
-      }
-    };
-    fetchData();
-  }, []);
-
-
 
   const categoryList = {
     // lifeCycle: [
@@ -195,13 +164,10 @@ const AddInfo = () => {
     //   "임신·출산",
     // ],
 
-    //성별
     gender: ["여성", "남성"],
 
-    //장애여부
     obstacleYN: ["있음", "없음"],
 
-    //장애유형
     obstacle: [
       "지체(전환대상)",
       "지체(상지절단)",
@@ -231,38 +197,16 @@ const AddInfo = () => {
       "기타",
     ],
 
-    //학력
-    scholarship: [
-      "고등학교 졸업 미만",
-      "고등학교 졸업",
-      "대학(원) 재학",
-      "대학(원) 휴학",
-      "대학(원) 졸업",
-    ],
-
-    //취업 여부
-    job : [
-      "미취업",
-      "취업"
-    ],
-
-    //결혼 여부
-    married : [
-      "미혼",
-      "기혼",
-      "이혼"
-    ],
-
-    //가구 유형
     target: [
       "다북화·탈북민",
       "다자녀",
       "보훈대상자",
-      "임신·출산",
+      "장애인",
+      "저소득",
       "한부모·조손",
     ],
 
-    //주소(시.도)
+    //
     city: [
       "-------",
       "강원도",
@@ -367,7 +311,7 @@ const AddInfo = () => {
     ],
 
     //대전광역시
-    daejeon: ["동구", "중구", "서구", "유성구", "대덕구"],
+    daejeon: ["동구", "중구", "서구", "유성구"],
 
     //강원도
     town1: [
@@ -562,31 +506,44 @@ const AddInfo = () => {
       <TextBox>✏️ 정보를 입력해 주세요!</TextBox>
 
       <Container>
+        {/* test */}
+        {/* {
+       Object.entries(categoryList.gender).map((item, idx) => {
+         return <InfoTest key={idx} {...item} />
+       })} */}
+
+        {/* test */}
+
         <Grid>
           <Text size="20px" bold margin="20px 8px">
             생년월일
           </Text>
           <TextEnd>*필수 선택</TextEnd>
           <CategoryBox>
-            <input
-              placeholder="년"
-              onChange={infoYear}
-              maxLength="4"
-              defaultValue={year}
-            ></input>
-            <input
-              onChange={infoMonth}
-              placeholder="월"
-              maxLength="2"
-              className="middle"
-              defaultValue={month}
-            ></input>
-            <input
-              placeholder="일"
-              onChange={infoDate}
-              maxLength="2"
-              defaultValue={date}
-            ></input>
+            {info_list && (
+              <>
+                <input
+                  placeholder="년"
+                  onChange={infoYear}
+                  maxLength="4"
+                  defaultValue={info_list.lifeCycle[0]?.substring(0, 4)}
+                ></input>
+                <input
+                  // defaultValue={info_list?.lifeCycle[0].substring(4,2)}
+                  onChange={infoMonth}
+                  placeholder="월"
+                  maxLength="2"
+                  className="middle"
+                  defaultValue={info_list.lifeCycle[0]?.substring(4, 6)}
+                ></input>
+                <input
+                  placeholder="일"
+                  onChange={infoDate}
+                  maxLength="2"
+                  defaultValue={info_list.lifeCycle[0]?.substring(6, 8)}
+                ></input>
+              </>
+            )}
 
             {!year ? null : !birthYear(year) ? (
               <Grid is_flex>
@@ -617,25 +574,26 @@ const AddInfo = () => {
             성별
           </Text>
           <CategoryBox>
-            {Object.entries(categoryList.gender).map((item, idx) => {
-              return (
-                <Btn
-                  width="378px"
-                  key={idx}
-                  color={
-                    gender?.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    CreateGender(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
+            {info_list &&
+              Object.entries(categoryList.gender).map((item, idx) => {
+                return (
+                  <Btn
+                    width="378px"
+                    key={idx}
+                    color={
+                      gender.findIndex((i) => i === item[1]) === -1
+                        ? "#E8E8E8"
+                        : "#0361FB"
+                    }
+                    value={item[0]}
+                    onClick={(e) => {
+                      CreateGender(e, item[1]);
+                    }}
+                  >
+                    {item[1]}
+                  </Btn>
+                );
+              })}
           </CategoryBox>
 
           <Text size="20px" bold margin="40px 0 8px 8px">
@@ -647,7 +605,7 @@ const AddInfo = () => {
                 setOpenSelectCity(!open_select_city);
               }}
             >
-              {<RebalanceCont>{city}</RebalanceCont>}
+              {info_list && <RebalanceCont>{city}</RebalanceCont>}
               {open_select_city && (
                 <RebalanceSelect>
                   {Object.entries(categoryList.city).map((item, idx) => {
@@ -664,6 +622,16 @@ const AddInfo = () => {
                 </RebalanceSelect>
               )}
             </RebalanceWrap>
+
+            {/* <select onChange={handleSelect} value={city}>
+              {Object.entries(categoryList.city).map((item, idx) => {
+                return (
+                  <option value={item[1]} key={idx}>
+                    {item[1]}
+                  </option>
+                );
+              })}
+            </select> */}
 
             <RebalanceWrap
               onClick={() => {
@@ -985,142 +953,109 @@ const AddInfo = () => {
           <Text size="20px" bold margin="40px 0 8px 8px">
             장애유형
           </Text>
+
           <CategoryBox>
             {obstacleYN[0] === "있음"
               ? Object.entries(categoryList.obstacle).map((item, idx) => {
                   return (
-                    <Btn
-                      width="174px"
-                      key={idx}
-                      color={
-                        obstacle.findIndex((i) => i === item[1]) === -1
-                          ? "#E8E8E8"
-                          : "#0361FB"
-                      }
-                      value={item[0]}
-                      onClick={(e) => {
-                        CreateObstacle(e, item[1]);
-                      }}
-                    >
-                      {item[1]}
-                    </Btn>
+                    <>
+                      <Btn
+                        width="174px"
+                        key={idx}
+                        color={
+                          obstacle.findIndex((i) => i === item[1]) === -1
+                            ? "#E8E8E8"
+                            : "#0361FB"
+                        }
+                        value={item[0]}
+                        onClick={(e) => {
+                          CreateObstacle(e, item[1]);
+                        }}
+                      >
+                        {item[1]}
+                      </Btn>
+                    </>
                   );
                 })
               : null}
           </CategoryBox>
 
           <Text size="20px" bold margin="40px 0 8px 8px">
-            학력
-          </Text>
-          <CategoryBox>
-            {Object.entries(categoryList.scholarship).map((item, idx) => {
-              return (
-                <Btn
-                  width="174px"
-                  key={idx}
-                  color={
-                    scholarship?.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    CreateScholarship(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
-          </CategoryBox>
-
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            취업 여부
-          </Text>
-          <CategoryBox>
-            {Object.entries(categoryList.job).map((item, idx) => {
-              return (
-                <Btn
-                  width="378px"
-                  key={idx}
-                  color={
-                    job?.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    CreateJob(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
-          </CategoryBox>
-
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            결혼
-          </Text>
-          <CategoryBox>
-            {Object.entries(categoryList.married).map((item, idx) => {
-              return (
-                <Btn
-                  width="244px"
-                  key={idx}
-                  color={
-                    married?.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    Createmarried(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
-          </CategoryBox>
-
-          <Text size="20px" bold margin="40px 0 8px 8px">
             가구유형
           </Text>
           <CategoryBox>
-            {Object.entries(categoryList.target).map((item, idx) => {
-              return (
-                <Btn
-                  width="174px"
-                  key={idx}
-                  color={
-                    target.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    CreateTarget(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
-          </CategoryBox>
+            {info_list &&
+              Object.entries(categoryList.target).map((item, idx) => {
+                return (
+                  <Btn
+                    width="174px"
+                    key={idx}
+                    color={
+                      // info_list.target?.findIndex((i) => i === item[1]) === -1
+                      // ? target.findIndex((i) => i === item[1]) === -1
+                      //   ? "#E8E8E8"
+                      //   : "#0361FB"
+                      // : "tomato"
 
-          <Text size="20px" bold margin="20px 8px">
-            월 소득
-          </Text>
-          <TextEnd>*1인 가구 : 개인 월 소득, 2인 이상 가구 : 가구 월 소득</TextEnd>
-          <CategoryBox>
-            <IncomeInput
-              placeholder="만원"
-              onChange={CreateIncome}
-              maxLength="10"
-              defaultValue={income}
-            ></IncomeInput>
-            </CategoryBox>
+                      // target.findIndex((i) => i === item[1]) === -1   //현재 target 리스트에 없는 애면
+                      // ? "silver"  //target 리스트에 없는 애면 silver
+                      //   && info_list.target?.findIndex((i) => i === item[1]) === -1  //selector list에 없는 애면
+                      //     ? "silver"
+                      //     : "blue"
+                      //       // && target.findIndex((i) => i === item[1]) === -1
+                      //       //   ? "blue"
+                      //       //   : "silver"
+                      // : "blue"               //클릭하면 바뀜
+
+                      info_list.target?.findIndex((i) => i === item[1]) === -1 //유저 정보에 없는 값이니
+                        ? target.findIndex((i) => i === item[1]) === -1 //유저 정보에 없는 새로운 버튼 && target에 새로 추가될 애들
+                          ? "silver" //아직 추가 안됨
+                          : "blue" //클릭하면 바뀜
+                        : target.findIndex((i) => i === item[1]) === -1 //target에 있는 값들
+                        ? "#FEE2C5" //젤 첨에 select 되는 애들
+                        : //: "blue"  //젤 첨에 select 되는 애들
+                        target.findIndex((i) => i === item[1]) !== -1
+                        ? "blue"
+                        : "silver"
+
+                      // : target.findIndex((i) => i === item[1]) === -1
+                      // ? "silver"
+                      // : "blue"
+
+                      // ? target.findIndex((i) => i === item[1]) === -1
+                      // : "tomato"
+                      // ? "blue"
+                      // : "blue"
+
+                      //뭔가 됨
+                      // target.findIndex((i) => i === item[1]) === -1
+                      // ? info_list.target?.findIndex((i) => i === item[1]) === -1
+                      //   ? "#E8E8E8"
+                      //   : "#0361FB"
+                      // :"silver"
+                      //  ? "silver"
+                      //  : "silver"
+
+                      //
+
+                      //     ? target?.findIndex((i) => i === item[1]) === -1
+                      //     ? "#E8E8E8"
+                      //     : "#0361FB"
+                      // : "#0361FB"
+                      //  target?.findIndex((i) => i === item[1]) === -1
+                      //   ? "#E8E8E8"
+                      //   : "#0361FB"
+                    }
+                    value={item[0]}
+                    onClick={(e) => {
+                      CreateTarget(e, item[1]);
+                    }}
+                  >
+                    {item[1]}
+                  </Btn>
+                );
+              })}
+          </CategoryBox>
         </Grid>
       </Container>
 
@@ -1131,11 +1066,12 @@ const AddInfo = () => {
       !birthMonth(month) ||
       !date ||
       !birthDate(date) ? (
-        <CompleteBtn disabled={true}>완료</CompleteBtn>
+        <>
+          <CompleteBtn disabled={true}>완료</CompleteBtn>
+        </>
       ) : (
         <CompleteBtn
           onClick={() => {
-            //console.log("생년월이리ㅣㅣㅣㅣㅣㅣㅣ", lifeCycle);
             dispatch(
               infoActions.addInfoDB(
                 userId,
@@ -1143,14 +1079,11 @@ const AddInfo = () => {
                 gender,
                 region,
                 obstacleYN,
-                obstacle,
-                scholarship,
-                job,
-                married,
-                target,
-                newIncome
+                obstacle
               )
             );
+            //console.log(age, obstacle, target);
+            //history.push("/main")
           }}
         >
           완료
@@ -1196,7 +1129,6 @@ const CategoryBox = styled.div`
     border-radius: 5px;
     border: 1px solid darkgrey;
     font-weight: 700;
-    text-align : right;
   }
 
   input:focus {
@@ -1222,12 +1154,6 @@ const CategoryBox = styled.div`
   .middle {
     margin: 0 25px;
   }
-`;
-
-const IncomeInput = styled.input`
-  width: 500px!important;
-  margin-bottom : 30px!important;
-
 `;
 
 const Btn = styled.button`

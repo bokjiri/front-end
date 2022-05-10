@@ -69,14 +69,20 @@ export const apis = {
   userDelete: (userId) => instance.delete(`/api/users/${userId}`),
 
   infoGet: (userId) => instance.get(`/api/users/${userId}`),
-  infoAdd: (userId, lifeCycle, gender, region, disability, obstacle) =>
-    instance.put(`/api/users/${userId}`, {
+  infoAdd: (userId, lifeCycle, gender, region, disability, obstacle, scholarship, job, married, target, newIncome) =>
+    instance.patch(`/api/users/${userId}`, {
       age: lifeCycle,
       gender: gender,
       region: region,
       disability: disability,
       obstacle: obstacle,
+      scholarship : scholarship,
+      job : job,
+      marriage : married,
+      target : target,
+      salary : newIncome,
     }),
+
 
   policyGet: (userId) => instance.get(`/api/main/${userId}`),
 
