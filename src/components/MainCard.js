@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Text } from "../elements/index";
 import { ReactIcon } from "../Icons/Icon";
 import ShareIcon from "@mui/icons-material/Share";
+import { actionCreators as categoryActions } from "../redux/modules/category";
 
 import { history } from "../redux/configureStore";
 
@@ -27,17 +28,30 @@ import { useHistory } from "react-router-dom";
 import { HistoryOutlined } from "@mui/icons-material";
 
 export default function MainCard(props) {
+  console.log(props);
+  const categoryName = props.categoryName;
+  //카테고리
+  const policy_list = useSelector((state) => state.category.policyList);
+  const work = useSelector((state) => state.category.work);
+  const houseLife = useSelector((state) => state.category.houseLife);
+  const health = useSelector((state) => state.category.health);
+  const eduCare = useSelector((state) => state.category.eduCare);
+  const safetyRight = useSelector((state) => state.category.safetyRight);
+  const etc = useSelector((state) => state.category.etc);
+  useEffect(() => {
+    dispatch(categoryActions.workDB(userId));
+    dispatch(categoryActions.houseLifeDB(userId));
+    dispatch(categoryActions.healthDB(userId));
+    dispatch(categoryActions.eduCareDB(userId));
+    dispatch(categoryActions.safetyRightDB(userId));
+    dispatch(categoryActions.etcDB(userId));
+  }, []);
+
   const userId = localStorage.getItem("userId");
   console.log("maincard의", props);
-  const dataId = 52;
+  const dataId = 41;
   const history = useHistory();
   const dispatch = useDispatch();
-  const add = () => {
-    dispatch(bookActions.addBookFB(userId, dataId));
-  };
-  const bookdelete = () => {
-    dispatch(bookActions.deleteBookFB(dataId));
-  };
   const isPc = useMediaQuery({
     query: "(min-width:767px)",
   });
@@ -46,14 +60,10 @@ export default function MainCard(props) {
     query: "(max-width:767px)",
   });
 
-  const [bookMark, setbookMark] = useState(false);
-
   return (
     <>
       {isPc && (
         <Container>
-          <button onClick={add}>여기</button>
-          <button onClick={bookdelete}>삭제</button>
           <Swiper
             slidesPerView={3}
             grid={{
@@ -72,33 +82,127 @@ export default function MainCard(props) {
             // }}
           >
             {/* map */}
-            {props.policyList.map((x, idx) => {
-              return (
-                <SwiperSlide>
-                  <CardBox key={idx}>
-                    <Text>{x.obstacle}</Text>
-                    <span
-                      onClick={() => {
-                        history.push(`/detail/${x.dataId}`);
-                      }}
-                    >
-                      {x.target}
-                    </span>
-                    <p>
-                      <button onClick={() => setbookMark(!bookMark)}>
-                        {bookMark === true ? (
-                          <ReactIcon.BsBookmarkCheckFill />
-                        ) : (
-                          <ReactIcon.BsBookmarkCheck />
-                        )}
-                      </button>
-
-                      <ShareIcon />
-                    </p>
-                  </CardBox>
-                </SwiperSlide>
-              );
-            })}
+            {categoryName === "전체"
+              ? policy_list.map((x, idx) => {
+                  return (
+                    <SwiperSlide>
+                      <CardBox
+                        key={idx}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          history.push(`/detail/${x.dataId}`);
+                        }}
+                      >
+                        <div>{x.desire}</div>
+                        <Text>{x.name}</Text>
+                        <span>{x.target}</span>
+                      </CardBox>
+                    </SwiperSlide>
+                  );
+                })
+              : categoryName === "📄 일자리"
+              ? work.map((x, idx) => {
+                  return (
+                    <SwiperSlide>
+                      <CardBox key={idx}>
+                        <Text>{x.obstacle}</Text>
+                        <span
+                          onClick={() => {
+                            history.push(`/detail/${x.dataId}`);
+                          }}
+                        >
+                          {x.target}
+                        </span>
+                      </CardBox>
+                    </SwiperSlide>
+                  );
+                })
+              : categoryName === "🏠 주거 및 일상생활"
+              ? houseLife.map((x, idx) => {
+                  return (
+                    <SwiperSlide>
+                      <CardBox key={idx}>
+                        <Text>{x.obstacle}</Text>
+                        <span
+                          onClick={() => {
+                            history.push(`/detail/${x.dataId}`);
+                          }}
+                        >
+                          {x.target}
+                        </span>
+                      </CardBox>
+                    </SwiperSlide>
+                  );
+                })
+              : categoryName === "💪🏻 건강"
+              ? health.map((x, idx) => {
+                  return (
+                    <SwiperSlide>
+                      <CardBox key={idx}>
+                        <Text>{x.obstacle}</Text>
+                        <span
+                          onClick={() => {
+                            history.push(`/detail/${x.dataId}`);
+                          }}
+                        >
+                          {x.target}
+                        </span>
+                      </CardBox>
+                    </SwiperSlide>
+                  );
+                })
+              : categoryName === "👪 교육 및 돌봄"
+              ? eduCare.map((x, idx) => {
+                  return (
+                    <SwiperSlide>
+                      <CardBox key={idx}>
+                        <Text>{x.obstacle}</Text>
+                        <span
+                          onClick={() => {
+                            history.push(`/detail/${x.dataId}`);
+                          }}
+                        >
+                          {x.target}
+                        </span>
+                      </CardBox>
+                    </SwiperSlide>
+                  );
+                })
+              : categoryName === "⛑ 안전 및 권익보장"
+              ? safetyRight.map((x, idx) => {
+                  return (
+                    <SwiperSlide>
+                      <CardBox key={idx}>
+                        <Text>{x.obstacle}</Text>
+                        <span
+                          onClick={() => {
+                            history.push(`/detail/${x.dataId}`);
+                          }}
+                        >
+                          {x.target}
+                        </span>
+                      </CardBox>
+                    </SwiperSlide>
+                  );
+                })
+              : categoryName === "기타"
+              ? etc.map((x, idx) => {
+                  return (
+                    <SwiperSlide>
+                      <CardBox key={idx}>
+                        <Text>{x.obstacle}</Text>
+                        <span
+                          onClick={() => {
+                            history.push(`/detail/${x.dataId}`);
+                          }}
+                        >
+                          {x.target}
+                        </span>
+                      </CardBox>
+                    </SwiperSlide>
+                  );
+                })
+              : null}
           </Swiper>
         </Container>
       )}
@@ -173,4 +277,5 @@ const CardBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 40px;
 `;

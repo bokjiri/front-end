@@ -73,9 +73,9 @@ const getNewsFB = () => {
     apis
       .newsGet()
       .then((res) => {
-        // console.log("영우님", res);
-        dispatch(getNews(res.data.newsData));
-        // console.log("퇴근하셔도 됩니다 😁", res.data.newsData);
+        console.log("영우님", res);
+        dispatch(getNews(res.data.newsList));
+        console.log("퇴근하셔도 됩니다 😁", res.data.newsList);
       })
       .catch((error) => {
         console.log("뉴스 겟 실패", error);

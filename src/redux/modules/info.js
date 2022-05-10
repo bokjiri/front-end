@@ -8,6 +8,7 @@ const ADD_INFO = "ADD_INFO";
 
 //2. initialState
 const initialState = {
+  policyList: [],
   list: {
     lifeCycle: [],
     gender: [],
@@ -47,7 +48,7 @@ export const getInfoDB =
     }
   };
 
-//User 정보 입력 PATCH
+//User 정보 입력 POST
 const addInfoDB = (
   userId,
   lifeCycle,
