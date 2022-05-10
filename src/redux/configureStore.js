@@ -7,6 +7,7 @@ import User from "./modules/user";
 import Info from "./modules/info";
 import Post from "./modules/post";
 import bookMark from "./modules/bookMark";
+import category from "./modules/category";
 
 export const history = createBrowserHistory();
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   info: Info,
   post: Post,
   bookMark: bookMark,
+  category: category,
 
   router: connectRouter(history),
 });
