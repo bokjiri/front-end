@@ -7,21 +7,28 @@ import styled from "styled-components";
 import MainCard from "../components/MainCard";
 
 import { actionCreators as infoActions } from "../redux/modules/info";
+import { actionCreators as categoryActions } from "../redux/modules/category";
 
 import News from "../components/News";
 import DndShop from "../components/DndShop";
 
 import Cookies from "universal-cookie";
+import { useHistory, useParams } from "react-router-dom";
+import NewsCard from "../components/NewsCard";
 const cookies = new Cookies();
 
 const Main = () => {
+  const history = useHistory();
+  const params = useParams();
+  const categoryName = params.category;
+  console.log(categoryName);
   const userId = localStorage.getItem("userId");
   console.log(userId);
   const dispatch = useDispatch();
 
   const info_list = useSelector((state) => state.info.list);
-  const policy_list = useSelector((state) => state.info.policyList);
-  console.log(policy_list);
+  const policy_list = useSelector((state) => state.category);
+  console.log("카테고리", policy_list);
   const [category, setCategory] = useState([
     "전체",
     "📄 일자리",
@@ -36,7 +43,7 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(infoActions.getInfoDB(userId));
-    dispatch(infoActions.getPolicyDB(userId));
+    dispatch(categoryActions.getPolicyDB(userId));
   }, []);
 
   if (cookies.get("userToken")) {
@@ -63,78 +70,20 @@ const Main = () => {
               box-shadow="0 4px 14px rgba(0,0,0,0.1)"
               color="#999999"
               width="171px"
-              border-radius="10px"
+              radius="10px"
               margin="10px"
+              _onClick={() => {
+                history.push(`/main/${table}`);
+              }}
             >
               {table}
             </Button>
           ))}
-          {/* <Button
-            backgroundColor="#ffffff"
-            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
-            color="#999999"
-            width="171px"
-            border-radius="10px"
-            margin="10px"
-          >
-            📄 일자리
-          </Button>
-          <Button
-            backgroundColor="#ffffff"
-            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
-            color="#999999"
-            width="171px"
-            border-radius="10px"
-            margin="10px"
-          >
-            🏠 주거 및 일상생활
-          </Button>
-          <Button
-            backgroundColor="#ffffff"
-            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
-            color="#999999"
-            width="171px"
-            border-radius="10px"
-            margin="10px"
-          >
-            💪🏻 건강
-          </Button>
-          <Button
-            backgroundColor="#ffffff"
-            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
-            color="#999999"
-            width="171px"
-            border-radius="10px"
-            margin="10px"
-          >
-            👪 교육 및 돌봄
-          </Button>
-          <Button
-            backgroundColor="#ffffff"
-            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
-            color="#999999"
-            width="171px"
-            border-radius="10px"
-            margin="10px"
-          >
-            ⛑ 안전 및 권익보장
-          </Button>
-          <Button
-            backgroundColor="#ffffff"
-            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
-            color="#999999"
-            width="171px"
-            border-radius="10px"
-            margin="10px"
-          >
-            기타
-          </Button> */}
         </CategoryBox>
         <DndShop policyList={policy_list} userId={userId} />
-        <MainCard policyList={policy_list} />
+        <MainCard categoryName={categoryName} />
         <h4>새로운 복지 뉴스를 확인해보세요!</h4>
-        <News />
-        {/* <Like policyList={policy_list} /> */}
+        <NewsCard />
       </Container>
     );
   } else {
