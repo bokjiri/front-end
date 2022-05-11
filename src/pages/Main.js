@@ -4,7 +4,6 @@ import { Grid, Button } from "../elements/index";
 import { history } from "../redux/configureStore";
 import { BiSearchAlt } from "react-icons/bi";
 import styled from "styled-components";
-import MainCard from "../components/MainCard";
 import MainCard2 from "../components/MainCard2";
 
 import { actionCreators as infoActions } from "../redux/modules/info";

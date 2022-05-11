@@ -177,58 +177,59 @@ export default function MainCard2(props) {
             ))
           : null}
       </Swiper>
-      {/* 
-      <p className="append-buttons">
-        <button onClick={() => prepend()} className="prepend-2-slides">
-          Prepend 2 Slides
-        </button>
-        <button onClick={() => slideTo(1)} className="prepend-slide">
-          Slide 1
-        </button>
-        <button onClick={() => slideTo(250)} className="slide-250">
-          Slide 250
-        </button>
-        <button onClick={() => slideTo(500)} className="slide-500">
-          Slide 500
-        </button>
-        <button onClick={() => append()} className="append-slides">
-          Append Slide
-        </button>
-      </p> */}
     </>
   );
 }
 
 const Container = styled.div`
-  margin-bottom: 100px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 20px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const PolicyDesire = styled.div`
-  width: 80px;
-  height: 25px;
-  margin: 4px 8px;
-  background: rgba(109, 205, 199, 0.5);
-  border-radius: 4px;
+  text-align: center;
+  width : max-content;
+  max-width: 100px;
+  padding: 5px;
   font-size: 12px;
-  font-weight: 700
-  line-height: 17px;
-  color: #666666;
+  margin: 5px 0 10px 20px;
+  background-color: #6DCDC7;
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
 `;
 
 const PolicyName = styled.div`
+  max-width: 100%;
   font-weight: 700;
-  font-size: 20px;
-  line-height: 35px;
+  font-size: 18px;
+  line-height: 34px;
   text-align: left;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  margin: 0 10px 10px 20px;
+  padding: 0 10px 10px 0;
 `;
 
 const PolicySummary = styled.div`
+  text-align: left;
+  font-size: 15px;
+  margin: 0 20px 10px 20px;
+
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  &:hover {
-    color: #72a8fe;
-  }
 `;
