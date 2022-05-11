@@ -1215,7 +1215,6 @@ const AddInfo = () => {
 export default AddInfo;
 
 const MainWrap = styled.div`
-  margin: 150px auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1296,7 +1295,7 @@ const Btn = styled.button`
 const CompleteBtn = styled.button`
   width: 175px;
   height: 50px;
-  margin: 7px 7px;
+  margin: 7px 0 100px 0;
   border-radius: 5px;
   border: none;
   background-color: ${(props) =>
@@ -1329,6 +1328,7 @@ const TextBox = styled.div`
   display: flex;
   justify-content: center;
   margin-left: -600px;
+  margin-top : 130px;
 `;
 
 const ValidationBox = styled.div`

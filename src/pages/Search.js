@@ -23,7 +23,6 @@ const Search = () => {
   return (
     <Container>
       <SearchContainer>
-
         <SearchBox>
           <BiSearchAlt size="20px" color="#999999"/>
           <input placeholder="검색어 입력 (ex. 청년, 주거...)"></input>
@@ -41,7 +40,6 @@ const Search = () => {
 export default Search;
 
 const Container = styled.div`
-  margin-top: 100px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -125,6 +123,7 @@ const SearchButton = styled.button`
 `;
 
 const SearchBox = styled.div`
+  margin-top : 150px;
   display: flex;
   align-items: center;
   justify-content: center;
