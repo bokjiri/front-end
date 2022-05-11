@@ -142,8 +142,3 @@ const SearchBox = styled.div`
   }
 `;
 
-const Item = styled.div`
-  width: 100px;
-  background-color: white;
-  height: 50px;
-`;
