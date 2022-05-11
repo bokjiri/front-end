@@ -17,7 +17,7 @@ import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/pagination";
 
-import "../css/mainCard.css";
+// import "../css/mainCard.css";
 
 // import required modules
 import { Grid, Pagination } from "swiper";
