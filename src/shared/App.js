@@ -52,7 +52,6 @@ function App() {
         <Route path="/main" exact component={Main} />
         <Route path="/main/:category" exact component={Main} />
         <Route path="/detail/:dataId" exact component={Detail} />
-        <Route path="/footer" exact component={Footer} />
         <Route path="/modal" exact component={Modal} />
         <Route path="/mypage" exact component={Mypage} />
 

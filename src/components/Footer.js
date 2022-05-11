@@ -8,9 +8,15 @@ import { ReactComponent as Logo_Footer } from "../imgs/Logo_Footer.svg";
 import { GrInstagram } from "react-icons/gr";
 import { AiOutlineMail } from "react-icons/ai";
 import { MdOutlineEmail } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const FooterTest = () => {
+
+  const isLogin = useSelector((state) => state.user.isLogin);
+
+
   return (
+    isLogin &&
     <Container>
       <Wrap>
       <Logo_Footer />
@@ -33,6 +39,7 @@ const FooterTest = () => {
 
       </Wrap>
     </Container>
+    
   );
 };
 

@@ -12,7 +12,6 @@ import { birthYear, birthMonth, birthDate } from "../shared/Validation";
 import { apis } from "../shared/axios";
 
 const AddInfo = () => {
-
   const dispatch = useDispatch();
 
   const userId = localStorage.getItem("userId");
@@ -38,17 +37,8 @@ const AddInfo = () => {
   const [income, setIncome] = useState("");
   let newIncome = Number(income);
 
-  console.log("생년월일", lifeCycle);
-  console.log("성별", gender);
-  console.log("주소지", region);
-  console.log("장애여부", obstacleYN);
-  console.log("장애유형", obstacle);
-  console.log("학력", scholarship);
-  console.log("취업 여부", job);
-  console.log("결혼 여부", married);
-  console.log("가구유형", target);
-  console.log("월 소득", newIncome);
-
+  const [family, setFamily] = useState("");
+  let newFamily = Number(family);
 
   const [open_select_city, setOpenSelectCity] = useState(false);
   const [open_select, setOpenSelect] = useState(false);
@@ -170,19 +160,26 @@ const AddInfo = () => {
     setIncome(e.target.value);
   };
 
+  const CreateFamily = (e) => {
+    const regex = /^[1-8]*$/;
+    if (regex.test(e.target.value)) {
+      setFamily(e.target.value);
+    } else {
+      setFamily();
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await apis.infoGet(userId);
       const data = result.data.data;
 
-      if(data.age){
+      if (data.age) {
         history.replace("/main");
       }
     };
     fetchData();
   }, []);
-
-
 
   const categoryList = {
     // lifeCycle: [
@@ -241,17 +238,10 @@ const AddInfo = () => {
     ],
 
     //취업 여부
-    job : [
-      "미취업",
-      "취업"
-    ],
+    job: ["미취업", "취업"],
 
     //결혼 여부
-    married : [
-      "미혼",
-      "기혼",
-      "이혼"
-    ],
+    married: ["미혼", "기혼", "이혼"],
 
     //가구 유형
     target: [
@@ -982,12 +972,15 @@ const AddInfo = () => {
             ) : null}
           </CategoryBox>
 
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            장애유형
-          </Text>
-          <CategoryBox>
-            {obstacleYN[0] === "있음"
-              ? Object.entries(categoryList.obstacle).map((item, idx) => {
+          {obstacleYN[0] === "있음" ? (
+            <>
+              <Text size="20px" bold margin="40px 0 8px 8px">
+                장애유형
+              </Text>
+              <TextEnd>*복수 선택 가능</TextEnd>
+
+              <ObstacleBox>
+                {Object.entries(categoryList.obstacle).map((item, idx) => {
                   return (
                     <Btn
                       width="174px"
@@ -1005,9 +998,10 @@ const AddInfo = () => {
                       {item[1]}
                     </Btn>
                   );
-                })
-              : null}
-          </CategoryBox>
+                })}
+              </ObstacleBox>
+            </>
+          ) : null}
 
           <Text size="20px" bold margin="40px 0 8px 8px">
             학력
@@ -1112,7 +1106,9 @@ const AddInfo = () => {
           <Text size="20px" bold margin="20px 8px">
             월 소득
           </Text>
-          <TextEnd>*1인 가구 : 개인 월 소득, 2인 이상 가구 : 가구 월 소득</TextEnd>
+          <TextEnd>
+            *1인 가구 : 개인 월 소득, 2인 이상 가구 : 가구 월 소득
+          </TextEnd>
           <CategoryBox>
             <IncomeInput
               placeholder="만원"
@@ -1120,7 +1116,33 @@ const AddInfo = () => {
               maxLength="10"
               defaultValue={income}
             ></IncomeInput>
-            </CategoryBox>
+          </CategoryBox>
+
+          {income !== 0 && income !== "" ? (
+            <>
+              <Text size="20px" bold margin="20px 8px">
+                가구원 수
+              </Text>
+              <TextEnd>*가구원 수는 중위소득 판별에 활용됩니다.</TextEnd>
+              <TextEnd>*1~8명까지 입력 가능합니다.</TextEnd>
+              <CategoryBox>
+                <IncomeInput
+                  placeholder="명"
+                  onChange={CreateFamily}
+                  maxLength="1"
+                  defaultValue={family}
+                ></IncomeInput>
+              </CategoryBox>
+            </>
+          ) : null}
+
+          {income && !family ? (
+            <Grid is_flex>
+              <ValidationBox style={{ color: "#ED6451" }}>
+                월 소득 기입 시, 가구원 수 입력은 필수입니다.
+              </ValidationBox>
+            </Grid>
+          ) : null}
         </Grid>
       </Container>
 
@@ -1130,7 +1152,8 @@ const AddInfo = () => {
       !month ||
       !birthMonth(month) ||
       !date ||
-      !birthDate(date) ? (
+      !birthDate(date) ||
+      (income && !family) ? (
         <CompleteBtn disabled={true}>완료</CompleteBtn>
       ) : (
         <CompleteBtn
@@ -1148,7 +1171,8 @@ const AddInfo = () => {
                 job,
                 married,
                 target,
-                newIncome
+                newIncome,
+                newFamily
               )
             );
           }}
@@ -1196,7 +1220,7 @@ const CategoryBox = styled.div`
     border-radius: 5px;
     border: 1px solid darkgrey;
     font-weight: 700;
-    text-align : right;
+    text-align: right;
   }
 
   input:focus {
@@ -1225,9 +1249,8 @@ const CategoryBox = styled.div`
 `;
 
 const IncomeInput = styled.input`
-  width: 500px!important;
-  margin-bottom : 30px!important;
-
+  width: 500px !important;
+  margin-bottom: 30px !important;
 `;
 
 const Btn = styled.button`
@@ -1360,4 +1383,10 @@ const TextEnd = styled.div`
   margin-right: 15px;
   font-size: 7px;
   margin-bottom: 5px;
+`;
+
+const ObstacleBox = styled.div`
+  display: inline-block;
+  margin: 0 auto;
+  text-align: center;
 `;

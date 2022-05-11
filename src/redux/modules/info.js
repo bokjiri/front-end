@@ -8,7 +8,6 @@ const ADD_INFO = "ADD_INFO";
 
 //2. initialState
 const initialState = {
-  policyList: [],
   list: {
     lifeCycle: [],
     gender: [],
@@ -60,7 +59,8 @@ const addInfoDB = (
   job,
   married,
   target,
-  newIncome
+  newIncome,
+  newFamily
 ) => {
   return function (dispatch, getState, { history }) {
     const _info = {
@@ -75,6 +75,7 @@ const addInfoDB = (
       married: married,
       target: target,
       newIncome: newIncome,
+      newFamily : newFamily
     };
 
     apis
@@ -89,7 +90,8 @@ const addInfoDB = (
         job,
         married,
         target,
-        newIncome
+        newIncome,
+        newFamily
       )
       .then((res) => {
         dispatch(addInfo(_info));
