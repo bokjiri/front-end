@@ -1,110 +1,52 @@
-import React, {useEffect} from "react";
-import {Grid, Button} from "../elements/index";
+import React, { useEffect } from "react";
+import { Grid, Button } from "../elements/index";
 import { useSelector, useDispatch } from "react-redux";
 import { BiSearchAlt } from "react-icons/bi";
 import { history } from "../redux/configureStore";
 import Cookies from "universal-cookie";
 import styled from "styled-components";
+import SearchCard from "../components/SearchCard";
 
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import { styles } from '@mui/material/styles';
-import { apis } from "../shared/axios";
-
-import { actionCreators as infoActions } from "../redux/modules/info";
-
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: '#fff',
-    // ...theme.typography.body2,
-    // padding: theme.spacing(1),
-    padding : '20px',
-    textAlign: 'center',
-    marginTop : '20px',
-    // color: theme.palette.text.secondary,
-  }));
+import { actionCreators as categoryActions } from "../redux/modules/category";
 
 const cookies = new Cookies();
 
 const Search = () => {
   const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
-
+  const policy_list = useSelector((state) => state.category);
 
   useEffect(() => {
-    apis
-    .tokenTest()
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
-
-
-    dispatch(infoActions.getPolicyDB(userId));
+    dispatch(categoryActions.getPolicyDB(userId));
   }, []);
 
-  useEffect(() => {
-    apis
-    .newsGet()
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
-  })
+  return (
+    <Container>
+      <SearchContainer>
 
-    return(
-            <Container>
-              <SearchContainer>
-                <SearchButton
-                  onClick={() => {
-                    history.push("/search");
-                  }}
-                >
-                  <SearchBox>
-                    <BiSearchAlt size="20px" />
-                    <input placeholder="검색어 입력"></input>
-                  </SearchBox>
-                </SearchButton>
-              </SearchContainer>
-        
-              <Box sx={{ width: '100%' }}>
-      <Stack spacing={2}>
-        <Item>Item 1</Item>
-        <Item>Item 2</Item>
-        <Item>Item 3</Item>
-        <Item>Item 3</Item>
-        <Item>Item 3</Item>
-        <Item>Item 3</Item>
-        <Item>Item 3</Item>
-        <Item>Item 3</Item>
-      </Stack>
-    </Box>
-        
-            </Container>
-          
-    );
+        <SearchBox>
+          <BiSearchAlt size="20px" color="#999999"/>
+          <input placeholder="검색어 입력 (ex. 청년, 주거...)"></input>
+        </SearchBox>
+         <SearchButton>검색</SearchButton> 
+      </SearchContainer>
 
-
-
-
-
-}
+      <Box>
+        <SearchCard policyList={policy_list} />
+      </Box>
+    </Container>
+  );
+};
 
 export default Search;
 
 const Container = styled.div`
-  margin-top : 100px;
+  margin-top: 100px;
   width: 100%;
   display: flex;
   align-items: center;
 
   flex-direction: column;
-  height : 100%;
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -115,10 +57,36 @@ const Container = styled.div`
   }
 `;
 
+const Box = styled.div`
+  width: 1024px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top : 60px;
+`;
+
 const SearchContainer = styled.div`
   display: flex;
+  flex-direction : column;
   align-items: center;
   justify-content: center;
+  width : 1024px;
+  background-color : none;
+
+  input {
+    margin-left : 10px;
+    width : 900px;
+    border : none;
+    height : 40px;
+    border-radius : 10px;
+    padding : 10px;
+    background-color : #7FAAEE;
+  }
+
+  input:focus {
+    outline : none;
+  }
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -128,8 +96,25 @@ const SearchContainer = styled.div`
   }
 `;
 
-const SearchButton = styled.div`
-  width: 500px;
+const SearchButton = styled.button`
+  margin-top : 30px;
+  width: 174px;
+  height: 60px;
+  background-color : tomato;
+  text-align : center;
+
+  border-radius: 5px;
+  border: none;
+  background-color: #0361FB;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size : 13px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #72a8fe;
+    color: #ffffff;
+  }
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -143,15 +128,12 @@ const SearchBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 500px;
-  background-color: #4b7be5;
+  width: 100%;
+
   border-radius: 5px;
   color: white;
   height: 50px;
   font-weight: 700;
-  &:hover {
-    cursor: pointer;
-  }
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -159,4 +141,10 @@ const SearchBox = styled.div`
     align-items: center;
     justify-content: center;
   }
+`;
+
+const Item = styled.div`
+  width: 100px;
+  background-color: white;
+  height: 50px;
 `;
