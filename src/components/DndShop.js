@@ -15,14 +15,14 @@ const DndShop = (props) => {
   }, []);
   return (
     <div>
-      <DndBox className="dataId">
-        <div>나의 정책 </div>
-        <div>
-          <CardBox>
+      <DndBox>
+        <div style={{ left: "0" }}>나의 정책 </div>
+        <CardBox>
+          <InBox>
             <CateBox>안전 및 권익 보장</CateBox>
-            <div>text text text text text text</div>
-          </CardBox>
-        </div>
+            <DescBox>text text text text text text</DescBox>
+          </InBox>
+        </CardBox>
       </DndBox>
     </div>
   );
@@ -31,14 +31,18 @@ const DndShop = (props) => {
 export default DndShop;
 
 const DndBox = styled.div`
-  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: fixed;
   width: 150px;
   height: 599px;
+  top: 156px;
   right: 0;
   border-radius: 20px 0 0 20px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   background: #ffffff;
-  margin-top: 80px;
 `;
 
 const CardBox = styled.div`
@@ -46,18 +50,29 @@ const CardBox = styled.div`
   height: 120px;
   background: rgba(255, 169, 90, 0.5);
   border-radius: 10px;
-  margin: 59px 15px 0 15px;
+`;
+
+const InBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 `;
 
 const CateBox = styled.div`
-  width: 100px;
-  height: 25px;
+  width: 90px;
   border-radius: 4px;
-  margin: 10px 10px 0 10px;
   padding: 4px 8px 4px 8px;
   background: #ffffff;
   font-size: 12px;
   font-weight: 700;
   line-height: 17.38px;
   color: #ffa95a;
+  margin: 10px 0 5px 0;
+`;
+
+const DescBox = styled.div`
+  border: 1px solid red;
+  width: 100px;
+  height: 51px;
 `;
