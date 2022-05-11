@@ -69,20 +69,33 @@ export const apis = {
   userDelete: (userId) => instance.delete(`/api/users/${userId}`),
 
   infoGet: (userId) => instance.get(`/api/users/${userId}`),
-  infoAdd: (userId, lifeCycle, gender, region, disability, obstacle, scholarship, job, married, target, newIncome) =>
+  infoAdd: (
+    userId,
+    lifeCycle,
+    gender,
+    region,
+    disability,
+    obstacle,
+    scholarship,
+    job,
+    married,
+    target,
+    newIncome,
+    newFamily
+  ) =>
     instance.patch(`/api/users/${userId}`, {
       age: lifeCycle,
       gender: gender,
       region: region,
       disability: disability,
       obstacle: obstacle,
-      scholarship : scholarship,
-      job : job,
-      marriage : married,
-      target : target,
-      salary : newIncome,
+      scholarship: scholarship,
+      job: job,
+      marriage: married,
+      target: target,
+      salary: newIncome,
+      family: newFamily,
     }),
-
 
   policyGet: (userId) => instance.get(`/api/main/${userId}`),
 
@@ -92,18 +105,10 @@ export const apis = {
     instance.put(`/api/marks/${userId}`, {
       dataId: dataId,
     }),
+  bugAdd: (dataId) =>
+    instance.post(`/api/tips/`, {
+      dataId: dataId,
+    }),
   bookdelete: (dataId) => instance.delete(`/api/marks/${dataId}`),
   newsGet: () => instance.get(`/api/news/`),
-
-  //   postGet: () => instance.get("/api/posts"),
-
-  //   postOne: (postId) => instance.get(`/api/posts/${postId}`),
-
-  //   postLike: (postId) => instance.post(`/api/${postId}/like`),
-
-  //   addComment: (postId, contents) =>
-  //     instance.post(`/api/comments/${postId}`, {contents: contents}),
-
-  //   delComment: (postId) =>
-  //   instance.delete(`/api/comments/${postId}`)
 };

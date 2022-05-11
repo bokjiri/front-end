@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { Text, Grid, Input, Button } from "../elements/index";
-import { ReactIcon } from "../Icons/Icon";
+import { BiSearchAlt } from "react-icons/bi";
 
 import { history } from "../redux/configureStore";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,7 @@ import Cookies from "universal-cookie";
 import Swal from "sweetalert2";
 const cookies = new Cookies();
 
-const HeaderTest2 = () => {
+const Header = () => {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
 
@@ -85,12 +85,12 @@ const HeaderTest2 = () => {
           {isLogin && cookies.get("userToken") ? (
             <Box>
               <div className="auth none">
-                <span>검색</span>
+                <BiSearchAlt size="30" onClick={()=>{history.push("/search")}}/>
               </div>
 
-              <div className="auth none" onClick={logOut}>
+              {/* <div className="auth none" onClick={logOut}>
                 <span>로그아웃</span>
-              </div>
+              </div> */}
 
               <div className="auth none">
                 <span>
@@ -103,6 +103,9 @@ const HeaderTest2 = () => {
                         </li>
                         <li className="userRemove" onClick={userRemove}>
                           회원탈퇴
+                        </li>
+                        <li className="userRemove" onClick={logOut}>
+                          로그아웃
                         </li>
                       </ul>
                     </div>
@@ -120,10 +123,12 @@ const HeaderTest2 = () => {
   );
 };
 
-export default HeaderTest2;
+export default Header;
 
 const Box = styled.div`
   display: flex;
+  justfiy-content : center;
+  align-items : center;
 `;
 
 // box-shadow: -4px 5px 14px 0 rgb(65 0 131 / 6%);
@@ -156,8 +161,7 @@ const Container = styled.div`
     justify-content: center;
     width: 100px;
     height: 50px;
-    padding-left: 20px;
-    padding-right: 17px;
+    padding-left: 10px;
     border-radius: 8px;
     cursor: pointer;
 
@@ -183,7 +187,7 @@ const Container = styled.div`
     display: flex;
 
     &:hover div.view ul {
-      height: 110px;
+      height: 150px;
     }
 
     i {
@@ -230,7 +234,7 @@ const Container = styled.div`
     top: 100%;
     width: 100%;
     z-index: 10;
-    height: 50px;
+    height: 100px;
 
     ul {
       width: auto;
@@ -271,15 +275,13 @@ const Container = styled.div`
     }
 
     &.userRemove {
-      color: red;
       &:hover {
-        background-color: #998bff;
+        color: red;
       }
     }
 
     &:hover {
-      color: #fff;
-      background-color: #7966ff;
+      color: #72A8FE;
     }
   }
 
