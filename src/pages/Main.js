@@ -5,11 +5,11 @@ import { history } from "../redux/configureStore";
 import { BiSearchAlt } from "react-icons/bi";
 import styled from "styled-components";
 import MainCard from "../components/MainCard";
+import MainCard2 from "../components/MainCard2";
 
 import { actionCreators as infoActions } from "../redux/modules/info";
 import { actionCreators as categoryActions } from "../redux/modules/category";
 
-import News from "../components/News";
 import DndShop from "../components/DndShop";
 
 import Cookies from "universal-cookie";
@@ -61,7 +61,7 @@ const Main = () => {
             </SearchBox>
           </SearchButton>
         </SearchContainer>
-        <h4>나에게 맞는 정책을 확인해보세요!</h4>
+        <MypolicyCheck>나에게 맞는 정책을 확인해보세요!</MypolicyCheck>
         <CategoryBox>
           {category.map((table, index) => (
             <Button
@@ -81,8 +81,16 @@ const Main = () => {
           ))}
         </CategoryBox>
         <DndShop policyList={policy_list} userId={userId} />
-        <MainCard categoryName={categoryName} />
-        <h4>새로운 복지 뉴스를 확인해보세요!</h4>
+        {/* <MainCard categoryName={categoryName} /> */}
+        {/* <div
+          onClick={() => {
+            history.push("/search");
+          }}
+        >
+          전체보기 >
+        </div> */}
+        <MainCard2 categoryName={categoryName} />
+        <MynewsCheck>새로운 복지 뉴스를 확인해보세요!</MynewsCheck>
         <NewsCard />
       </Container>
     );
@@ -114,6 +122,12 @@ const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 70px;
+  margin-bottom: 100px;
+  width: 100vw;
+  height: 297px;
+  background: rgba(114, 168, 254, 0.1);
+  border: 1px solid blue;
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -146,6 +160,7 @@ const SearchBox = styled.div`
   font-weight: 700;
   &:hover {
     cursor: pointer;
+    color: #72a8fe;
   }
 
   @media screen and (max-width: 767px) {
@@ -156,14 +171,34 @@ const SearchBox = styled.div`
   }
 `;
 
+const MypolicyCheck = styled.div`
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 49px;
+  letter-spacing: 0.0025em;
+  border: 1px solid red;
+`;
+const MynewsCheck = styled.div`
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 49px;
+  letter-spacing: 0.0025em;
+  border: 1px solid red;
+  margin-bottom: 40px;
+  align-items: flex-start;
+`;
+
 const CategoryBox = styled.div`
   background: rgba(114, 168, 254, 0.1);
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  margin-top: 50px;
+  justify-content: center;
+  margin-top: 20px;
   margin-bottom: 10px;
   min-width: 800px;
+  &:hover {
+    color: #72a8fe;
+  }
 
   @media screen and (max-width: 767px) {
     background: rgba(114, 168, 254, 0.1);

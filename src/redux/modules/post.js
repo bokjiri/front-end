@@ -36,18 +36,11 @@ const getPostFB = () => {
   };
 };
 
-const addBugFB = (dataId, userId) => {
+const addBugFB = (dataId) => {
   console.log("데이터아이디", dataId);
   return function ({ history }) {
-    axios
-      .post(
-        process.env.REACT_APP_BASE_URL + "api/tips",
-        {
-          userId: userId,
-          dataId: dataId,
-        }
-        // {headers : {'authorization': `${token}`}},
-      )
+    apis
+      .bugAdd(dataId)
       .then((res) => {
         console.log(res);
         window.alert("정책 오류 신고가 되었습니다.👍");

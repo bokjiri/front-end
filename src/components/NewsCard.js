@@ -13,7 +13,12 @@ const NewsCard = () => {
   return (
     <Container>
       {news_list.map((x, idx) => (
-        <NewsBox>
+        <NewsBox
+          key={idx}
+          onClick={() => {
+            window.open(x.link);
+          }}
+        >
           <NewsImg src={x.image} />
           <NewsView>
             <NewsHead>{x.title}</NewsHead>
@@ -42,11 +47,16 @@ const NewsBox = styled.div`
   align-items: center;
   width: 276px;
   height: 450px;
+  cursor: pointer;
   margin-right: 30px;
   margin-bottom: 30px;
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+  &:hover {
+    background: #ffffff;
+    color: #0361fb;
+  }
 `;
 
 const NewsImg = styled.img`
@@ -65,7 +75,7 @@ const NewsView = styled.div`
 const NewsHead = styled.h5`
   width: 236px;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 34.75px;
   margin: 0;
   margin-bottom: 20px;
@@ -83,6 +93,10 @@ const NewsDesc = styled.div`
   font-size: 16px;
   color: #666666;
   margin-bottom: 20px;
+  &:hover {
+    background: #ffffff;
+    color: #0361fb;
+  }
 `;
 
 const NewsCreateAt = styled.div`
@@ -94,4 +108,8 @@ const NewsCreateAt = styled.div`
   color: #999999;
   font-style: normal;
   font-weight: 400;
+  &:hover {
+    background: #ffffff;
+    color: #0361fb;
+  }
 `;

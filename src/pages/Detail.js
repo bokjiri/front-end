@@ -11,9 +11,10 @@ import { actionCreators as bookActions } from "../redux/modules/bookMark";
 
 import { ReactIcon } from "../Icons/Icon";
 import { ReactComponent as PostError } from "../Icons/PostError.svg";
-import { ReactComponent as Share } from "../Icons/ShareOff.svg";
-import { ReactComponent as BookMarkOff } from "../Icons/BookMarkOff.svg";
-import { ReactComponent as BookMarkOn } from "../Icons/BookMarkOn.svg";
+import { ReactComponent as Share_Disabled } from "../Icons/Share_Disabled.svg";
+import { ReactComponent as Share_Active } from "../Icons/Share_Active.svg";
+import { ReactComponent as Bookmark_Disabled } from "../Icons/Bookmark_Disabled.svg";
+import { ReactComponent as Bookmark_Active } from "../Icons/Bookmark_Active.svg";
 
 import { Text, Grid, Input, Button } from "../elements/index";
 
@@ -25,12 +26,21 @@ const Detail = (props) => {
   const dataId = params.dataId;
   console.log(params);
   const detail_post = useSelector((state) => state.post.detail_post);
-  console.log("디테일 나이 ", detail_post.age);
+  console.log("디테일 나이 ", detail_post.institution);
+  const 지역 = detail_post.region;
+  // const 부서 = () => {
+  //   if(지역 === undefined){
+  //     detail_post.institution
+  //   } else if (지역.length !== 0){
+  //     지역
+  //   }
 
+  // }
+  console.log(지역);
   useEffect(() => {
     dispatch(postActions.getDetailFB(dataId));
   }, []);
-  console.log(detail_post);
+  console.log(detail_post.resion);
   const [bookMark, setbookMark] = useState(false);
 
   const hello = () => {
@@ -61,13 +71,11 @@ const Detail = (props) => {
             </CloseBtn>
             {/* onClick={openModal} */}
 
-            <ModalGo
-              onClick={() => dispatch(postActions.addBugFB(dataId, userId))}
-            >
+            <ModalGo onClick={() => dispatch(postActions.addBugFB(dataId))}>
               <PostError />
             </ModalGo>
           </div>
-          <div style={{ margin: "21px 0 0 45px" }}>
+          <div style={{ margin: "0px 0 0 45px" }}>
             <div
               style={{
                 display: "flex",
@@ -75,36 +83,35 @@ const Detail = (props) => {
                 marginRight: "59px",
               }}
             >
-              <h1>{detail_post.name}</h1>
+              <PolicyName>{detail_post.name}</PolicyName>
               <div style={{ display: "flex" }}>
                 <BookBtn onClick={hello}>
-                  {!bookMark === true ? <BookMarkOn /> : <BookMarkOff />}
+                  {!bookMark === true ? (
+                    <Bookmark_Active />
+                  ) : (
+                    <Bookmark_Disabled />
+                  )}
                 </BookBtn>
 
-                <Share />
+                <Share_Disabled />
               </div>
             </div>
             <InfoBox>
               <InfoBox1>
-                <span>
-                  <b style={{ color: "#0361fb" }}>지원대상 </b>
-                </span>
+                <span>지원대상</span>
                 <p>{detail_post.summary}</p>
               </InfoBox1>
               <InfoBox2>
-                <span>
-                  <b style={{ color: "#0361fb" }}>대상 지역 및 부서</b>
-                </span>
+                <span>대상 지역 및 부서</span>
                 <p>
-                  {detail_post.region
-                    ? detail_post.region
-                    : detail_post.institution}
+                  {detail_post.region === undefined ||
+                  detail_post.region.length === 0
+                    ? detail_post.institution
+                    : detail_post.region}
                 </p>
               </InfoBox2>
               <InfoBox3>
-                <span>
-                  <b style={{ color: "#0361fb" }}> 서비스 내용</b>
-                </span>
+                <span>서비스 내용</span>
                 <p>{detail_post.support}</p>
               </InfoBox3>
             </InfoBox>
@@ -115,14 +122,13 @@ const Detail = (props) => {
         </ModalDetail>
         <div>
           {/* <ShareIcon /> */}
-          <Button
-            style={{ cursor: "pointer" }}
-            _onClick={() => {
+          <SubmitBtn
+            onClick={() => {
               window.open(detail_post.link);
             }}
           >
             신청하기
-          </Button>
+          </SubmitBtn>
         </div>
       </ModalBox>
     </ModalBack>
@@ -142,24 +148,27 @@ const ModalBack = styled.div`
 
 const ModalBox = styled.div`
   position: absolute;
-  top: calc(25vh - 100px);
-  left: calc(40vw - 200px);
+  top: calc(21vh - 100px);
+  left: calc(45vw - 200px);
   background-color: #f8faff;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 40px;
-  width: 750px;
+  width: 700px;
   height: 800px;
   flex-direction: column;
 `;
 
 const ModalDetail = styled.div`
   width: 700px;
-  height: 650px;
+  height: 800px;
+  margin: 20px 10px 0 0;
 `;
 
-const CloseBtn = styled.div``;
+const CloseBtn = styled.div`
+  margin-right: 10px;
+`;
 
 const ModalGo = styled.div`
   cursor: pointer;
@@ -168,14 +177,20 @@ const ModalGo = styled.div`
   margin-right: 59px;
 `;
 
-const BookBtn = styled.div`
-  border: 1px solid red;
+const BookBtn = styled.div``;
+
+const PolicyName = styled.div`
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 49px;
+  letter-spacing: 0.0025em;
+  width: 445px;
 `;
 
 const InfoBox = styled.div`
   overflow: auto;
-  margin: 10px 0 0 20px;
   height: 394px;
+  margin-top: 40px;
 
   overflow-y: scroll;
   ::-webkit-scrollbar {
@@ -196,19 +211,29 @@ const InfoBox = styled.div`
 
 const InfoBox1 = styled.div`
   background-color: white;
-  margin-top: 30px;
-  width: 601px;
+  width: 581px;
   font-size: 16px;
   color: black;
   display: flex;
   flex-direction: column;
+  padding: 10px 20px 20px;
+  gap: 10px;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   border-radius: 14px;
+
   span {
-    margin: 20px 0 10px 20px;
+    font-weight: 700;
+    color: #0361fb;
+    font-size: 16px;
+    line-height: 23px;
+    letter-spacing: 0.0015em;
+    margin-top: 10px;
   }
   p {
-    margin: 0 0 0px 20px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+    letter-spacing: 0.0015em;
   }
 `;
 
@@ -216,35 +241,67 @@ const InfoBox2 = styled.div`
   background-color: white;
   margin-top: 30px;
   height: 97px;
-  width: 601px;
+  width: 581px;
   font-size: 16px;
   color: black;
   display: flex;
   flex-direction: column;
+  padding: 10px 20px 20px;
+  gap: 10px;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   border-radius: 14px;
   span {
-    margin: 20px 0 10px 20px;
+    font-weight: 700;
+    color: #0361fb;
+    font-size: 16px;
+    line-height: 23px;
+    letter-spacing: 0.0015em;
+    margin-top: 10px;
   }
   p {
-    margin: 0 0 0px 20px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+    letter-spacing: 0.0015em;
   }
 `;
 
 const InfoBox3 = styled.div`
   background-color: white;
   margin-top: 30px;
-  width: 601px;
+  width: 581px;
   font-size: 16px;
   color: black;
   display: flex;
   flex-direction: column;
+  padding: 10px 20px 20px;
+  gap: 10px;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   border-radius: 14px;
   span {
-    margin: 20px 0 10px 20px;
+    font-weight: 700;
+    color: #0361fb;
+    font-size: 16px;
+    line-height: 23px;
+    letter-spacing: 0.0015em;
+    margin-top: 10px;
   }
   p {
-    margin: 0 0 0px 20px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+    letter-spacing: 0.0015em;
   }
+`;
+
+const SubmitBtn = styled.div`
+  width: 149px;
+  height: 48px;
+  cursor: pointer;
+  margin-bottom: 60px;
+  text-align: center;
+  line-height: 48px;
+  background: #0361fb;
+  border-radius: 5px;
+  color: #ffffff;
 `;

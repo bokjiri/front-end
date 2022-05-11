@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Text, Grid, Input, Button } from "../elements/index";
 import Footer from "../components/Footer";
-import Card from "../components/Card";
 import Header from "../components/Header";
 
 const Mypage = () => {
@@ -28,13 +27,7 @@ const Mypage = () => {
         <div>
           <div>나의 정책</div>
         </div>
-        <div style={{ display: "flex" }}>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </div>
+        <div style={{ display: "flex" }}></div>
         <Footer />
       </Grid>
     </>
