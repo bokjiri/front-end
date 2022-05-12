@@ -102,7 +102,7 @@ export const apis = {
   detailGet: (dataId) => instance.get(`/api/detail/${dataId}`),
   bookGet: (userId) => instance.get(`/api/marks/${userId}`),
   bookAdd: (userId, dataId) =>
-    instance.put(`/api/marks/${userId}`, {
+    instance.put(`/api/marks/`, {
       dataId: dataId,
     }),
   bugAdd: (dataId) =>
@@ -111,4 +111,10 @@ export const apis = {
     }),
   bookdelete: (dataId) => instance.delete(`/api/marks/${dataId}`),
   newsGet: () => instance.get(`/api/news/`),
+
+  searchAdd: (searchKey, type) =>
+    instance.post(`/api/search`, {
+      searchKey: searchKey,
+      type: type,
+    }),
 };

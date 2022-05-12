@@ -1,19 +1,72 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Text } from "../elements";
+import { history } from "../redux/configureStore";
+
+import Pagination from "./Pagination";
 
 const SearchCard = (props) => {
   const list = props.policyList.policyList;
 
-  return list.map((item, idx) => {
-    return (
-      <Container key={idx}>
-        <Category>{item.desire}</Category>
-        <Text margin="5px 0 10px 18px" bold size="20px">{item.name}</Text>
-        <Summary>{item.summary}</Summary>
-      </Container>
-    );
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
+
+  let listCard = list.filter((data) => {
+    if (props.category === "전체") {
+      return data;
+    }
+    if (props.category === data.desire) {
+      return data;
+    }
   });
+  
+  return (
+    <>
+      {listCard?.slice(offset, offset + limit).map((item, idx) => {
+        return (
+          <React.Fragment key={idx}>
+            <Container
+              onClick={() => {
+                history.push(`/detail/${item.dataId}`);
+              }}
+            >
+              <Category
+                color={
+                  item.desire === "일자리"
+                    ? "#EE5D58"
+                    : item.desire === "주거 및 일상생활"
+                    ? "#FF98B7"
+                    : item.desire === "건강"
+                    ? "#FFA95A"
+                    : item.desire === "교육 및 돌봄"
+                    ? "#A397EF"
+                    : item.desire === "안전 및 권익보장"
+                    ? "#7FAAEE"
+                    : item.desire === "기타"
+                    ? "#6DCDC7"
+                    : null
+                }
+              >
+                {item.desire}
+              </Category>
+              <Text margin="5px 0 10px 18px" bold size="20px">
+                {item.name}
+              </Text>
+              <Summary>{item.summary}</Summary>
+            </Container>
+          </React.Fragment>
+        );
+      })}
+
+      <Pagination
+        total={listCard.length}
+        limit={limit}
+        page={page}
+        setPage={setPage}
+      />
+    </>
+  );
 };
 
 export default SearchCard;
@@ -24,11 +77,11 @@ const Container = styled.div`
   width: 100%;
   height: 150px;
   margin-bottom: 40px;
-    justify-content : center;
+  justify-content: center;
 
   background-color: white;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius : 10px;
+  border-radius: 10px;
 
   div {
     white-space: nowrap;
@@ -38,19 +91,20 @@ const Container = styled.div`
 `;
 
 const Category = styled.div`
-  text-align : center;
+  text-align: center;
   width: min-content;
-  padding : 5px;
+  padding: 5px;
   height: 20px;
   font-size: 12px;
   margin: 0 0 10px 20px;
-  background-color: #72a8fe;
-  border-radius : 5px;
-  color : white;
-  font-weight : 700;
+  background-color: ${(props) => props.color};
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
 `;
 
 const Summary = styled.div`
-  font-size : 15px;
-  margin : 0 0 0 18px;
+  font-size: 15px;
+  margin: 0 0 0 18px;
+  padding: 0 15px 0 0;
 `;
