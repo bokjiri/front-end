@@ -8,6 +8,7 @@ import Info from "./modules/info";
 import Post from "./modules/post";
 import bookMark from "./modules/bookMark";
 import category from "./modules/category";
+import search from "./modules/search";
 
 export const history = createBrowserHistory();
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   post: Post,
   bookMark: bookMark,
   category: category,
+  search: search,
 
   router: connectRouter(history),
 });

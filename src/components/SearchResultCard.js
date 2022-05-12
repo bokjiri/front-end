@@ -1,0 +1,93 @@
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Text } from "../elements";
+import { history } from "../redux/configureStore";
+
+const SearchResultCard = (props) => {
+  const list = props.searchList;
+
+  let resultCard = list?.filter((data) => {
+    if (props.category === "전체") {
+      return data;
+    }
+    if (props.category === data.desire) {
+      return data;
+    }
+  });
+
+  return resultCard
+    ? resultCard?.map((item, idx) => (
+        <React.Fragment key={idx}>
+          <Container
+            onClick={() => {
+              history.push(`/detail/${item.dataId}`);
+            }}
+          >
+            <Category
+              color={
+                item.desire === "일자리"
+                  ? "#EE5D58"
+                  : item.desire === "주거 및 일상생활"
+                  ? "#FF98B7"
+                  : item.desire === "건강"
+                  ? "#FFA95A"
+                  : item.desire === "교육 및 돌봄"
+                  ? "#A397EF"
+                  : item.desire === "안전 및 권익보장"
+                  ? "#7FAAEE"
+                  : item.desire === "기타"
+                  ? "#6DCDC7"
+                  : null
+              }
+            >
+              {item.desire}
+            </Category>
+            <Text margin="5px 0 10px 18px" bold size="20px">
+              {item.name}
+            </Text>
+            <Summary>{item.summary}</Summary>
+          </Container>
+        </React.Fragment>
+      ))
+    : null;
+};
+
+export default SearchResultCard;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 150px;
+  margin-bottom: 40px;
+  justify-content: center;
+
+  background-color: white;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+
+  div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`;
+
+const Category = styled.div`
+  text-align: center;
+  width: min-content;
+  padding: 5px;
+  height: 20px;
+  font-size: 12px;
+  margin: 0 0 10px 20px;
+  background-color: ${(props) => props.color};
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+`;
+
+const Summary = styled.div`
+  font-size: 15px;
+  margin: 0 0 0 18px;
+  padding: 0 15px 0 0;
+`;
