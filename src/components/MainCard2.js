@@ -73,7 +73,26 @@ export default function MainCard2(props) {
                 }}
               >
                 <Container>
-                  <PolicyDesire>{x.desire}</PolicyDesire>
+                  <PolicyDesire
+                    style={{
+                      backgroundColor:
+                        `${x.desire}` === "일자리"
+                          ? "#7FAAEE"
+                          : null || `${x.desire}` === "주거 및 일상생활"
+                          ? "#EE5D58"
+                          : null || `${x.desire}` === "건강"
+                          ? "#6DCDC7"
+                          : null || `${x.desire}` === "교육 및 돌봄"
+                          ? "#FF98B7"
+                          : null || `${x.desire}` === "안전 및 권익보장"
+                          ? "#FFA95A"
+                          : null || `${x.desire}` === "기타"
+                          ? "#A397EF"
+                          : null,
+                    }}
+                  >
+                    {x.desire}
+                  </PolicyDesire>
                   <PolicyName>{x.name}</PolicyName>
                   <PolicySummary>{x.summary}</PolicySummary>
                 </Container>
@@ -89,7 +108,14 @@ export default function MainCard2(props) {
                 }}
               >
                 <Container>
-                  <PolicyDesire>{x.desire}</PolicyDesire>
+                  <PolicyDesire
+                    style={{
+                      backgroundColor:
+                        `${x.desire}` === "일자리" ? "#7FAAEE" : null,
+                    }}
+                  >
+                    {x.desire}
+                  </PolicyDesire>
                   <PolicyName>{x.name}</PolicyName>
                   <PolicySummary>{x.summary}</PolicySummary>
                 </Container>
@@ -105,7 +131,14 @@ export default function MainCard2(props) {
                 }}
               >
                 <Container>
-                  <PolicyDesire>{x.desire}</PolicyDesire>
+                  <PolicyDesire
+                    style={{
+                      backgroundColor:
+                        `${x.desire}` === "주거 및 일상생활" ? "#EE5D58" : null,
+                    }}
+                  >
+                    {x.desire}
+                  </PolicyDesire>
                   <PolicyName>{x.name}</PolicyName>
                   <PolicySummary>{x.summary}</PolicySummary>
                 </Container>
@@ -121,7 +154,14 @@ export default function MainCard2(props) {
                 }}
               >
                 <Container>
-                  <PolicyDesire>{x.desire}</PolicyDesire>
+                  <PolicyDesire
+                    style={{
+                      backgroundColor:
+                        `${x.desire}` === "건강" ? "#6DCDC7" : null,
+                    }}
+                  >
+                    {x.desire}
+                  </PolicyDesire>
                   <PolicyName>{x.name}</PolicyName>
                   <PolicySummary>{x.summary}</PolicySummary>
                 </Container>
@@ -137,7 +177,14 @@ export default function MainCard2(props) {
                 }}
               >
                 <Container>
-                  <PolicyDesire>{x.desire}</PolicyDesire>
+                  <PolicyDesire
+                    style={{
+                      backgroundColor:
+                        `${x.desire}` === "교육 및 돌봄" ? "#FF98B7" : null,
+                    }}
+                  >
+                    {x.desire}
+                  </PolicyDesire>
                   <PolicyName>{x.name}</PolicyName>
                   <PolicySummary>{x.summary}</PolicySummary>
                 </Container>
@@ -153,7 +200,14 @@ export default function MainCard2(props) {
                 }}
               >
                 <Container>
-                  <PolicyDesire>{x.desire}</PolicyDesire>
+                  <PolicyDesire
+                    style={{
+                      backgroundColor:
+                        `${x.desire}` === "안전 및 권익보장" ? "#FFA95A" : null,
+                    }}
+                  >
+                    {x.desire}
+                  </PolicyDesire>
                   <PolicyName>{x.name}</PolicyName>
                   <PolicySummary>{x.summary}</PolicySummary>
                 </Container>
@@ -169,7 +223,14 @@ export default function MainCard2(props) {
                 }}
               >
                 <Container>
-                  <PolicyDesire>{x.desire}</PolicyDesire>
+                  <PolicyDesire
+                    style={{
+                      backgroundColor:
+                        `${x.desire}` === "기타" ? "#A397EF" : null,
+                    }}
+                  >
+                    {x.desire}
+                  </PolicyDesire>
                   <PolicyName>{x.name}</PolicyName>
                   <PolicySummary>{x.summary}</PolicySummary>
                 </Container>
@@ -194,12 +255,12 @@ const Container = styled.div`
 
 const PolicyDesire = styled.div`
   text-align: center;
-  width : max-content;
+  width: max-content;
   max-width: 100px;
   padding: 5px;
   font-size: 12px;
   margin: 5px 0 10px 20px;
-  background-color: #6DCDC7;
+  background-color: #6dcdc7;
   border-radius: 5px;
   color: white;
   font-weight: 700;

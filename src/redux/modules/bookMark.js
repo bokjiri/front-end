@@ -39,11 +39,10 @@ const getBookFB = (userId) => {
   };
 };
 
-const addBookFB = (userId, dataId) => {
-  console.log("추가 유저 데이터 아이디", userId, dataId);
+const addBookFB = (dataId) => {
   return function (dispatch, getState, { history }) {
     apis
-      .bookAdd(userId, dataId)
+      .bookAdd(dataId)
       .then((res) => {
         // console.log(res);
         dispatch(addBook(dataId));

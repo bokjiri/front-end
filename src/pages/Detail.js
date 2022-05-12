@@ -27,16 +27,7 @@ const Detail = (props) => {
   console.log(params);
   const detail_post = useSelector((state) => state.post.detail_post);
   console.log("디테일 나이 ", detail_post.institution);
-  const 지역 = detail_post.region;
-  // const 부서 = () => {
-  //   if(지역 === undefined){
-  //     detail_post.institution
-  //   } else if (지역.length !== 0){
-  //     지역
-  //   }
 
-  // }
-  console.log(지역);
   useEffect(() => {
     dispatch(postActions.getDetailFB(dataId));
   }, []);
@@ -46,7 +37,7 @@ const Detail = (props) => {
   const hello = () => {
     setbookMark(!bookMark);
     if (bookMark === true) {
-      dispatch(bookActions.addBookFB(userId, dataId));
+      dispatch(bookActions.addBookFB(dataId));
     } else {
       dispatch(bookActions.deleteBookFB(dataId));
     }
@@ -172,9 +163,10 @@ const CloseBtn = styled.div`
 
 const ModalGo = styled.div`
   cursor: pointer;
-  color: red;
-  text-align: right;
-  margin-right: 59px;
+  width: 227px;
+  height: 24px;
+  border: 1px solid red;
+  float: right;
 `;
 
 const BookBtn = styled.div``;

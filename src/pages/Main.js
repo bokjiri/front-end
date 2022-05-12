@@ -49,15 +49,18 @@ const Main = () => {
     return (
       <Container>
         <SearchContainer>
+          <SearchText>🔎 어떤 정책을 찾으세요?</SearchText>
+
           <SearchButton
             onClick={() => {
               history.push("/search");
             }}
           >
             <SearchBox>
-              <BiSearchAlt size="20px" />
-              <span>&nbsp;&nbsp;정책을 검색해보세요!</span>
+              <BiSearchAlt size="20px" style={{ marginLeft: "20px" }} />
+              <span>&nbsp;&nbsp;검색어를 입력하세요</span>
             </SearchBox>
+            <BoxSearch>검색</BoxSearch>
           </SearchButton>
         </SearchContainer>
         <MypolicyCheck>나에게 맞는 정책을 확인해보세요!</MypolicyCheck>
@@ -119,6 +122,7 @@ const Container = styled.div`
 
 const SearchContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 70px;
@@ -126,7 +130,6 @@ const SearchContainer = styled.div`
   width: 100vw;
   height: 297px;
   background: rgba(114, 168, 254, 0.1);
-  border: 1px solid blue;
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -136,8 +139,15 @@ const SearchContainer = styled.div`
   }
 `;
 
+const SearchText = styled.div`
+  font-weight: 700;
+  font-size: 34px;
+  margin-bottom: 20px;
+`;
+
 const SearchButton = styled.div`
-  width: 500px;
+  display: flex;
+  /* width: 500px; */
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -148,15 +158,15 @@ const SearchButton = styled.div`
 `;
 
 const SearchBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 500px;
-  background-color: #4b7be5;
-  border-radius: 5px;
-  color: white;
-  height: 50px;
+  text-align: left;
+  width: 786px;
+  height: 68px;
+  line-height: 68px;
+  color: #666666;
   font-weight: 700;
+  background: #ffffff;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   &:hover {
     cursor: pointer;
     color: #72a8fe;
@@ -168,6 +178,21 @@ const SearchBox = styled.div`
     align-items: center;
     justify-content: center;
   }
+`;
+
+const BoxSearch = styled.div`
+  margin-left: 30px;
+  text-align: center;
+  width: 174px;
+  height: 68px;
+  line-height: 68px;
+  background: #0361fb;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.0125em;
+  cursor: pointer;
 `;
 
 const MypolicyCheck = styled.div`
