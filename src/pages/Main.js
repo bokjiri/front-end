@@ -9,6 +9,9 @@ import MainCard2 from "../components/MainCard2";
 import { actionCreators as infoActions } from "../redux/modules/info";
 import { actionCreators as categoryActions } from "../redux/modules/category";
 
+import News1 from "../imgs/Banner_News1.png";
+import News2 from "../imgs/Banner_News2.png";
+
 import DndShop from "../components/DndShop";
 
 import Cookies from "universal-cookie";
@@ -82,6 +85,7 @@ const Main = () => {
             </Button>
           ))}
         </CategoryBox>
+        
         <DndShop policyList={policy_list} userId={userId} />
         {/* <MainCard categoryName={categoryName} /> */}
         {/* <div
@@ -91,7 +95,14 @@ const Main = () => {
         >
           전체보기 >
         </div> */}
+
         <MainCard2 categoryName={categoryName} />
+        
+        <BannerBox>
+          <img src={News1} alt="banner1"/>
+          <img src={News2} alt="banner2"/>
+        </BannerBox>
+
         <MynewsCheck>새로운 복지 뉴스를 확인해보세요!</MynewsCheck>
         <NewsCard />
       </Container>
@@ -120,6 +131,11 @@ const Container = styled.div`
   }
 `;
 
+const BannerBox = styled.div`
+  display : flex;
+  margin-top : 100px;
+`;
+
 const SearchContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -141,8 +157,9 @@ const SearchContainer = styled.div`
 
 const SearchText = styled.div`
   font-weight: 700;
-  font-size: 34px;
+  font-size: 30px;
   margin-bottom: 20px;
+  margin-right: 650px;
 `;
 
 const SearchButton = styled.div`
@@ -197,18 +214,18 @@ const BoxSearch = styled.div`
 
 const MypolicyCheck = styled.div`
   font-weight: 700;
-  font-size: 34px;
+  font-size: 30px;
   line-height: 49px;
   letter-spacing: 0.0025em;
-  border: 1px solid red;
+  margin-right: 800px;
 `;
+
 const MynewsCheck = styled.div`
   font-weight: 700;
-  font-size: 34px;
+  font-size: 30px;
   line-height: 49px;
   letter-spacing: 0.0025em;
-  border: 1px solid red;
-  margin-bottom: 40px;
+  margin: 100px 800px 40px 0;
   align-items: flex-start;
 `;
 

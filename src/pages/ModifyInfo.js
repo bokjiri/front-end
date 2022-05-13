@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Text, Grid, Button } from "../elements/index";
 
-import { history } from "../redux/configureStore";
-
 import { actionCreators as infoActions } from "../redux/modules/info";
 
 import { birthYear, birthMonth, birthDate } from "../shared/Validation";

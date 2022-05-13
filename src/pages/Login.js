@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { Input, Text, Grid, Button } from "../elements/index";
-// import { getCookie, setCookie, deleteCookie } from '../shared/Cookie';
 import { history } from "../redux/configureStore";
 import styled from "styled-components";
 
 import kakaoBtn from "../imgs/kakao_login.png";
 import { Link } from "react-router-dom";
 
-import { instance } from "../shared/axios";
-import { apis } from "../shared/axios";
 
 import { ReactComponent as LoginLogo } from "../imgs/Symbol.svg";
 import { ReactComponent as LoginText } from "../imgs/Logo_Text.svg";
@@ -31,9 +28,6 @@ const Login = () => {
     return (
       <React.Fragment>
         <Grid is_flex width="100vw" height="100vh">
-          {/* <Grid height="100vh" width="480px" is_flex flexDirection="column" margin="0 30px"> */}
-          {/* <Grid width="480px" height="625px" bg="silver" margin="100px 0 0 0">
-          </Grid> */}
           <Container>
             <LoginLogo />
 
@@ -47,7 +41,6 @@ const Login = () => {
               >
               <LoginText />
               </Grid>
-              {/* <Text>서비스 이용을 위해 로그인이 필요합니다!</Text> */}
               <img
                 src={kakaoBtn}
                 alt="kakaoLogin"
@@ -86,7 +79,6 @@ const Login = () => {
               </LoginTerms>
             </LoginBox>
           </Container>
-          {/* </Grid> */}
         </Grid>
       </React.Fragment>
     );
@@ -122,6 +114,10 @@ const LoginBox = styled.div`
   align-items: center;
   flex-direction: column;
   margin-left : 50px;
+
+  img {
+    cursor : pointer;
+  }
 `;
 
 const Container = styled.div`
@@ -137,29 +133,3 @@ const Container = styled.div`
   border-radius: 30px;
   margin-bottom : 80px;
 `;
-
-//체크박스
-// input[type="checkbox"] {
-//   display: none;
-// }
-
-// input[type="checkbox"] + label {
-//   display: inline-block;
-//   width: 10px;
-//   height: 10px;
-//   border: 1px solid #707070;
-//   position: relative;
-//   margin-right : 3px;
-//   margin-top : 2px;
-// }
-
-// input[type="checkbox"]:checked + label::after {
-//   content: "V";
-//   font-size: 25px;
-//   width: 30px;
-//   height: 30px;
-//   text-align: center;
-//   position: absolute;
-//   left: 0;
-//   top: 0;
-// }

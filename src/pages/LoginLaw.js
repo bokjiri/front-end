@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Grid } from "../elements";
-import {Button} from "../elements/index";
 import { history } from "../redux/configureStore";
 
 

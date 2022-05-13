@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
-import { Text, Grid, Input, Button } from "../elements/index";
 import { BiSearchAlt } from "react-icons/bi";
 
 import { history } from "../redux/configureStore";
@@ -29,7 +28,6 @@ const Header = () => {
     const userId = localStorage.getItem("userId");
 
     Swal.fire({
-      //title: '회원을 탈퇴하시겠습니까?',
       text: "회원 탈퇴를 진행하시겠습니까?",
       icon: "warning",
       showCancelButton: true,
@@ -45,12 +43,6 @@ const Header = () => {
           "회원 탈퇴가 완료되었습니다!",
           "회원 정보가 모두 삭제되었습니다!"
         );
-        // cookies.remove("userToken", { path: "/" });
-        // cookies.remove("refreshToken", { path: "/" });
-        // localStorage.clear();
-
-        // history.replace("/");
-        // window.location.reload("/");
       }
     });
   };
@@ -68,13 +60,6 @@ const Header = () => {
     <>
       <Container>
         <div>
-          {/* <BrowserRouter>
-          <HomeLink to={"/"} title="메인으로">
-          <img className="Logo" src={logo} />
-          </HomeLink>
-          </BrowserRouter> */}
-
-          {/* push가 없는게 나을지? => 페이지 자체가 별로 없어서,,,*/}
           <Logo
             className="Logo"
             onClick={() => {
@@ -87,10 +72,6 @@ const Header = () => {
               <div className="auth none">
                 <BiSearchAlt size="30" onClick={()=>{history.push("/search")}}/>
               </div>
-
-              {/* <div className="auth none" onClick={logOut}>
-                <span>로그아웃</span>
-              </div> */}
 
               <div className="auth none">
                 <span>
@@ -112,9 +93,6 @@ const Header = () => {
                   </div>
                 </span>
               </div>
-              {/* <div className="auth none" onClick={userRemove}>
-            <span>회원탈퇴</span>
-          </div> */}
             </Box>
           ) : null}
         </div>
@@ -131,7 +109,6 @@ const Box = styled.div`
   align-items : center;
 `;
 
-// box-shadow: -4px 5px 14px 0 rgb(65 0 131 / 6%);
 const Container = styled.div`
   min-width: 100vw;
   height: 50px;

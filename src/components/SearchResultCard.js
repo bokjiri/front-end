@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Text } from "../elements";
 import { history } from "../redux/configureStore";
 
+import Pagination from "./Pagination";
+
 const SearchResultCard = (props) => {
   const list = props.searchList;
+
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
 
   let resultCard = list?.filter((data) => {
     if (props.category === "전체") {
@@ -15,41 +21,58 @@ const SearchResultCard = (props) => {
     }
   });
 
-  return resultCard
-    ? resultCard?.map((item, idx) => (
-        <React.Fragment key={idx}>
-          <Container
-            onClick={() => {
-              history.push(`/detail/${item.dataId}`);
-            }}
-          >
-            <Category
-              color={
-                item.desire === "일자리"
-                  ? "#EE5D58"
-                  : item.desire === "주거 및 일상생활"
-                  ? "#FF98B7"
-                  : item.desire === "건강"
-                  ? "#FFA95A"
-                  : item.desire === "교육 및 돌봄"
-                  ? "#A397EF"
-                  : item.desire === "안전 및 권익보장"
-                  ? "#7FAAEE"
-                  : item.desire === "기타"
-                  ? "#6DCDC7"
-                  : null
-              }
+  useEffect(() => {
+    if (props.clear === true) {
+      setPage(1);
+    }
+  }, [props]);
+
+  return (
+    <>
+      {resultCard?.slice(offset, offset + limit).map((item, idx) => {
+        return (
+          <React.Fragment key={idx}>
+            <Container
+              onClick={() => {
+                history.push(`/detail/${item.dataId}`);
+              }}
             >
-              {item.desire}
-            </Category>
-            <Text margin="5px 0 10px 18px" bold size="20px">
-              {item.name}
-            </Text>
-            <Summary>{item.summary}</Summary>
-          </Container>
-        </React.Fragment>
-      ))
-    : null;
+              <Category
+                color={
+                  item.desire === "일자리"
+                    ? "#7FAAEE"
+                    : item.desire === "주거 및 일상생활"
+                    ? "#EE5D58"
+                    : item.desire === "건강"
+                    ? "#6DCDC7"
+                    : item.desire === "교육 및 돌봄"
+                    ? "#FF98B7"
+                    : item.desire === "안전 및 권익보장"
+                    ? "#FFA95A"
+                    : item.desire === "기타"
+                    ? "#A397EF"
+                    : null
+                }
+              >
+                {item.desire}
+              </Category>
+              <Text margin="5px 0 10px 18px" bold size="20px">
+                {item.name}
+              </Text>
+              <Summary>{item.summary}</Summary>
+            </Container>
+          </React.Fragment>
+        );
+      })}
+
+      <Pagination
+        total={resultCard.length}
+        limit={limit}
+        page={page}
+        setPage={setPage}
+      />
+    </>
+  );
 };
 
 export default SearchResultCard;
