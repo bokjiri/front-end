@@ -23,9 +23,12 @@ const Search = () => {
 
   const [searchContent, setSearchContent] = useState("");
 
+  const [clear, setClear] = useState(false);
+
   const selectCategory = (value) => {
     setCategory(value);
     setOpenSelect(true);
+    setClear(true);
   };
 
   const selectSearchCategory = (e) => {
@@ -38,7 +41,8 @@ const Search = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(categoryActions.getPolicyDB(userId));
+    //dispatch(categoryActions.getPolicyDB(userId));
+    
   }, []);
 
   return (
@@ -62,24 +66,23 @@ const Search = () => {
           ></input>
         </SearchBox>
 
-        <SearchBtn>
-          <SearchButton
-            onClick={(e) => {
-              dispatch(
-                searchActions.addSearchDB(searchContent, searchCategory)
-              );
-            }}
-          >
-            검색
-          </SearchButton>
-          <SearchButton onClick={() => window.location.reload()}>
-            초기화
-          </SearchButton>
-        </SearchBtn>
+          {!searchContent ? (
+            <SearchButton disabled={true}>검색</SearchButton>
+          ) : (
+            <SearchButton
+              onClick={(e) => {
+                dispatch(
+                  searchActions.addSearchDB(searchContent, searchCategory)
+                );
+              }}
+            >
+              검색
+            </SearchButton>
+          )}
       </SearchContainer>
 
       {/* 검색 리스트 */}
-      {search_list?.length === 0 || !search_list ? (
+      {search_list?.length === 0 || !search_list || !searchContent ? (
         <>
           <SelectBox>
             <RebalanceWrap
@@ -129,7 +132,7 @@ const Search = () => {
           </SelectBox>
 
           <Box>
-            <SearchCard policyList={policy_list} category={category} />
+            <SearchCard policyList={policy_list} category={category} clear={clear}/>
           </Box>
         </>
       ) : (
@@ -182,7 +185,7 @@ const Search = () => {
           </SelectBox>
 
           <Box>
-            <SearchResultCard searchList={searchList} category={category} />
+            <SearchResultCard searchList={searchList} category={category} clear={clear}/>
           </Box>
         </>
       )}
