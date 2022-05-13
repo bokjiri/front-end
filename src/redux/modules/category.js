@@ -37,8 +37,6 @@ export const getPolicyDB =
   async (dispatch, getState, { history }) => {
     try {
       const { data } = await apis.policyGet(userId);
-      // console.log("메인 데이터 ", data.checkedData);
-      console.log("메인 데이터", data);
       dispatch(setPolicy(data.checkedData));
     } catch (err) {
       console.log(err);
@@ -49,8 +47,6 @@ export const workDB =
   async (dispatch, getState, { history }) => {
     try {
       const { data } = await apis.policyGet(userId);
-      // console.log("메인 데이터 ", data.checkedData);
-      console.log("일자리 데이터", data.work);
       dispatch(setWork(data.work));
     } catch (err) {
       console.log(err);
@@ -61,8 +57,6 @@ export const houseLifeDB =
   async (dispatch, getState, { history }) => {
     try {
       const { data } = await apis.policyGet(userId);
-      // console.log("메인 데이터 ", data.checkedData);
-      console.log("주거 및 일상생활 데이터", data.houseLife);
       dispatch(setHouselife(data.houseLife));
     } catch (err) {
       console.log(err);
@@ -73,8 +67,6 @@ export const healthDB =
   async (dispatch, getState, { history }) => {
     try {
       const { data } = await apis.policyGet(userId);
-      // console.log("메인 데이터 ", data.checkedData);
-      console.log("건강 데이터", data.health);
       dispatch(setHealth(data.health));
     } catch (err) {
       console.log(err);
@@ -85,8 +77,6 @@ export const eduCareDB =
   async (dispatch, getState, { history }) => {
     try {
       const { data } = await apis.policyGet(userId);
-      // console.log("메인 데이터 ", data.checkedData);
-      console.log("교육 및 돌봄 데이터", data.eduCare);
       dispatch(setEducare(data.eduCare));
     } catch (err) {
       console.log(err);
@@ -97,8 +87,6 @@ export const safetyRightDB =
   async (dispatch, getState, { history }) => {
     try {
       const { data } = await apis.policyGet(userId);
-      // console.log("메인 데이터 ", data.checkedData);
-      console.log("안전 및 권익보장 데이터", data.safetyRight);
       dispatch(setSafetyright(data.safetyRight));
     } catch (err) {
       console.log(err);
@@ -109,8 +97,6 @@ export const etcDB =
   async (dispatch, getState, { history }) => {
     try {
       const { data } = await apis.policyGet(userId);
-      // console.log("메인 데이터 ", data.checkedData);
-      console.log("기타 데이터", data.etc);
       dispatch(setEtc(data.etc));
     } catch (err) {
       console.log(err);
@@ -122,37 +108,30 @@ export default handleActions(
     [SET_POLICY]: (state, action) =>
       produce(state, (draft) => {
         draft.policyList = action.payload.policy_list;
-        console.log("전체 담기", action.payload.policy_list);
       }),
     [SET_WORK]: (state, action) =>
       produce(state, (draft) => {
         draft.work = action.payload.work;
-        console.log("일 담기", action.payload.work);
       }),
     [SET_HOUSELIFE]: (state, action) =>
       produce(state, (draft) => {
         draft.houseLife = action.payload.houseLife;
-        console.log("집 담기", action.payload.houseLife);
       }),
     [SET_HEALTH]: (state, action) =>
       produce(state, (draft) => {
         draft.health = action.payload.health;
-        console.log("건강 담기", action.payload.health);
       }),
     [SET_EDUCARE]: (state, action) =>
       produce(state, (draft) => {
         draft.eduCare = action.payload.eduCare;
-        console.log("교육 담기", action.payload.eduCare);
       }),
     [SET_SAFETYRIGHT]: (state, action) =>
       produce(state, (draft) => {
         draft.safetyRight = action.payload.safetyRight;
-        console.log("안전 담기", action.payload.safetyRight);
       }),
     [SET_ETC]: (state, action) =>
       produce(state, (draft) => {
         draft.etc = action.payload.etc;
-        console.log("기타 담기", action.payload.etc);
       }),
   },
   initialState

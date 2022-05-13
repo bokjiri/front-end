@@ -27,7 +27,6 @@ const getPostFB = () => {
     axios
       .get("http://localhost:3001/post")
       .then((res) => {
-        console.log(res);
         dispatch(getPost(res.data));
       })
       .catch((err) => {
@@ -42,7 +41,6 @@ const addBugFB = (dataId) => {
     apis
       .bugAdd(dataId)
       .then((res) => {
-        console.log(res);
         window.alert("정책 오류 신고가 되었습니다.👍");
       })
       .catch((error) => {
@@ -57,9 +55,7 @@ const getDetailFB = (dataId) => {
     apis
       .detailGet(dataId)
       .then((res) => {
-        console.log(res);
         dispatch(getDetail(res.data.data));
-        console.log(res.data.data);
       })
       .catch((error) => {
         console.log("디테일 로드 실패", error);
@@ -73,12 +69,10 @@ export default handleActions(
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.post = action.payload.post;
-        console.log(state, action);
       }),
     [GET_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detail_post = action.payload.detail_post;
-        console.log("디테일 리듀서", action.payload);
       }),
   },
   initialState

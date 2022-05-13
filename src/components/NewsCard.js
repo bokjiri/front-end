@@ -41,6 +41,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 100px;
 `;
 
 const NewsBox = styled.div`
