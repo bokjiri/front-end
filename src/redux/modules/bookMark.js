@@ -29,6 +29,7 @@ const getBookFB = (userId) => {
     apis
       .bookGet(userId)
       .then((res) => {
+        console.log("북마크 res", res);
         dispatch(getBook(res.data.userMark));
       })
       .catch((error) => {
