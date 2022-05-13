@@ -43,7 +43,6 @@ const AddInfo = () => {
     const fetchData = async () => {
       const result = await apis.infoGet(userId);
       const data = result.data.data;
-      console.log(data);
 
       setYear(data.age.toString().substring(0, 4));
       setMonth(data.age.toString().substring(4, 6));
@@ -54,17 +53,23 @@ const AddInfo = () => {
       setObstacle(data.obstacle);
       setTarget(data.target);
       if (data.region[0].split(" ").length > 2) {
-        setCity(data.region[0].split(" ")[0]);
+        setCity(
+          data.region[0].split(" ")[0] +
+            " " +
+            data.region[0].split(" ")[1] +
+            " " +
+            data.region[0].split(" ")[2]
+        );
         setTown(
-          data.region[0].split(" ")[1] +
+          data.region[1].split(" ")[0] +
             " " +
-            data.region[0].split(" ")[2] +
+            data.region[1].split(" ")[1] +
             " " +
-            data.region[0].split(" ")[3]
+            data.region[1].split(" ")[2]
         );
       } else {
-        setCity(data.region[0].split(" ")[0]);
-        setTown(data.region[0].split(" ")[1]);
+        setCity(data.region[0]);
+        setTown(data.region[1]);
       }
       setScholarship(data.scholarship);
       setJob(data.job);
@@ -584,29 +589,29 @@ const AddInfo = () => {
           <TextEnd>*필수 선택</TextEnd>
           <CategoryBox>
             <input
-              placeholder="년"
+              placeholder="YYYY년"
               onChange={infoYear}
               maxLength="4"
               defaultValue={year}
             ></input>
             <input
               onChange={infoMonth}
-              placeholder="월"
+              placeholder="MM월"
               maxLength="2"
               className="middle"
               defaultValue={month}
             ></input>
             <input
-              placeholder="일"
+              placeholder="DD일"
               onChange={infoDate}
               maxLength="2"
               defaultValue={date}
             ></input>
 
-            {!year ? null : !birthYear(year) ? (
+            {!year ? null : !birthYear(year) || Number(year) > 2022 ? (
               <Grid is_flex>
                 <ValidationBox style={{ color: "#ED6451" }}>
-                  생년은 19YY, 20YY 형식으로 작성해 주세요.
+                  생년을 올바른 형식으로 입력해 주세요.
                 </ValidationBox>
               </Grid>
             ) : null}
@@ -614,7 +619,7 @@ const AddInfo = () => {
             {!month ? null : !birthMonth(month) ? (
               <Grid is_flex>
                 <ValidationBox style={{ color: "#ED6451" }}>
-                  월은 MM 형식으로 작성해 주세요.
+                  월을 올바른 형식으로 입력해 주세요.
                 </ValidationBox>
               </Grid>
             ) : null}
@@ -622,7 +627,7 @@ const AddInfo = () => {
             {!date ? null : !birthDate(date) ? (
               <Grid is_flex>
                 <ValidationBox style={{ color: "#ED6451" }}>
-                  일은 DD 형식으로 작성해 주세요.
+                  일을 올바른 형식으로 입력해 주세요.
                 </ValidationBox>
               </Grid>
             ) : null}
@@ -1180,6 +1185,7 @@ const AddInfo = () => {
       !birthMonth(month) ||
       !date ||
       !birthDate(date) ||
+      Number(year) > 2022 ||
       (income && !family) ? (
         <CompleteBtn disabled={true}>완료</CompleteBtn>
       ) : (
@@ -1326,7 +1332,7 @@ const TextBox = styled.div`
   display: flex;
   justify-content: center;
   margin-left: -600px;
-  margin-top : 130px;
+  margin-top: 130px;
 `;
 
 const ValidationBox = styled.div`
