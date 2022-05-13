@@ -19,7 +19,7 @@ const FooterTest = () => {
             <Contents>
               <div>복지받고 세상 편하게 살자</div>
               <div>복세편살은 복지로의 OPEN API를 사용합니다.</div>
-              <div>문의 : seorachoi08@gmail.com</div>
+              <div>문의 : boksei_@naver.com</div>
               <div>2022 복세편살 Co.All rights Reserved.</div>
             </Contents>
 

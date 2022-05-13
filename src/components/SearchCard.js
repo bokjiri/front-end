@@ -95,6 +95,10 @@ const Container = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &:hover {
+    cursor : pointer;
+  }
 `;
 
 const Category = styled.div`
