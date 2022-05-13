@@ -23,16 +23,13 @@ const Main = () => {
   const history = useHistory();
   const params = useParams();
   const categoryName = params.category;
-  console.log(categoryName);
   const userId = localStorage.getItem("userId");
-  console.log(userId);
   const dispatch = useDispatch();
 
   const info_list = useSelector((state) => state.info.list);
   const policy_list = useSelector((state) => state.category);
-  console.log("카테고리", policy_list);
+  const policyList = useSelector((state) => state.category.policyList);
   const [category, setCategory] = useState([
-    "전체",
     "📄 일자리",
     "🏠 주거 및 일상생활",
     "💪🏻 건강",
@@ -40,8 +37,6 @@ const Main = () => {
     "⛑ 안전 및 권익보장",
     "기타",
   ]);
-
-  console.log("인포", info_list);
 
   useEffect(() => {
     dispatch(infoActions.getInfoDB(userId));
@@ -68,6 +63,19 @@ const Main = () => {
         </SearchContainer>
         <MypolicyCheck>나에게 맞는 정책을 확인해보세요!</MypolicyCheck>
         <CategoryBox>
+          <Button
+            backgroundColor="#ffffff"
+            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
+            color="#999999"
+            width="171px"
+            radius="10px"
+            margin="10px"
+            _onClick={() => {
+              history.push("/main");
+            }}
+          >
+            전체
+          </Button>
           {category.map((table, index) => (
             <Button
               key={index}
@@ -85,7 +93,7 @@ const Main = () => {
             </Button>
           ))}
         </CategoryBox>
-        
+
         <DndShop policyList={policy_list} userId={userId} />
         {/* <MainCard categoryName={categoryName} /> */}
         {/* <div
@@ -96,11 +104,11 @@ const Main = () => {
           전체보기 >
         </div> */}
 
-        <MainCard2 categoryName={categoryName} />
-        
+        <MainCard2 categoryName={categoryName} policyList={policyList} />
+
         <BannerBox>
-          <img src={News1} alt="banner1"/>
-          <img src={News2} alt="banner2"/>
+          <img src={News1} alt="banner1" />
+          <img src={News2} alt="banner2" />
         </BannerBox>
 
         <MynewsCheck>새로운 복지 뉴스를 확인해보세요!</MynewsCheck>
@@ -132,8 +140,8 @@ const Container = styled.div`
 `;
 
 const BannerBox = styled.div`
-  display : flex;
-  margin-top : 100px;
+  display: flex;
+  margin-top: 100px;
 `;
 
 const SearchContainer = styled.div`

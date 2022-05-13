@@ -17,7 +17,6 @@ import { useHistory } from "react-router-dom";
 SwiperCore.use([Virtual, Navigation, Pagination]);
 
 export default function MainCard2(props) {
-  console.log("메인 프롭스", props);
   const categoryName = props.categoryName;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -63,42 +62,7 @@ export default function MainCard2(props) {
         navigation={true}
         virtual
       >
-        {categoryName === "전체"
-          ? policy_list.map((x, index) => (
-              <SwiperSlide
-                key={index}
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  history.push(`/detail/${x.dataId}`);
-                }}
-              >
-                <Container>
-                  <PolicyDesire
-                    style={{
-                      backgroundColor:
-                        `${x.desire}` === "일자리"
-                          ? "#7FAAEE"
-                          : null || `${x.desire}` === "주거 및 일상생활"
-                          ? "#EE5D58"
-                          : null || `${x.desire}` === "건강"
-                          ? "#6DCDC7"
-                          : null || `${x.desire}` === "교육 및 돌봄"
-                          ? "#FF98B7"
-                          : null || `${x.desire}` === "안전 및 권익보장"
-                          ? "#FFA95A"
-                          : null || `${x.desire}` === "기타"
-                          ? "#A397EF"
-                          : null,
-                    }}
-                  >
-                    {x.desire}
-                  </PolicyDesire>
-                  <PolicyName>{x.name}</PolicyName>
-                  <PolicySummary>{x.summary}</PolicySummary>
-                </Container>
-              </SwiperSlide>
-            ))
-          : categoryName === "📄 일자리"
+        {categoryName === "📄 일자리"
           ? work.map((x, index) => (
               <SwiperSlide
                 key={index}
@@ -236,7 +200,40 @@ export default function MainCard2(props) {
                 </Container>
               </SwiperSlide>
             ))
-          : null}
+          : policy_list.map((x, index) => (
+              <SwiperSlide
+                key={index}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  history.push(`/detail/${x.dataId}`);
+                }}
+              >
+                <Container>
+                  <PolicyDesire
+                    style={{
+                      backgroundColor:
+                        `${x.desire}` === "일자리"
+                          ? "#7FAAEE"
+                          : null || `${x.desire}` === "주거 및 일상생활"
+                          ? "#EE5D58"
+                          : null || `${x.desire}` === "건강"
+                          ? "#6DCDC7"
+                          : null || `${x.desire}` === "교육 및 돌봄"
+                          ? "#FF98B7"
+                          : null || `${x.desire}` === "안전 및 권익보장"
+                          ? "#FFA95A"
+                          : null || `${x.desire}` === "기타"
+                          ? "#A397EF"
+                          : null,
+                    }}
+                  >
+                    {x.desire}
+                  </PolicyDesire>
+                  <PolicyName>{x.name}</PolicyName>
+                  <PolicySummary>{x.summary}</PolicySummary>
+                </Container>
+              </SwiperSlide>
+            ))}
       </Swiper>
     </>
   );
