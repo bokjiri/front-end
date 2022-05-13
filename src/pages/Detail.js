@@ -21,22 +21,16 @@ import { Text, Grid, Input, Button } from "../elements/index";
 const Detail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const userId = localStorage.getItem("userId");
   const params = useParams();
   const dataId = params.dataId;
-  console.log(params);
   const detail_post = useSelector((state) => state.post.detail_post);
-  console.log("디테일 나이 ", detail_post.institution);
 
   useEffect(() => {
     dispatch(postActions.getDetailFB(dataId));
   }, []);
-  console.log(detail_post.resion);
-  const [bookMark, setbookMark] = useState(false);
 
-  const hello = () => {
-    setbookMark(!bookMark);
-    if (bookMark === true) {
+  const bookmarkState = () => {
+    if (detail_post.bookmarkState === false) {
       dispatch(bookActions.addBookFB(dataId));
     } else {
       dispatch(bookActions.deleteBookFB(dataId));
@@ -103,11 +97,11 @@ const Detail = (props) => {
             >
               <PolicyName>{detail_post.name}</PolicyName>
               <div style={{ display: "flex" }}>
-                <BookBtn onClick={hello}>
-                  {!bookMark === true ? (
-                    <Bookmark_Active />
+                <BookBtn>
+                  {detail_post.bookmarkState ? (
+                    <Bookmark_Active onClick={bookmarkState} />
                   ) : (
-                    <Bookmark_Disabled />
+                    <Bookmark_Disabled onClick={bookmarkState} />
                   )}
                 </BookBtn>
 

@@ -9,10 +9,8 @@ import { useDispatch } from "react-redux";
 
 const Modal = (props) => {
   const dispatch = useDispatch();
-  // const userCode = getCookie("userCode");
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
-  const history = useHistory();
   const { open, close } = props;
   return (
     <>

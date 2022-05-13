@@ -14,7 +14,6 @@ const DndShop = (props) => {
   const dispatch = useDispatch();
   const userId = props.userId;
   const mark_post = useSelector((state) => state.bookMark.marks);
-  console.log(mark_post);
   useEffect(() => {
     dispatch(markActions.getBookFB(userId));
   }, []);

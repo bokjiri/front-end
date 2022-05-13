@@ -6,7 +6,6 @@ import { actionCreators as markActions } from "../redux/modules/bookMark";
 const NewsCard = () => {
   const dispatch = useDispatch();
   const news_list = useSelector((state) => state.bookMark.news);
-  console.log("뉴스카드 리스트", news_list);
   useEffect(() => {
     dispatch(markActions.getNewsFB());
   }, []);
