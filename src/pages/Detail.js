@@ -61,10 +61,37 @@ const Detail = (props) => {
               />
             </CloseBtn>
             {/* onClick={openModal} */}
-
-            <ModalGo onClick={() => dispatch(postActions.addBugFB(dataId))}>
-              <PostError />
-            </ModalGo>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginLeft: "25px",
+              }}
+            >
+              <PolicyDesire
+                style={{
+                  backgroundColor:
+                    `${detail_post.desire}` === "일자리"
+                      ? "#7FAAEE"
+                      : null || `${detail_post.desire}` === "주거 및 일상생활"
+                      ? "#EE5D58"
+                      : null || `${detail_post.desire}` === "건강"
+                      ? "#6DCDC7"
+                      : null || `${detail_post.desire}` === "교육 및 돌봄"
+                      ? "#FF98B7"
+                      : null || `${detail_post.desire}` === "안전 및 권익보장"
+                      ? "#FFA95A"
+                      : null || `${detail_post.desire}` === "기타"
+                      ? "#A397EF"
+                      : null,
+                }}
+              >
+                {detail_post.desire}
+              </PolicyDesire>
+              <ModalGo onClick={() => dispatch(postActions.addBugFB(dataId))}>
+                <PostError />
+              </ModalGo>
+            </div>
           </div>
           <div style={{ margin: "0px 0 0 45px" }}>
             <div
@@ -128,6 +155,19 @@ const Detail = (props) => {
 
 export default Detail;
 
+const PolicyDesire = styled.div`
+  text-align: center;
+  width: max-content;
+  max-width: 100px;
+  padding: 5px;
+  font-size: 12px;
+  margin: 5px 0 10px 20px;
+  background-color: #6dcdc7;
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+`;
+
 const ModalBack = styled.div`
   position: fixed;
   top: 0;
@@ -165,8 +205,7 @@ const ModalGo = styled.div`
   cursor: pointer;
   width: 227px;
   height: 24px;
-  border: 1px solid red;
-  float: right;
+  margin: 0 70px 0 0;
 `;
 
 const BookBtn = styled.div``;
