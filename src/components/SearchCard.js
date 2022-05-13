@@ -20,6 +20,13 @@ const SearchCard = (props) => {
       return data;
     }
   });
+
+  useEffect(() => {
+    if(props.clear === true) {
+      setPage(1);
+    }
+  }, [props]);
+
   
   return (
     <>
@@ -34,17 +41,17 @@ const SearchCard = (props) => {
               <Category
                 color={
                   item.desire === "일자리"
-                    ? "#EE5D58"
-                    : item.desire === "주거 및 일상생활"
-                    ? "#FF98B7"
-                    : item.desire === "건강"
-                    ? "#FFA95A"
-                    : item.desire === "교육 및 돌봄"
-                    ? "#A397EF"
-                    : item.desire === "안전 및 권익보장"
                     ? "#7FAAEE"
-                    : item.desire === "기타"
+                    : item.desire === "주거 및 일상생활"
+                    ? "#EE5D58"
+                    : item.desire === "건강"
                     ? "#6DCDC7"
+                    : item.desire === "교육 및 돌봄"
+                    ? "#FF98B7"
+                    : item.desire === "안전 및 권익보장"
+                    ? "#FFA95A"
+                    : item.desire === "기타"
+                    ? "#A397EF"
                     : null
                 }
               >

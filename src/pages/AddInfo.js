@@ -1158,7 +1158,6 @@ const AddInfo = () => {
       ) : (
         <CompleteBtn
           onClick={() => {
-            //console.log("생년월이리ㅣㅣㅣㅣㅣㅣㅣ", lifeCycle);
             dispatch(
               infoActions.addInfoDB(
                 userId,

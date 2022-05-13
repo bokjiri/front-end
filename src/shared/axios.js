@@ -101,8 +101,8 @@ export const apis = {
 
   detailGet: (dataId) => instance.get(`/api/detail/${dataId}`),
   bookGet: (userId) => instance.get(`/api/marks/${userId}`),
-  bookAdd: (userId, dataId) =>
-    instance.put(`/api/marks/`, {
+  bookAdd: (dataId) =>
+    instance.post(`/api/marks/`, {
       dataId: dataId,
     }),
   bugAdd: (dataId) =>

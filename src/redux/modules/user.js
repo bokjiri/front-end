@@ -1,13 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
 import { apis } from "../../shared/axios";
 import jwtDecode from "jwt-decode";
 import { history } from "../configureStore";
 const cookies = new Cookies();
 
-/////////////////////////////////**로그아웃 & 회원탈퇴 **
 
 //1. Action
 const LOG_IN = "LOG_IN";
