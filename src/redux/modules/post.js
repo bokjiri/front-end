@@ -55,6 +55,7 @@ const getDetailFB = (dataId) => {
     apis
       .detailGet(dataId)
       .then((res) => {
+        console.log("ㅇㅇㅇ", res.data);
         dispatch(getDetail(res.data.data));
       })
       .catch((error) => {
@@ -72,6 +73,8 @@ export default handleActions(
       }),
     [GET_DETAIL]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload);
+        console.log(state);
         draft.detail_post = action.payload.detail_post;
       }),
   },

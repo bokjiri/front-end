@@ -30,14 +30,6 @@ export default function MainCard2(props) {
   const eduCare = useSelector((state) => state.category.eduCare);
   const safetyRight = useSelector((state) => state.category.safetyRight);
   const etc = useSelector((state) => state.category.etc);
-  useEffect(() => {
-    dispatch(categoryActions.workDB(userId));
-    dispatch(categoryActions.houseLifeDB(userId));
-    dispatch(categoryActions.healthDB(userId));
-    dispatch(categoryActions.eduCareDB(userId));
-    dispatch(categoryActions.safetyRightDB(userId));
-    dispatch(categoryActions.etcDB(userId));
-  }, []);
 
   const [swiperRef, setSwiperRef] = useState(null);
 

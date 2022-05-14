@@ -87,6 +87,19 @@ const Main = () => {
               margin="10px"
               _onClick={() => {
                 history.push(`/main/${table}`);
+                if (table === "📄 일자리") {
+                  dispatch(categoryActions.workDB(userId));
+                } else if (table === "🏠 주거 및 일상생활") {
+                  dispatch(categoryActions.houseLifeDB(userId));
+                } else if (table === "💪🏻 건강") {
+                  dispatch(categoryActions.healthDB(userId));
+                } else if (table === "👪 교육 및 돌봄") {
+                  dispatch(categoryActions.eduCareDB(userId));
+                } else if (table === "⛑ 안전 및 권익보장") {
+                  dispatch(categoryActions.safetyRightDB(userId));
+                } else if (table === "기타") {
+                  dispatch(categoryActions.etcDB(userId));
+                }
               }}
             >
               {table}
