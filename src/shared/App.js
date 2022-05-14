@@ -21,8 +21,6 @@ import Header from "../components/Header";
 import Modal from "../components/Modal";
 import Footer from "../components/Footer";
 
-import Map from "../pages/Map";
-
 function App() {
   const dispatch = useDispatch();
 
@@ -35,8 +33,6 @@ function App() {
       <Header />
 
       <ConnectedRouter history={history}>
-        <Route path="/test" exact component={Map} />
-
         <Route path="/" exact component={Login} />
         <Route path="/law" exact component={LoginLaw} />
 
