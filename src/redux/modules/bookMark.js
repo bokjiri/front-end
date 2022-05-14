@@ -89,6 +89,7 @@ export default handleActions(
       }),
     [ADD_BOOK]: (state, action) =>
       produce(state, (draft) => {
+        console.log("rrr", state);
         draft.marks.unshift(action.payload.marks_list);
       }),
     [DELETE_BOOK]: (state, action) =>
