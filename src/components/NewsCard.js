@@ -46,7 +46,7 @@ const Container = styled.div`
 const NewsBox = styled.div`
   align-items: center;
   width: 276px;
-  height: 450px;
+  height: 410px;
   cursor: pointer;
   margin-right: 30px;
   margin-bottom: 30px;
@@ -64,6 +64,7 @@ const NewsImg = styled.img`
   height: 198px;
   margin-bottom: 20px;
   margin: 0;
+  border-radius: 16px 16px 0px 0px;
 `;
 
 const NewsView = styled.div`
@@ -74,17 +75,23 @@ const NewsView = styled.div`
 
 const NewsHead = styled.h5`
   width: 236px;
+  height: 65px;
   font-weight: bold;
   font-size: 20px;
   line-height: 34.75px;
-  margin: 0;
-  margin-bottom: 20px;
+  margin: 20px 0 10px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const NewsDesc = styled.div`
   width: 236px;
   height: 69px;
   overflow: hidden;
+  margin-bottom: 10px;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -92,7 +99,7 @@ const NewsDesc = styled.div`
   line-height: 23.17px;
   font-size: 16px;
   color: #666666;
-  margin-bottom: 20px;
+  /* margin-bottom: 10px; */
   &:hover {
     background: #ffffff;
     color: #0361fb;
@@ -100,13 +107,12 @@ const NewsDesc = styled.div`
 `;
 
 const NewsCreateAt = styled.div`
-  width: 84px;
+  width: 73px;
   height: 23px;
   float: right;
-  font-size: 16px;
-  line-height: 23.17px;
+  font-size: 14px;
+  line-height: 20.27px;
   color: #999999;
-  font-style: normal;
   font-weight: 400;
   &:hover {
     background: #ffffff;

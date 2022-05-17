@@ -2,7 +2,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
+import { BsBookmarkCheck, BsBookmarkCheckFill, BsShare } from "react-icons/bs";
 
 const ReactIcon = {
   AiOutlineSearch,
@@ -12,6 +12,7 @@ const ReactIcon = {
   BsBookmarkCheckFill,
   FiChevronLeft,
   FiChevronRight,
+  BsShare,
 };
 
 export { ReactIcon };

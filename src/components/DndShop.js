@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { actionCreators as markActions } from "../redux/modules/bookMark";
 import { actionCreators as bookActions } from "../redux/modules/bookMark";
 
 import { ReactIcon } from "../Icons/Icon";
+import { ReactComponent as Bookmark_Side_Active } from "../Icons/Bookmark_Side_Active.svg";
+import { ReactComponent as SideOpen } from "../Icons/Arrow_Side.svg";
+import { ReactComponent as Side_Close } from "../Icons/Side_Close.svg";
 
 const DndShop = (props) => {
+  const history = useHistory();
   const [toggle, setToggle] = useState(false);
+  const [sideBox, setSideBox] = useState(false);
   const [close, setClose] = useState();
   const dispatch = useDispatch();
   const userId = props.userId;
@@ -19,9 +24,9 @@ const DndShop = (props) => {
   }, []);
   return (
     <div>
-      {toggle === true ? (
-        <div>
-          <DndBox2>
+      {sideBox === true ? (
+        toggle === true ? (
+          <div>
             <CloseToggle
               onClick={() => {
                 setToggle(!toggle);
@@ -29,88 +34,187 @@ const DndShop = (props) => {
             >
               <ReactIcon.FiChevronRight className="rightToggle" />
             </CloseToggle>
-            <Title2>북마크</Title2>
-            <CardList2>
-              {mark_post.map((x, idx) => (
-                <CardBox2
-                  key={idx}
-                  style={{
-                    backgroundColor:
-                      `${x.desire}` === "일자리"
-                        ? "rgba(127, 170, 238, 0.5)"
-                        : null || `${x.desire}` === "주거 및 일상생활"
-                        ? "rgba(238, 93, 88, 0.5)"
-                        : null || `${x.desire}` === "건강"
-                        ? "rgba(109, 205, 199, 0.5)"
-                        : null || `${x.desire}` === "교육 및 돌봄"
-                        ? "rgba(255, 152, 183, 0.5)"
-                        : null || `${x.desire}` === "안전 및 권익보장"
-                        ? "rgba(255, 169, 90, 0.5)"
-                        : null || `${x.desire}` === "기타"
-                        ? "rgba(163, 151, 239, 0.5)"
-                        : null,
-                  }}
-                >
-                  <InBox2>
-                    <CateBox2>{x.desire}</CateBox2>
-                    <DescBox2>{x.name}</DescBox2>
-                    <DeleteBtn2
-                      onClick={() =>
-                        dispatch(bookActions.deleteBookFB(x.dataId))
-                      }
-                    >
-                      ㅡ
-                    </DeleteBtn2>
-                  </InBox2>
-                </CardBox2>
-              ))}
-            </CardList2>
-          </DndBox2>
-        </div>
-      ) : (
-        <DndBox>
-          <OpenToggle
-            onClick={() => {
-              setToggle(!toggle);
-            }}
-          >
-            <ReactIcon.FiChevronLeft className="leftToggle" />
-          </OpenToggle>
-          <Title>북마크</Title>
-          <CardList>
-            {mark_post.map((x, idx) => (
-              <CardBox
-                key={idx}
-                style={{
-                  backgroundColor:
-                    `${x.desire}` === "일자리"
-                      ? "rgba(127, 170, 238, 0.5)"
-                      : null || `${x.desire}` === "주거 및 일상생활"
-                      ? "rgba(238, 93, 88, 0.5)"
-                      : null || `${x.desire}` === "건강"
-                      ? "rgba(109, 205, 199, 0.5)"
-                      : null || `${x.desire}` === "교육 및 돌봄"
-                      ? "rgba(255, 152, 183, 0.5)"
-                      : null || `${x.desire}` === "안전 및 권익보장"
-                      ? "rgba(255, 169, 90, 0.5)"
-                      : null || `${x.desire}` === "기타"
-                      ? "rgba(163, 151, 239, 0.5)"
-                      : null,
-                }}
-              >
-                <InBox>
-                  <CateBox>{x.desire}</CateBox>
-                  <DescBox>{x.name}</DescBox>
-                  <DeleteBtn
-                    onClick={() => dispatch(bookActions.deleteBookFB(x.dataId))}
+            <DndBox2>
+              <div style={{ display: "flex" }}>
+                <Title2>
+                  북마크{" "}
+                  <span style={{ color: "#0361FB", marginLeft: "10px" }}>
+                    {mark_post.length}
+                  </span>
+                </Title2>
+              </div>
+              <CardList2>
+                {mark_post.map((x, idx) => (
+                  <CardBox2
+                    key={idx}
+                    style={{
+                      backgroundColor:
+                        `${x.desire}` === "일자리"
+                          ? "rgba(127, 170, 238, 0.5)"
+                          : null || `${x.desire}` === "주거 및 일상생활"
+                          ? "rgba(238, 93, 88, 0.5)"
+                          : null || `${x.desire}` === "건강"
+                          ? "rgba(109, 205, 199, 0.5)"
+                          : null || `${x.desire}` === "교육 및 돌봄"
+                          ? "rgba(255, 152, 183, 0.5)"
+                          : null || `${x.desire}` === "안전 및 권익보장"
+                          ? "rgba(255, 169, 90, 0.5)"
+                          : null || `${x.desire}` === "기타"
+                          ? "rgba(163, 151, 239, 0.5)"
+                          : null,
+                    }}
                   >
-                    ㅡ
-                  </DeleteBtn>
-                </InBox>
-              </CardBox>
-            ))}
-          </CardList>
-        </DndBox>
+                    <InBox2>
+                      <CateBox2
+                        style={{
+                          color:
+                            `${x.desire}` === "일자리"
+                              ? "#7faaee"
+                              : null || `${x.desire}` === "주거 및 일상생활"
+                              ? "#ee5d58"
+                              : null || `${x.desire}` === "건강"
+                              ? "#6dcdc7"
+                              : null || `${x.desire}` === "교육 및 돌봄"
+                              ? "#ff98b7"
+                              : null || `${x.desire}` === "안전 및 권익보장"
+                              ? "#ffa95a"
+                              : null || `${x.desire}` === "기타"
+                              ? "#a397ef"
+                              : null,
+                        }}
+                      >
+                        {x.desire}
+                      </CateBox2>
+                      <DescBox2
+                        onClick={() => history.push(`/detail/${x.dataId}`)}
+                      >
+                        {x.name}
+                      </DescBox2>
+                      <Bookmark_Side_Active
+                        className="deleteBtn2"
+                        onClick={() =>
+                          dispatch(bookActions.deleteBookFB(x.dataId))
+                        }
+                      />
+                    </InBox2>
+                  </CardBox2>
+                ))}
+              </CardList2>
+            </DndBox2>
+            <Side_Close
+              style={{
+                display: "inline-block",
+                position: "fixed",
+                right: "100px",
+                top: "83%",
+                zIndex: "100",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                setSideBox(!sideBox);
+              }}
+            />
+          </div>
+        ) : (
+          <div>
+            <OpenToggle
+              onClick={() => {
+                setToggle(!toggle);
+              }}
+            >
+              <ReactIcon.FiChevronLeft className="leftToggle" />
+            </OpenToggle>
+            <DndBox>
+              <Title>
+                북마크
+                <span style={{ color: "#0361FB", marginLeft: "10px" }}>
+                  {mark_post.length}
+                </span>
+              </Title>
+              <CardList>
+                {mark_post.map((x, idx) => (
+                  <CardBox
+                    key={idx}
+                    style={{
+                      backgroundColor:
+                        `${x.desire}` === "일자리"
+                          ? "rgba(127, 170, 238, 0.5)"
+                          : null || `${x.desire}` === "주거 및 일상생활"
+                          ? "rgba(238, 93, 88, 0.5)"
+                          : null || `${x.desire}` === "건강"
+                          ? "rgba(109, 205, 199, 0.5)"
+                          : null || `${x.desire}` === "교육 및 돌봄"
+                          ? "rgba(255, 152, 183, 0.5)"
+                          : null || `${x.desire}` === "안전 및 권익보장"
+                          ? "rgba(255, 169, 90, 0.5)"
+                          : null || `${x.desire}` === "기타"
+                          ? "rgba(163, 151, 239, 0.5)"
+                          : null,
+                    }}
+                  >
+                    <InBox>
+                      <CateBox
+                        style={{
+                          color:
+                            `${x.desire}` === "일자리"
+                              ? "#7faaee"
+                              : null || `${x.desire}` === "주거 및 일상생활"
+                              ? "#ee5d58"
+                              : null || `${x.desire}` === "건강"
+                              ? "#6dcdc7"
+                              : null || `${x.desire}` === "교육 및 돌봄"
+                              ? "#ff98b7"
+                              : null || `${x.desire}` === "안전 및 권익보장"
+                              ? "#ffa95a"
+                              : null || `${x.desire}` === "기타"
+                              ? "#a397ef"
+                              : null,
+                        }}
+                      >
+                        {x.desire}
+                      </CateBox>
+                      <DescBox
+                        onClick={() => history.push(`/detail/${x.dataId}`)}
+                      >
+                        {x.name}
+                      </DescBox>
+                      <Bookmark_Side_Active
+                        className="deleteBtn"
+                        onClick={() =>
+                          dispatch(bookActions.deleteBookFB(x.dataId))
+                        }
+                      />
+                    </InBox>
+                  </CardBox>
+                ))}
+              </CardList>
+            </DndBox>
+            <Side_Close
+              style={{
+                display: "inline-block",
+                position: "fixed",
+                right: "50px",
+                top: "82%",
+                zIndex: "100",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                setSideBox(!sideBox);
+              }}
+            />
+          </div>
+        )
+      ) : (
+        <SideOpen
+          style={{
+            position: "fixed",
+            right: "0",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            setSideBox(!sideBox);
+          }}
+        />
       )}
     </div>
   );
@@ -121,16 +225,13 @@ export default DndShop;
 const CardList2 = styled.div`
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
-  width: 300px;
-  height: 560px;
-  overflow: auto;
+  width: 285px;
 `;
 
 const CardList = styled.div`
+  display: flex;
+  flex-flow: row wrap;
   width: 160px;
-  height: 550px;
-  overflow: auto;
 `;
 
 const DndBox = styled.div`
@@ -140,22 +241,24 @@ const DndBox = styled.div`
   top: 156px;
   right: 0;
   border-radius: 20px 0 0 20px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   background: #ffffff;
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const OpenToggle = styled.div`
   display: inline-block;
-  position: absolute;
+  position: fixed;
   cursor: pointer;
   width: 24px;
   height: 48px;
   border-radius: 100px 0 0 100px;
   top: 50%;
-  left: -24px;
+  right: 150px;
   background: #ffffff;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   line-height: 48px;
+  z-index: 100;
 
   .leftToggle {
     font-size: 25px;
@@ -187,20 +290,26 @@ const CardBox = styled.div`
 `;
 
 const InBox = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center; */
+  .deleteBtn {
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    background: white;
+    padding: 5px;
+    font-weight: bold;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+    float: right;
+    cursor: pointer;
+  }
 `;
 
 const CateBox = styled.div`
-  width: 90px;
+  width: max-content;
   border-radius: 4px;
   padding: 4px 8px 4px 8px;
   background: #ffffff;
   font-size: 12px;
   font-weight: 700;
-  line-height: 17.38px;
   color: #ffa95a;
   margin: 10px 0 5px 0;
 `;
@@ -209,11 +318,16 @@ const DescBox = styled.div`
   width: 100px;
   height: 51px;
   text-align: left;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 17.38px;
+  color: #666666;
+  cursor: pointer;
 
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 `;
 
@@ -235,28 +349,28 @@ const DndBox2 = styled.div`
   top: 156px;
   right: 0;
   border-radius: 20px 0 0 20px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   background: #ffffff;
+  z-index: 100;
 `;
 
 const CloseToggle = styled.div`
   display: inline-block;
-  position: absolute;
+  position: fixed;
   cursor: pointer;
   width: 24px;
   height: 48px;
   border-radius: 100px 0 0 100px;
   top: 50%;
-  left: -24px;
+  right: 285px;
   background: #ffffff;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   line-height: 48px;
+  z-index: 100;
 
   .rightToggle {
     font-size: 25px;
     color: #cccccc;
     font-weight: bold;
-    margin: 10px 0 0 3px;
+    margin: 12px 0 0 5px;
     border-right: none;
   }
 `;
@@ -282,14 +396,21 @@ const CardBox2 = styled.div`
 `;
 
 const InBox2 = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center; */
+  .deleteBtn2 {
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    background: white;
+    padding: 5px;
+    font-weight: bold;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+    float: right;
+    cursor: pointer;
+  }
 `;
 
 const CateBox2 = styled.div`
-  width: 90px;
+  width: max-content;
   border-radius: 4px;
   padding: 4px 8px 4px 8px;
   background: #ffffff;
@@ -304,22 +425,15 @@ const DescBox2 = styled.div`
   width: 100px;
   height: 51px;
   text-align: left;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 17.38px;
+  color: #666666;
+  cursor: pointer;
 
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-`;
-
-const DeleteBtn2 = styled.div`
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  background: white;
-  color: red;
-  font-weight: bold;
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
-  float: right;
-  cursor: pointer;
 `;
