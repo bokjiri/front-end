@@ -40,6 +40,7 @@ const Main = () => {
   ]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(infoActions.getInfoDB(userId));
     dispatch(categoryActions.getPolicyDB(userId));
     if (categoryName === "📄 일자리") {
