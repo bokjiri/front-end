@@ -245,7 +245,7 @@ const AddInfo = () => {
 
     //가구 유형
     target: [
-      "다북화·탈북민",
+      "다문화·탈북민",
       "다자녀",
       "보훈대상자",
       "임신·출산",
@@ -556,8 +556,8 @@ const AddInfo = () => {
           <Text size="20px" bold margin="20px 8px">
             생년월일
           </Text>
-          <TextEnd>*필수 선택</TextEnd>
-          <CategoryBox>
+          <TextEnd>*필수 입력</TextEnd>
+          <BirthBox>
             <input
               placeholder="YYYY년"
               onChange={infoYear}
@@ -601,7 +601,7 @@ const AddInfo = () => {
                 </ValidationBox>
               </Grid>
             ) : null}
-          </CategoryBox>
+          </BirthBox>
 
           <Text size="20px" bold margin="40px 0 8px 8px">
             성별
@@ -983,7 +983,7 @@ const AddInfo = () => {
                 {Object.entries(categoryList.obstacle).map((item, idx) => {
                   return (
                     <Btn
-                      width="174px"
+                      width="178px"
                       key={idx}
                       color={
                         obstacle.findIndex((i) => i === item[1]) === -1
@@ -1010,7 +1010,7 @@ const AddInfo = () => {
             {Object.entries(categoryList.scholarship).map((item, idx) => {
               return (
                 <Btn
-                  width="174px"
+                  width="178px"
                   key={idx}
                   color={
                     scholarship?.findIndex((i) => i === item[1]) === -1
@@ -1085,7 +1085,7 @@ const AddInfo = () => {
             {Object.entries(categoryList.target).map((item, idx) => {
               return (
                 <Btn
-                  width="174px"
+                  width="178px"
                   key={idx}
                   color={
                     target.findIndex((i) => i === item[1]) === -1
@@ -1109,14 +1109,14 @@ const AddInfo = () => {
           <TextEnd>
             *1인 가구 : 개인 월 소득, 2인 이상 가구 : 가구 월 소득
           </TextEnd>
-          <CategoryBox>
+          <InputBox>
             <IncomeInput
               placeholder="만원"
               onChange={CreateIncome}
               maxLength="10"
               defaultValue={income}
             ></IncomeInput>
-          </CategoryBox>
+          </InputBox>
 
           {income !== 0 && income !== "" ? (
             <>
@@ -1125,14 +1125,14 @@ const AddInfo = () => {
               </Text>
               <TextEnd>*가구원 수는 중위소득 판별에 활용됩니다.</TextEnd>
               <TextEnd>*1~8명까지 입력 가능합니다.</TextEnd>
-              <CategoryBox>
+              <InputBox>
                 <IncomeInput
                   placeholder="명"
                   onChange={CreateFamily}
                   maxLength="1"
                   defaultValue={family}
                 ></IncomeInput>
-              </CategoryBox>
+              </InputBox>
             </>
           ) : null}
 
@@ -1211,7 +1211,8 @@ const Container = styled.div`
 const CategoryBox = styled.div`
   flex-wrap: wrap;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
 
   input {
     width: 225px;
@@ -1387,7 +1388,89 @@ const TextEnd = styled.div`
 `;
 
 const ObstacleBox = styled.div`
-  display: inline-block;
+  padding: auto;
+  margin: auto;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-start;
   margin: 0 auto;
   text-align: center;
+`;
+
+const InputBox = styled.div`
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+
+  input {
+    width: 765px !important;
+    height: 48px;
+    padding: 0 10px 0 5px;
+    border-radius: 5px;
+    border: 1px solid darkgrey;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input::-webkit-input-placeholder {
+    text-align: right;
+  }
+  input::-moz-placeholder {
+    text-align: right;
+  }
+  input:-ms-input-placeholder {
+    text-align: right;
+  }
+  input:-moz-placeholder {
+    text-align: right;
+  }
+  input::placeholder {
+    text-align: right;
+  }
+`;
+
+const BirthBox = styled.div`
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  input {
+    width: 232px;
+    height: 48px;
+    padding: 0 10px 0 2px;
+    border-radius: 5px;
+    border: 1px solid darkgrey;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input::-webkit-input-placeholder {
+    text-align: right;
+  }
+  input::-moz-placeholder {
+    text-align: right;
+  }
+  input:-ms-input-placeholder {
+    text-align: right;
+  }
+  input:-moz-placeholder {
+    text-align: right;
+  }
+  input::placeholder {
+    text-align: right;
+  }
+
+  .middle {
+    margin: 0 20px;
+  }
 `;
