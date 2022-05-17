@@ -16,7 +16,6 @@ const addSearchDB = (searchContent, searchCategory) => {
     apis
       .searchAdd(searchContent, searchCategory)
       .then((res) => {
-        console.log(res);
         dispatch(addSearch(res.data));
       })
       .catch((error) => {

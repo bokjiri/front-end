@@ -10,11 +10,14 @@ import { actionCreators as searchActions } from "../redux/modules/search";
 import { RiArrowDownSLine } from "react-icons/ri";
 
 const Search = () => {
+
   const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
   const policy_list = useSelector((state) => state.category);
   const search_list = useSelector((state) => state.search.list);
   const searchList = search_list?.searchList;
+  //const allCnt = policy_list?.policyList.length;
+  const [clearList, setClearList] = useState("");
 
   const [openSelect, setOpenSelect] = useState(false);
 
@@ -37,11 +40,32 @@ const Search = () => {
 
   const handleSearchContent = (e) => {
     setSearchContent(e.target.value);
+
+    // if(!e.target.value){
+    //    //window.location.reload();
+    //   //dispatch(categoryActions.getPolicyDB(userId));
+    //   //setClearList("클리어");
+    // } 
   };
+
+  const handleEvent = (e) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
+    if (e.key !== "Enter" || !searchContent) {
+      return;
+    }
+
+    dispatch(
+      searchActions.addSearchDB(searchContent, searchCategory)
+    );
+  };
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(categoryActions.getPolicyDB(userId));
+
   }, []);
 
   return (
@@ -62,9 +86,9 @@ const Search = () => {
           <input
             placeholder="검색어 입력 (ex. 청년, 주거...)"
             onChange={handleSearchContent}
+            onKeyDown={handleEvent}
+            spellCheck={false}
           ></input>
-        </SearchBox>
-
           {!searchContent ? (
             <SearchButton disabled={true}>검색</SearchButton>
           ) : (
@@ -78,10 +102,25 @@ const Search = () => {
               검색
             </SearchButton>
           )}
+        </SearchBox>
+
+          {/* {!searchContent ? (
+            <SearchButton disabled={true}>검색</SearchButton>
+          ) : (
+            <SearchButton
+              onClick={(e) => {
+                dispatch(
+                  searchActions.addSearchDB(searchContent, searchCategory)
+                );
+              }}
+            >
+              검색
+            </SearchButton>
+          )} */}
       </SearchContainer>
 
       {/* 검색 리스트 */}
-      {search_list?.length === 0 || !search_list || !searchContent ? (
+      {search_list?.length === 0 || !search_list || !searchContent? (
         <>
           <SelectBox>
             <RebalanceWrap
@@ -184,8 +223,9 @@ const Search = () => {
           </SelectBox>
 
           <Box>
-            <SearchResultCard searchList={searchList} category={category} clear={clear}/>
-          </Box>
+            <SearchResultCard clearList={clearList} searchList={searchList} category={category} clear={clear}/>
+          </Box> 
+          
         </>
       )}
     </Container>
@@ -194,19 +234,11 @@ const Search = () => {
 
 export default Search;
 
-const SearchBtn = styled.div`
-  display: flex;
-  button {
-    margin-right: 10px;
-  }
-`;
-
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   display: flex;
   align-items: center;
   min-height: 100%;
-  margin-bottom: 50px;
 
   flex-direction: column;
 
@@ -226,25 +258,28 @@ const Box = styled.div`
   align-items: center;
   flex-direction: column;
   margin-top: 20px;
+  margin-bottom : 82px;
 `;
 
 const SearchContainer = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 1024px;
-  background-color: none;
+  width: 100%;
+  background: rgba(114,168,254,0.1);
+  transparent : 10%;
+  height : 297px;
+  margin-bottom: 99px;
 
   input {
     margin-left: 10px;
-    width: 900px;
+    width: 776px;
     border: none;
-    height: 40px;
+    height: 68px;
     border-radius: 10px;
-    padding: 10px;
-    background-color: #7faaee;
-    color: white;
+    padding: 0 0 0 10px;
+    background-color: #FFFFFF;
+    color: #666666;
     font-weight: 700;
     font-size: 15px;
   }
@@ -262,13 +297,13 @@ const SearchContainer = styled.div`
 `;
 
 const SearchButton = styled.button`
-  margin-top: 30px;
+  margin-left : 30px;
   width: 174px;
-  height: 60px;
+  height: 68px;
   background-color: tomato;
   text-align: center;
 
-  border-radius: 5px;
+  border-radius: 10px;
   border: none;
   background-color: #0361fb;
   color: #ffffff;
@@ -290,7 +325,7 @@ const SearchButton = styled.button`
 `;
 
 const SearchBox = styled.div`
-  margin-top: 150px;
+  margin-top: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -306,10 +341,11 @@ const SearchBox = styled.div`
     border: none;
     height: 60px;
     font-size: 15px;
-    background-color: #f8faff;
+    background: transparent;
     border-radius: 10px;
     font-weight: 500;
     color: #666666;
+    font-weight : 700;
   }
 
   select:focus {

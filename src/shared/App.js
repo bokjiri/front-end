@@ -20,6 +20,7 @@ import Mypage from "../pages/Mypage";
 import Header from "../components/Header";
 import Modal from "../components/Modal";
 import Footer from "../components/Footer";
+import NotFound from "../pages/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,9 +31,9 @@ function App() {
 
   return (
     <React.Fragment>
-      <Header />
 
       <ConnectedRouter history={history}>
+      <Header />
         <Route path="/" exact component={Login} />
         <Route path="/law" exact component={LoginLaw} />
 
@@ -50,6 +51,8 @@ function App() {
         <Route path="/detail/:dataId" exact component={Detail} />
         <Route path="/modal" exact component={Modal} />
         <Route path="/mypage" exact component={Mypage} />
+
+        {/* <Route path="*" exact component={NotFound} /> */}
 
         <Footer />
       </ConnectedRouter>
