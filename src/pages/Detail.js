@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import Modal from "../components/Modal";
+import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
 import CloseIcon from "@mui/icons-material/Close";
-import ShareIcon from "@mui/icons-material/Share";
+import { ReactIcon } from "../Icons/Icon";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as bookActions } from "../redux/modules/bookMark";
-
-import { ReactIcon } from "../Icons/Icon";
 import { ReactComponent as PostError } from "../Icons/PostError.svg";
-import { ReactComponent as Share_Disabled } from "../Icons/Share_Disabled.svg";
+import { ReactComponent as Share_Disabled } from "../Icons/Share_Modal.svg";
 import { ReactComponent as Share_Active } from "../Icons/Share_Active.svg";
 import { ReactComponent as Bookmark_Disabled } from "../Icons/Bookmark_Disabled.svg";
 import { ReactComponent as Bookmark_Active } from "../Icons/Bookmark_Active.svg";
-
-import { Text, Grid, Input, Button } from "../elements/index";
 
 const Detail = (props) => {
   const history = useHistory();
@@ -29,6 +27,8 @@ const Detail = (props) => {
     dispatch(postActions.getDetailFB(dataId));
   }, []);
 
+  const [bookClick, setBookclick] = useState(detail_post.bookmarkState);
+
   const bookmarkState = () => {
     if (detail_post.bookmarkState === false) {
       dispatch(bookActions.addBookFB(dataId));
@@ -37,13 +37,31 @@ const Detail = (props) => {
     }
   };
 
-  // const [modalOpen, setModalOpen] = useState(false);
-  // const openModal = () => {
-  //   setModalOpen(true);
-  // };
-  // const closeModal = () => {
-  //   setModalOpen(false);
-  // };
+  console.log("현재 주소", window.location.href);
+  const url = window.location.href;
+  let CopyUrl = () => {
+    try {
+      window.alert("클립보드에 주소가 복사되었습니다.");
+    } catch (err) {
+      console.log("클립보드 복사를 실패하였습니다.", err);
+    }
+  };
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
+  const { vertical, horizontal, open } = state;
+
+  const handleClick = (newState) => () => {
+    setState({ open: true, ...newState });
+  };
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+
   return (
     <ModalBack>
       <ModalBox>
@@ -51,7 +69,12 @@ const Detail = (props) => {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <CloseBtn onClick={() => history.goBack()}>
               <CloseIcon
-                style={{ fontSize: "40px", float: "right", color: "#666666" }}
+                style={{
+                  fontSize: "40px",
+                  float: "right",
+                  color: "#666666",
+                  cursor: "pointer",
+                }}
               />
             </CloseBtn>
             {/* onClick={openModal} */}
@@ -97,15 +120,37 @@ const Detail = (props) => {
             >
               <PolicyName>{detail_post.name}</PolicyName>
               <div style={{ display: "flex" }}>
-                <BookBtn>
+                <div style={{ cursor: "pointer" }}>
                   {detail_post.bookmarkState ? (
                     <Bookmark_Active onClick={bookmarkState} />
                   ) : (
                     <Bookmark_Disabled onClick={bookmarkState} />
                   )}
-                </BookBtn>
-
-                <Share_Disabled />
+                </div>
+                <CopyToClipboard text={url}>
+                  <ShareBtn>
+                    <ReactIcon.BsShare
+                      size="23px"
+                      style={{
+                        marginTop: "14px",
+                      }}
+                      // className="shareIcon"
+                      onClick={handleClick({
+                        vertical: "bottom",
+                        horizontal: "center",
+                      })}
+                    ></ReactIcon.BsShare>
+                    <Snackbar
+                      anchorOrigin={{ vertical, horizontal }}
+                      open={open}
+                      onClose={handleClose}
+                      message="클립보드에 복사되었습니다 </>"
+                      key={vertical + horizontal}
+                      onClick={url}
+                    />
+                  </ShareBtn>
+                  {/* <Share_Disabled onClick={CopyUrl} /> */}
+                </CopyToClipboard>
               </div>
             </div>
             <InfoBox>
@@ -153,7 +198,7 @@ const PolicyDesire = styled.div`
   text-align: center;
   width: max-content;
   max-width: 100px;
-  padding: 5px;
+  padding: 4px 8px;
   font-size: 12px;
   margin: 5px 0 10px 20px;
   background-color: #6dcdc7;
@@ -202,7 +247,16 @@ const ModalGo = styled.div`
   margin: 0 70px 0 0;
 `;
 
-const BookBtn = styled.div``;
+const ShareBtn = styled.div`
+  text-align: center;
+  background: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-top: 9px;
+  cursor: pointer;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+`;
 
 const PolicyName = styled.div`
   font-weight: 700;
@@ -210,6 +264,12 @@ const PolicyName = styled.div`
   line-height: 49px;
   letter-spacing: 0.0025em;
   width: 445px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const InfoBox = styled.div`

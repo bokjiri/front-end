@@ -8,6 +8,7 @@ import MainCard2 from "../components/MainCard2";
 
 import { actionCreators as infoActions } from "../redux/modules/info";
 import { actionCreators as categoryActions } from "../redux/modules/category";
+import { ReactComponent as Search } from "../Icons/Search.svg";
 
 import News1 from "../imgs/Banner_News1.png";
 import News2 from "../imgs/Banner_News2.png";
@@ -41,6 +42,19 @@ const Main = () => {
   useEffect(() => {
     dispatch(infoActions.getInfoDB(userId));
     dispatch(categoryActions.getPolicyDB(userId));
+    if (categoryName === "📄 일자리") {
+      dispatch(categoryActions.workDB(userId));
+    } else if (categoryName === "🏠 주거 및 일상생활") {
+      dispatch(categoryActions.houseLifeDB(userId));
+    } else if (categoryName === "💪🏻 건강") {
+      dispatch(categoryActions.healthDB(userId));
+    } else if (categoryName === "👪 교육 및 돌봄") {
+      dispatch(categoryActions.eduCareDB(userId));
+    } else if (categoryName === "⛑ 안전 및 권익보장") {
+      dispatch(categoryActions.safetyRightDB(userId));
+    } else if (categoryName === "기타") {
+      dispatch(categoryActions.etcDB(userId));
+    }
   }, []);
 
   if (cookies.get("userToken")) {
@@ -55,8 +69,12 @@ const Main = () => {
             }}
           >
             <SearchBox>
-              <BiSearchAlt size="20px" style={{ marginLeft: "20px" }} />
-              <span>&nbsp;&nbsp;검색어를 입력하세요</span>
+              <Search
+                style={{
+                  margin: "19px 20px 0 20px",
+                }}
+              />
+              <p>검색어를 입력하세요</p>
             </SearchBox>
             <BoxSearch>검색</BoxSearch>
           </SearchButton>
@@ -196,15 +214,20 @@ const SearchButton = styled.div`
 `;
 
 const SearchBox = styled.div`
+  display: flex;
   text-align: left;
   width: 786px;
   height: 68px;
-  line-height: 68px;
   color: #666666;
   font-weight: 700;
   background: #ffffff;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  p {
+    line-height: 37px;
+    color: #999999;
+    font-size: 14px;
+  }
   &:hover {
     cursor: pointer;
     color: #72a8fe;
@@ -228,7 +251,8 @@ const BoxSearch = styled.div`
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   color: white;
-  font-size: 14px;
+  weight: 700;
+  size: 14px;
   letter-spacing: 0.0125em;
   cursor: pointer;
 `;

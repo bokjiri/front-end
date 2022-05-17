@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SwiperCore, { Virtual, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -248,7 +248,7 @@ const PolicyDesire = styled.div`
   max-width: 100px;
   padding: 5px;
   font-size: 12px;
-  margin: 5px 0 10px 20px;
+  margin: 15px 0 10px 20px;
   background-color: #6dcdc7;
   border-radius: 5px;
   color: white;
@@ -260,6 +260,8 @@ const PolicyName = styled.div`
   font-weight: 700;
   font-size: 18px;
   line-height: 34px;
+  height: 58px;
+
   text-align: left;
 
   overflow: hidden;
@@ -275,7 +277,7 @@ const PolicyName = styled.div`
 const PolicySummary = styled.div`
   text-align: left;
   font-size: 15px;
-  margin: 0 20px 10px 20px;
+  margin: 0px 20px 10px 20px;
 
   overflow: hidden;
   text-overflow: ellipsis;
