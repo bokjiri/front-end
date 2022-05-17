@@ -70,12 +70,13 @@ return(
             <ul className="lawico01"></ul> 
             <div className="lawcon"> 
             <span className="bl"><label htmlFor="Y000700">제7조(회원가입)</label></span> &nbsp;<span className="sfon2"></span> ① 회원가입은 "이용자"가 약관의 내용에 대하여 동의를 하고 회원가입신청을 한 후 "회사"가 이러한 신청에 대하여 승낙함으로써 체결됩니다.&nbsp;<span className="sfon2"></span> 
-            <p className="pty1_de2_1">② 회원가입신청서에는 다음 사항을 기재해야 합니다. 1호 내지 3호의 사항은 필수사항이며, 그 외의 사항은 선택사항입니다.&nbsp;<span className="sfon2"></span></p> 
+            <p className="pty1_de2_1">② 회원가입신청서에는 다음 사항을 기재해야 합니다. 1호 내지 4호의 사항은 필수사항이며, 그 외의 사항은 선택사항입니다.&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">1. "회원"의 성명과 주민등록번호 또는 인터넷상 개인식별번호&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">2. "아이디"와 "비밀번호"&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">3. 전자우편주소&nbsp;<span className="sfon2"></span></p> 
-            <p className="pty1_de2h">4. 이용하려는 "콘텐츠"의 종류&nbsp;<span className="sfon2"></span></p> 
-            <p className="pty1_de2h">5. 기타 "회사"가 필요하다고 인정하는 사항&nbsp;<span className="sfon2"></span></p> 
+            <p className="pty1_de2h">4. 카카오 회원가입 & 로그인 시, 카카오 계정의 "닉네임(이름)", "이메일", "프로필 사진"&nbsp;<span className="sfon2"></span></p> 
+            <p className="pty1_de2h">5. 이용하려는 "콘텐츠"의 종류&nbsp;<span className="sfon2"></span></p> 
+            <p className="pty1_de2h">6. 기타 "회사"가 필요하다고 인정하는 사항&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2_1">③ "회사"는 상기 "이용자"의 신청에 대하여 회원가입을 승낙함을 원칙으로 합니다. 다만, "회사"는 다음 각 호에 해당하는 신청에 대하여는 승낙을 하지 않을 수 있습니다.&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">1. 가입신청자가 이 약관에 의하여 이전에 회원자격을 상실한 적이 있는 경우&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">2. 실명이 아니거나 타인의 명의를 이용한 경우&nbsp;<span className="sfon2"></span></p> 
@@ -394,7 +395,7 @@ return(
         <p className="gtit">제3조 (처리하는 개인정보의 항목)</p>
         ① 복세편살은(는) 다음의 개인정보 항목을 처리하고 있습니다.<br/>
         재화 또는 서비스 제공<br></br>
-        필수항목 : 성별, 결혼여부, 신체정보, 연령대
+        필수항목 : 생년월일, 성별, 주소지, 장애여부, 장애유형, 학력, 취업 여부, 결혼, 가구유형, 월소득, 가구원 수
 
 
         <p className="gtit">제4조 (개인정보의 파기절차 및 파기방법)</p>
@@ -429,36 +430,28 @@ return(
 
         <p className="gtit">제7조(개인정보를 자동으로 수집하는 장치의 설치·운영 및 그 거부에 관한 사항)</p>
         ① 복세편살은(는) 이용자에게 개별적인 맞춤서비스를 제공하기 위해 이용정보를 저장하고 수시로 불러오는 ‘쿠키(cookie)’를 사용합니다.<br/>
-        ② 쿠키는 웹사이트를 운영하는데 이용되는 서버(http)가 이용자의 컴퓨터 브라우저에게 보내는 소량의 정보이며 이용자들의 PC 컴퓨터내의 하드디스크에 저장되기도 합니다.<br/>
+        ② 쿠키는 웹사이트를 운영하는데 이용되는 서버(https)가 이용자의 컴퓨터 브라우저에게 보내는 소량의 정보이며 이용자들의 PC 컴퓨터내의 하드디스크에 저장되기도 합니다.<br/>
         가. 쿠키의 사용 목적 : 이용자가 방문한 각 서비스와 웹 사이트들에 대한 방문 및 이용형태, 인기 검색어, 보안접속 여부, 등을 파악하여 이용자에게 최적화된 정보 제공을 위해 사용됩니다.<br/>
         나. 쿠키의 설치•운영 및 거부 : 웹브라우저 상단의 도구 - 인터넷 옵션 - 개인정보 메뉴의 옵션 설정을 통해 쿠키 저장을 거부 할 수 있습니다.<br/>
         다. 쿠키 저장을 거부할 경우 맞춤형 서비스 이용에 어려움이 발생할 수 있습니다.<br/>
 
         <p className="gtit">제8조 (개인정보 보호책임자에 관한 사항)</p>
 
-        ① 복세편살은(는) 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.<br/>
+        ① 복세편살은(는) 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임을 지정하고 있습니다.<br/>
 
-        ▶ 개인정보 보호책임자<br/>
-        성명 :아무개<br/>
-        직책 :팀장<br/>
-        직급 :팀장<br/>
-        연락처 :010-1234-1234, realwelfare@gmail.com, 010-1234-1234<br/><br/>
+        ▶ 개인정보 보호책임 및 담당<br/>
+        담당 : 복세편살<br/>
+        연락처 : boksei_@naver.com<br/><br/>
 
-        ▶ 개인정보 보호 담당부서<br/>
-        부서명 :<br/>
-        담당자 :<br/>
-        연락처 :, ,<br/>
-        ② 정보주체께서는 복세편살의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다. 복세편살은(는) 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.<br/><br/>
+        ② 정보주체께서는 복세편살의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임 및 담당으로 문의하실 수 있습니다. 복세편살은(는) 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.<br/><br/>
 
         <p className="gtit">제9조 (개인정보의 열람청구를 접수·처리하는 부서)</p>
         정보주체는 ｢개인정보 보호법｣ 제35조에 따른 개인정보의 열람 청구를 아래의 연락처로 요청할 수 있습니다.<br/>
         복세편살은(는) 정보주체의 개인정보 열람청구가 신속하게 처리되도록 노력하겠습니다.<br/><br/>
 
-        ▶ 개인정보 열람청구 접수·처리 부서<br/>
-        부서명 :<br/>
-        담당자 :<br/>
-        연락처 : , ,<br/><br/>
-
+        ▶ 개인정보 열람청구 접수·처리<br/>
+        담당 : 복세편살<br/>
+        연락처 : boksei_@naver.com
 
         <p className="gtit">제10조 (정보주체의 권익침해에 대한 구제방법)</p>
         정보주체는 개인정보침해로 인한 구제를 받기 위하여 개인정보분쟁조정위원회, 한국인터넷진흥원 개인정보침해신고센터 등에 분쟁해결이나 상담 등을 신청할 수 있습니다. 이 밖에 기타 개인정보침해의 신고, 상담에 대하여는 아래의 기관에 문의하시기 바랍니다.<br/><br/>
@@ -493,13 +486,9 @@ const LawWarp = styled.div`
     width : 100vw;
     margin : 0 auto;
     padding: 5rem 0;
-    div+div{
-        margin: 5rem 0;
-    }
 `
 const LawCont = styled.div`
     margin: 0 auto;
-    padding: 0 10rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -510,22 +499,19 @@ const LawCont = styled.div`
 `;
 
 const LawTitle = styled.p`
-    margin-top : 40px;
-    margin-bottom : 20px;
     font-size : 34px;
     font-weight : 700;
 `
 
 const MainTerms = styled.div`
-    position: static;
-    display: inline-block;
-    width : 846px;
-    height : 280px;
-    height: 50vh;
+    width : 964px;
+    height : 494px;
     overflow-y: scroll;
     ::-webkit-scrollbar{
         display : none;
     }
+
+    margin : 40px 0 40px 0;
 
     .gtit{
         margin: 2rem 0;
@@ -533,14 +519,15 @@ const MainTerms = styled.div`
 `;
 
 const BackButton = styled.button`
-    width : 100px;
-    height : 40px;
-    background-color : lightgrey;
+    width : 174px;
+    height : 68px;
+    background-color : #E8E8E8;
     text-align : center;
     border : none;
     border-radius : 5px;
-    color : darkgrey;
+    color : #999999;
     font-weight : 700;
+    margin-top : 20px;
 
     &:hover{
         cursor : pointer;

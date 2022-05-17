@@ -6,9 +6,13 @@ import styled from "styled-components";
 import kakaoBtn from "../imgs/kakao_login.png";
 import { Link } from "react-router-dom";
 
-
 import { ReactComponent as LoginLogo } from "../imgs/Symbol.svg";
 import { ReactComponent as LoginText } from "../imgs/Logo_Text.svg";
+
+import CheckBox from "../Icons/CheckBox.png";
+import CheckedBox from "../Icons/CheckedBox.png";
+
+import Swal from "sweetalert2";
 
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -37,7 +41,7 @@ const Login = () => {
                 height="90px"
                 is_flex
                 bg="none"
-                margin="0 0 20px 0"
+                margin="0 0 43px 0"
               >
               <LoginText />
               </Grid>
@@ -46,35 +50,32 @@ const Login = () => {
                 alt="kakaoLogin"
                 onClick={() => {
                   if (state === false) {
-                    alert("정보 약관 동의는 필수입니다!");
+                    Swal.fire({
+                      text : "이용 약관 동의는 필수입니다!",
+                      confirmButtonColor: "#72A8FE",
+                    });
                     return;
                   }
                   window.location.href = kakaoUrl;
                 }}
-                style={{ width: "300px", margin: "0 0 40px 0" }}
+                style={{ width: "300px", margin: "0 0 13px 0" }}
               />
 
               <LoginTerms>
-                <input
-                  onChange={onChangeState}
-                  id="lawStatus"
-                  type="checkbox"
-                  className="check-int"
-                />
-                <label key="lawStatus" className="check-label"></label>
-                <span className="check-box"></span>
                 {state === true ? (
-                  <Link to="/law" style={{ color: "#0361FB" }}>
-                    <span>디지털콘텐츠 이용 및 </span>
-                    <span>개인정보 이용 약관</span>
-                    <span>내용을 확인하였고 동의합니다.</span>
+                  <>
+                  <img src={CheckedBox} onClick={onChangeState}/>
+                  <Link to="/law" style={{color : "#0361FB"}}>
+                    <Text color="#0361FB" size="14px" width="266px" margin="0 0 0 10px">디지털콘텐츠 이용 및 개인정보 이용 약관 내용을 확인하였고 동의합니다.</Text>
                   </Link>
+                  </>
                 ) : (
+                  <>
+                  <img src={CheckBox} onClick={onChangeState}/>
                   <Link to="/law">
-                    <span>디지털콘텐츠 이용 및 </span>
-                    <span>개인정보 이용 약관</span>
-                    <span>내용을 확인하였고 동의합니다.</span>
+                    <Text color="#999999" size="14px" width="266px" margin="0 0 0 10px">디지털콘텐츠 이용 및 개인정보 이용 약관 내용을 확인하였고 동의합니다.</Text>
                   </Link>
+                  </>
                 )}
               </LoginTerms>
             </LoginBox>
@@ -95,14 +96,21 @@ const LoginTerms = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+  width: 1000px;
   a {
-    color: black;
+    color: #999999;
     text-decoration: none;
+    cursor: pointer;
 
-    span {
-      font-size: 13px;
+    p {
+      color: ${(props) => props.color};
+      text-decoration: none;
+      cursor: pointer;
     }
+  }
+
+  a:focus {
+    color : #0361FB!important;
   }
 `;
 

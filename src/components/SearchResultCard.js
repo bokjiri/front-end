@@ -7,6 +7,7 @@ import Pagination from "./Pagination";
 
 const SearchResultCard = (props) => {
   const list = props.searchList;
+  //console.log(props.clearList);
 
   const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
@@ -20,6 +21,8 @@ const SearchResultCard = (props) => {
       return data;
     }
   });
+
+
 
   useEffect(() => {
     if (props.clear === true) {
@@ -56,7 +59,7 @@ const SearchResultCard = (props) => {
               >
                 {item.desire}
               </Category>
-              <Text margin="5px 0 10px 18px" bold size="20px">
+              <Text margin="5px 0 10px 25px" bold size="20px" cursor="pointer">
                 {item.name}
               </Text>
               <Summary>{item.summary}</Summary>
@@ -94,6 +97,14 @@ const Container = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &:hover {
+    cursor : pointer;
+  }
+
+  p:hover {
+    cursor : pointer;
+  }
 `;
 
 const Category = styled.div`
@@ -102,7 +113,7 @@ const Category = styled.div`
   padding: 5px;
   height: 20px;
   font-size: 12px;
-  margin: 0 0 10px 20px;
+  margin: 0 0 10px 25px;
   background-color: ${(props) => props.color};
   border-radius: 5px;
   color: white;
@@ -111,6 +122,6 @@ const Category = styled.div`
 
 const Summary = styled.div`
   font-size: 15px;
-  margin: 0 0 0 18px;
+  margin: 0 0 0 25px;
   padding: 0 15px 0 0;
 `;

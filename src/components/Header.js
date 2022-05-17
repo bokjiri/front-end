@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { BiSearchAlt } from "react-icons/bi";
@@ -12,9 +12,15 @@ import { ReactComponent as Logo } from "../imgs/Logo_Header.svg";
 import Cookies from "universal-cookie";
 
 import Swal from "sweetalert2";
+
+import { useLocation } from "react-router-dom";
+
 const cookies = new Cookies();
 
 const Header = () => {
+  const location = useLocation();
+  const path = location.pathname;
+
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
 
@@ -47,30 +53,29 @@ const Header = () => {
     });
   };
 
-  // url path별로 location 지정
-  // const location = useLocation();
-  //   const path = location.pathname;
-  //   // console.log(location)
-
-  //   let href = path.includes('/detail') ? '/detail'
-  //   : path.includes('/folder') ? '/folder'
-  //   : path
 
   return (
     <>
       <Container>
         <div>
-          <Logo
+          {path === "/addinfo" ? (
+            <Logo className="Logo" />
+          ) : isLogin && cookies.get("userToken") ? (
+            <>
+            <Logo
             className="Logo"
             onClick={() => {
               history.push("/main");
             }}
           />
-
-          {isLogin && cookies.get("userToken") ? (
             <Box>
               <div className="auth none">
-                <BiSearchAlt size="30" onClick={()=>{history.push("/search")}}/>
+                <BiSearchAlt
+                  size="30"
+                  onClick={() => {
+                    history.push("/search");
+                  }}
+                />
               </div>
 
               <div className="auth none">
@@ -94,6 +99,7 @@ const Header = () => {
                 </span>
               </div>
             </Box>
+            </>
           ) : null}
         </div>
       </Container>
@@ -105,8 +111,8 @@ export default Header;
 
 const Box = styled.div`
   display: flex;
-  justfiy-content : center;
-  align-items : center;
+  justfiy-content: center;
+  align-items: center;
 `;
 
 const Container = styled.div`
@@ -258,7 +264,7 @@ const Container = styled.div`
     }
 
     &:hover {
-      color: #72A8FE;
+      color: #72a8fe;
     }
   }
 

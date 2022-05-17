@@ -275,7 +275,7 @@ const AddInfo = () => {
 
     //가구 유형
     target: [
-      "다북화·탈북민",
+      "다문화·탈북민",
       "다자녀",
       "보훈대상자",
       "임신·출산",
@@ -578,652 +578,666 @@ const AddInfo = () => {
   };
 
   return (
-    <MainWrap>
-      <TextBox>✏️ 정보를 입력해 주세요!</TextBox>
+    <HomeWrap>
+      <MainWrap>
+        <TextBox>✏️ 정보를 입력해 주세요!</TextBox>
 
-      <Container>
-        <Grid>
-          <Text size="20px" bold margin="20px 8px">
-            생년월일
-          </Text>
-          <TextEnd>*필수 선택</TextEnd>
-          <CategoryBox>
-            <input
-              placeholder="YYYY년"
-              onChange={infoYear}
-              maxLength="4"
-              defaultValue={year}
-            ></input>
-            <input
-              onChange={infoMonth}
-              placeholder="MM월"
-              maxLength="2"
-              className="middle"
-              defaultValue={month}
-            ></input>
-            <input
-              placeholder="DD일"
-              onChange={infoDate}
-              maxLength="2"
-              defaultValue={date}
-            ></input>
+        <Container>
+          <Grid>
+            <Text size="20px" bold margin="20px 8px">
+              생년월일
+            </Text>
+            <TextEnd>*필수 입력</TextEnd>
+            <BirthBox>
+              <input
+                placeholder="YYYY년"
+                onChange={infoYear}
+                maxLength="4"
+                defaultValue={year}
+              ></input>
+              <input
+                onChange={infoMonth}
+                placeholder="MM월"
+                maxLength="2"
+                className="middle"
+                defaultValue={month}
+              ></input>
+              <input
+                placeholder="DD일"
+                onChange={infoDate}
+                maxLength="2"
+                defaultValue={date}
+              ></input>
 
-            {!year ? null : !birthYear(year) || Number(year) > 2022 ? (
-              <Grid is_flex>
-                <ValidationBox style={{ color: "#ED6451" }}>
-                  생년을 올바른 형식으로 입력해 주세요.
-                </ValidationBox>
-              </Grid>
-            ) : null}
+              {!year ? null : !birthYear(year) || Number(year) > 2022 ? (
+                <Grid is_flex>
+                  <ValidationBox style={{ color: "#ED6451" }}>
+                    생년을 올바른 형식으로 입력해 주세요.
+                  </ValidationBox>
+                </Grid>
+              ) : null}
 
-            {!month ? null : !birthMonth(month) ? (
-              <Grid is_flex>
-                <ValidationBox style={{ color: "#ED6451" }}>
-                  월을 올바른 형식으로 입력해 주세요.
-                </ValidationBox>
-              </Grid>
-            ) : null}
+              {!month ? null : !birthMonth(month) ? (
+                <Grid is_flex>
+                  <ValidationBox style={{ color: "#ED6451" }}>
+                    월을 올바른 형식으로 입력해 주세요.
+                  </ValidationBox>
+                </Grid>
+              ) : null}
 
-            {!date ? null : !birthDate(date) ? (
-              <Grid is_flex>
-                <ValidationBox style={{ color: "#ED6451" }}>
-                  일을 올바른 형식으로 입력해 주세요.
-                </ValidationBox>
-              </Grid>
-            ) : null}
-          </CategoryBox>
+              {!date ? null : !birthDate(date) ? (
+                <Grid is_flex>
+                  <ValidationBox style={{ color: "#ED6451" }}>
+                    일을 올바른 형식으로 입력해 주세요.
+                  </ValidationBox>
+                </Grid>
+              ) : null}
+            </BirthBox>
 
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            성별
-          </Text>
-          <CategoryBox>
-            {Object.entries(categoryList.gender).map((item, idx) => {
-              return (
-                <Btn
-                  width="378px"
-                  key={idx}
-                  color={
-                    gender?.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    CreateGender(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
-          </CategoryBox>
+            <Text size="20px" bold margin="40px 0 8px 8px">
+              성별
+            </Text>
+            <CategoryBox>
+              {Object.entries(categoryList.gender).map((item, idx) => {
+                return (
+                  <Btn
+                    width="378px"
+                    key={idx}
+                    color={
+                      gender?.findIndex((i) => i === item[1]) === -1
+                        ? "#E8E8E8"
+                        : "#0361FB"
+                    }
+                    value={item[0]}
+                    onClick={(e) => {
+                      CreateGender(e, item[1]);
+                    }}
+                  >
+                    {item[1]}
+                  </Btn>
+                );
+              })}
+            </CategoryBox>
 
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            주소지
-          </Text>
-          <CategoryBox>
-            <RebalanceWrap
-              onClick={() => {
-                setOpenSelectCity(!open_select_city);
-              }}
-            >
-              {<RebalanceCont>{city}</RebalanceCont>}
-              {open_select_city && (
-                <RebalanceSelect>
-                  {Object.entries(categoryList.city).map((item, idx) => {
+            <Text size="20px" bold margin="40px 0 8px 8px">
+              주소지
+            </Text>
+            <CategoryBox>
+              <RebalanceWrap
+                onClick={() => {
+                  setOpenSelectCity(!open_select_city);
+                }}
+              >
+                {<RebalanceCont>{city}</RebalanceCont>}
+                {open_select_city && (
+                  <RebalanceSelect>
+                    {Object.entries(categoryList.city).map((item, idx) => {
+                      return (
+                        <SelectItem
+                          key={idx}
+                          onClick={() => click_city(item[1])}
+                          value={city}
+                        >
+                          {item[1]}
+                        </SelectItem>
+                      );
+                    })}
+                  </RebalanceSelect>
+                )}
+              </RebalanceWrap>
+
+              <RebalanceWrap
+                onClick={() => {
+                  setOpenSelect(!open_select);
+                }}
+              >
+                <RebalanceCont>{town}</RebalanceCont>
+                {city === "-------" ? null : null}
+
+                {city === "강원도"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.town1).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "경기도"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.town2).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "경상남도"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.town3).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "경상북도"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.town4).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "광주광역시"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.gwangju).map(
+                          (item, idx) => {
+                            return (
+                              <SelectItem
+                                key={idx}
+                                onClick={() => click_select(item[1])}
+                                value={town}
+                              >
+                                {item[1]}
+                              </SelectItem>
+                            );
+                          }
+                        )}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "대구광역시"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.daegu).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "대전광역시"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.daejeon).map(
+                          (item, idx) => {
+                            return (
+                              <SelectItem
+                                key={idx}
+                                onClick={() => click_select(item[1])}
+                                value={town}
+                              >
+                                {item[1]}
+                              </SelectItem>
+                            );
+                          }
+                        )}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "부산광역시"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.busan).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "서울특별시"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.seoul).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "세종특별자치시" ? null : null}
+                {city === "울산광역시"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.ulsan).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "인천광역시"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.incheon).map(
+                          (item, idx) => {
+                            return (
+                              <SelectItem
+                                key={idx}
+                                onClick={() => click_select(item[1])}
+                                value={town}
+                              >
+                                {item[1]}
+                              </SelectItem>
+                            );
+                          }
+                        )}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "전라남도"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.town5).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "전라북도"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.town6).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "제주특별자치도"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.town7).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "충청남도"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.town8).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+                {city === "충청북도"
+                  ? open_select && (
+                      <RebalanceSelect>
+                        {Object.entries(categoryList.town9).map((item, idx) => {
+                          return (
+                            <SelectItem
+                              key={idx}
+                              onClick={() => click_select(item[1])}
+                              value={town}
+                            >
+                              {item[1]}
+                            </SelectItem>
+                          );
+                        })}
+                      </RebalanceSelect>
+                    )
+                  : null}
+              </RebalanceWrap>
+            </CategoryBox>
+
+            <Text size="20px" bold margin="40px 0 8px 8px">
+              장애여부
+            </Text>
+            <TextEnd>*필수 선택</TextEnd>
+            <CategoryBox>
+              {Object.entries(categoryList.obstacleYN).map((item, idx) => {
+                return (
+                  <Btn
+                    width="378px"
+                    key={idx}
+                    color={
+                      obstacleYN.findIndex((i) => i === item[1]) === -1
+                        ? "#E8E8E8"
+                        : "#0361FB"
+                    }
+                    value={item[0]}
+                    onClick={(e) => {
+                      CreateObstacleYN(e, item[1]);
+                    }}
+                  >
+                    {item[1]}
+                  </Btn>
+                );
+              })}
+              {obstacleYN.length === 0 ? (
+                <Grid is_flex>
+                  <ValidationBox style={{ color: "#ED6451" }}>
+                    장애여부를 선택해 주세요.
+                  </ValidationBox>
+                </Grid>
+              ) : null}
+            </CategoryBox>
+
+            {obstacleYN[0] === "있음" ? (
+              <>
+                <Text size="20px" bold margin="40px 0 8px 8px">
+                  장애유형
+                </Text>
+                <TextEnd>*복수 선택 가능</TextEnd>
+
+                <ObstacleBox>
+                  {Object.entries(categoryList.obstacle).map((item, idx) => {
                     return (
-                      <SelectItem
+                      <Btn
+                        width="178px"
                         key={idx}
-                        onClick={() => click_city(item[1])}
-                        value={city}
+                        color={
+                          obstacle.findIndex((i) => i === item[1]) === -1
+                            ? "#E8E8E8"
+                            : "#0361FB"
+                        }
+                        value={item[0]}
+                        onClick={(e) => {
+                          CreateObstacle(e, item[1]);
+                        }}
                       >
                         {item[1]}
-                      </SelectItem>
+                      </Btn>
                     );
                   })}
-                </RebalanceSelect>
-              )}
-            </RebalanceWrap>
+                </ObstacleBox>
+              </>
+            ) : null}
 
-            <RebalanceWrap
-              onClick={() => {
-                setOpenSelect(!open_select);
-              }}
-            >
-              <RebalanceCont>{town}</RebalanceCont>
-              {city === "-------" ? null : null}
+            <Text size="20px" bold margin="40px 0 8px 8px">
+              학력
+            </Text>
+            <CategoryBox>
+              {Object.entries(categoryList.scholarship).map((item, idx) => {
+                return (
+                  <Btn
+                    width="178px"
+                    key={idx}
+                    color={
+                      scholarship?.findIndex((i) => i === item[1]) === -1
+                        ? "#E8E8E8"
+                        : "#0361FB"
+                    }
+                    value={item[0]}
+                    onClick={(e) => {
+                      CreateScholarship(e, item[1]);
+                    }}
+                  >
+                    {item[1]}
+                  </Btn>
+                );
+              })}
+            </CategoryBox>
 
-              {city === "강원도"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.town1).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "경기도"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.town2).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "경상남도"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.town3).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "경상북도"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.town4).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "광주광역시"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.gwangju).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "대구광역시"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.daegu).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "대전광역시"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.daejeon).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "부산광역시"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.busan).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "서울특별시"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.seoul).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "세종특별자치시" ? null : null}
-              {city === "울산광역시"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.ulsan).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "인천광역시"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.incheon).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "전라남도"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.town5).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "전라북도"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.town6).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "제주특별자치도"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.town7).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "충청남도"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.town8).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-              {city === "충청북도"
-                ? open_select && (
-                    <RebalanceSelect>
-                      {Object.entries(categoryList.town9).map((item, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            onClick={() => click_select(item[1])}
-                            value={town}
-                          >
-                            {item[1]}
-                          </SelectItem>
-                        );
-                      })}
-                    </RebalanceSelect>
-                  )
-                : null}
-            </RebalanceWrap>
-          </CategoryBox>
+            <Text size="20px" bold margin="40px 0 8px 8px">
+              취업 여부
+            </Text>
+            <CategoryBox>
+              {Object.entries(categoryList.job).map((item, idx) => {
+                return (
+                  <Btn
+                    width="378px"
+                    key={idx}
+                    color={
+                      job?.findIndex((i) => i === item[1]) === -1
+                        ? "#E8E8E8"
+                        : "#0361FB"
+                    }
+                    value={item[0]}
+                    onClick={(e) => {
+                      CreateJob(e, item[1]);
+                    }}
+                  >
+                    {item[1]}
+                  </Btn>
+                );
+              })}
+            </CategoryBox>
 
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            장애여부
-          </Text>
-          <TextEnd>*필수 선택</TextEnd>
-          <CategoryBox>
-            {Object.entries(categoryList.obstacleYN).map((item, idx) => {
-              return (
-                <Btn
-                  width="378px"
-                  key={idx}
-                  color={
-                    obstacleYN.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    CreateObstacleYN(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
-            {obstacleYN.length === 0 ? (
+            <Text size="20px" bold margin="40px 0 8px 8px">
+              결혼
+            </Text>
+            <CategoryBox>
+              {Object.entries(categoryList.married).map((item, idx) => {
+                return (
+                  <Btn
+                    width="244px"
+                    key={idx}
+                    color={
+                      married?.findIndex((i) => i === item[1]) === -1
+                        ? "#E8E8E8"
+                        : "#0361FB"
+                    }
+                    value={item[0]}
+                    onClick={(e) => {
+                      Createmarried(e, item[1]);
+                    }}
+                  >
+                    {item[1]}
+                  </Btn>
+                );
+              })}
+            </CategoryBox>
+
+            <Text size="20px" bold margin="40px 0 8px 8px">
+              가구유형
+            </Text>
+            <TextEnd>*복수 선택 가능</TextEnd>
+
+            <CategoryBox>
+              {Object.entries(categoryList.target).map((item, idx) => {
+                return (
+                  <Btn
+                    width="177px"
+                    key={idx}
+                    color={
+                      target.findIndex((i) => i === item[1]) === -1
+                        ? "#E8E8E8"
+                        : "#0361FB"
+                    }
+                    value={item[0]}
+                    onClick={(e) => {
+                      CreateTarget(e, item[1]);
+                    }}
+                  >
+                    {item[1]}
+                  </Btn>
+                );
+              })}
+            </CategoryBox>
+
+            <Text size="20px" bold margin="50px 8px 20px 8px">
+              월 소득
+            </Text>
+            <TextEnd>
+              *1인 가구 : 개인 월 소득, 2인 이상 가구 : 가구 월 소득
+            </TextEnd>
+            <InputBox>
+              <IncomeInput
+                placeholder="만원"
+                onChange={CreateIncome}
+                maxLength="10"
+                defaultValue={income}
+              ></IncomeInput>
+            </InputBox>
+
+            {income !== 0 && income !== "" ? (
+              <>
+                <Text size="20px" bold margin="20px 8px">
+                  가구원 수
+                </Text>
+                <TextEnd>*가구원 수는 중위소득 판별에 활용됩니다.</TextEnd>
+                <TextEnd>*1~8명까지 입력 가능합니다.</TextEnd>
+                <InputBox>
+                  <IncomeInput
+                    placeholder="명"
+                    onChange={CreateFamily}
+                    maxLength="1"
+                    defaultValue={family}
+                  ></IncomeInput>
+                </InputBox>
+              </>
+            ) : null}
+
+            {income && !family ? (
               <Grid is_flex>
                 <ValidationBox style={{ color: "#ED6451" }}>
-                  장애여부를 선택해 주세요.
+                  월 소득 기입 시, 가구원 수 입력은 필수입니다.
                 </ValidationBox>
               </Grid>
             ) : null}
-          </CategoryBox>
+          </Grid>
+        </Container>
 
-          {obstacleYN[0] === "있음" ? (
-            <>
-              <Text size="20px" bold margin="40px 0 8px 8px">
-                장애유형
-              </Text>
-              <TextEnd>*복수 선택 가능</TextEnd>
-
-              <ObstacleBox>
-                {Object.entries(categoryList.obstacle).map((item, idx) => {
-                  return (
-                    <Btn
-                      width="174px"
-                      key={idx}
-                      color={
-                        obstacle.findIndex((i) => i === item[1]) === -1
-                          ? "#E8E8E8"
-                          : "#0361FB"
-                      }
-                      value={item[0]}
-                      onClick={(e) => {
-                        CreateObstacle(e, item[1]);
-                      }}
-                    >
-                      {item[1]}
-                    </Btn>
-                  );
-                })}
-              </ObstacleBox>
-            </>
-          ) : null}
-
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            학력
-          </Text>
-          <CategoryBox>
-            {Object.entries(categoryList.scholarship).map((item, idx) => {
-              return (
-                <Btn
-                  width="174px"
-                  key={idx}
-                  color={
-                    scholarship?.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    CreateScholarship(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
+        {obstacleYN.length === 0 ||
+        !year ||
+        !birthYear(year) ||
+        !month ||
+        !birthMonth(month) ||
+        !date ||
+        !birthDate(date) ||
+        Number(year) > 2022 ||
+        (income && !family) ? (
+          <CompleteBtn disabled={true}>완료</CompleteBtn>
+        ) : (
+          <CompleteBtn
+            onClick={() => {
+              dispatch(
+                infoActions.addInfoDB(
+                  userId,
+                  lifeCycle,
+                  gender,
+                  region,
+                  obstacleYN,
+                  obstacle,
+                  scholarship,
+                  job,
+                  married,
+                  target,
+                  newIncome,
+                  newFamily
+                )
               );
-            })}
-          </CategoryBox>
-
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            취업 여부
-          </Text>
-          <CategoryBox>
-            {Object.entries(categoryList.job).map((item, idx) => {
-              return (
-                <Btn
-                  width="378px"
-                  key={idx}
-                  color={
-                    job?.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    CreateJob(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
-          </CategoryBox>
-
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            결혼
-          </Text>
-          <CategoryBox>
-            {Object.entries(categoryList.married).map((item, idx) => {
-              return (
-                <Btn
-                  width="244px"
-                  key={idx}
-                  color={
-                    married?.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    Createmarried(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
-          </CategoryBox>
-
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            가구유형
-          </Text>
-          <TextEnd>*복수 선택 가능</TextEnd>
-
-          <CategoryBox>
-            {Object.entries(categoryList.target).map((item, idx) => {
-              return (
-                <Btn
-                  width="174px"
-                  key={idx}
-                  color={
-                    target.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    CreateTarget(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
-          </CategoryBox>
-
-          <Text size="20px" bold margin="20px 8px">
-            월 소득
-          </Text>
-          <TextEnd>
-            *1인 가구 : 개인 월 소득, 2인 이상 가구 : 가구 월 소득
-          </TextEnd>
-          <CategoryBox>
-            <IncomeInput
-              placeholder="만원"
-              onChange={CreateIncome}
-              maxLength="10"
-              defaultValue={income}
-            ></IncomeInput>
-          </CategoryBox>
-
-          {income !== 0 && income !== "" ? (
-            <>
-              <Text size="20px" bold margin="20px 8px">
-                가구원 수
-              </Text>
-              <TextEnd>*가구원 수는 중위소득 판별에 활용됩니다.</TextEnd>
-              <TextEnd>*1~8명까지 입력 가능합니다.</TextEnd>
-              <CategoryBox>
-                <IncomeInput
-                  placeholder="명"
-                  onChange={CreateFamily}
-                  maxLength="1"
-                  defaultValue={family}
-                ></IncomeInput>
-              </CategoryBox>
-            </>
-          ) : null}
-
-          {income && !family ? (
-            <Grid is_flex>
-              <ValidationBox style={{ color: "#ED6451" }}>
-                월 소득 기입 시, 가구원 수 입력은 필수입니다.
-              </ValidationBox>
-            </Grid>
-          ) : null}
-        </Grid>
-      </Container>
-
-      {obstacleYN.length === 0 ||
-      !year ||
-      !birthYear(year) ||
-      !month ||
-      !birthMonth(month) ||
-      !date ||
-      !birthDate(date) ||
-      Number(year) > 2022 ||
-      (income && !family) ? (
-        <CompleteBtn disabled={true}>완료</CompleteBtn>
-      ) : (
-        <CompleteBtn
-          onClick={() => {
-            dispatch(
-              infoActions.addInfoDB(
-                userId,
-                lifeCycle,
-                gender,
-                region,
-                obstacleYN,
-                obstacle,
-                scholarship,
-                job,
-                married,
-                target,
-                newIncome,
-                newFamily
-              )
-            );
-          }}
-        >
-          완료
-        </CompleteBtn>
-      )}
-    </MainWrap>
+            }}
+          >
+            완료
+          </CompleteBtn>
+        )}
+      </MainWrap>
+    </HomeWrap>
   );
 };
 
 export default AddInfo;
+
+const HomeWrap = styled.div`
+  width : 100%;
+  margin : 0;
+  padding : 0;
+`;
 
 const MainWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100vw;
+  width : 100%;
 `;
 
 const Container = styled.div`
@@ -1242,7 +1256,8 @@ const Container = styled.div`
 const CategoryBox = styled.div`
   flex-wrap: wrap;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
 
   input {
     width: 225px;
@@ -1272,10 +1287,6 @@ const CategoryBox = styled.div`
   }
   input::placeholder {
     text-align: right;
-  }
-
-  .middle {
-    margin: 0 25px;
   }
 `;
 
@@ -1403,7 +1414,7 @@ export const SelectItem = styled.li`
 
   &:hover {
     font-weight: 600;
-    color: var(--primary-color);
+    color: #0361FB;
     background-color: var(--secondary-color);
   }
 `;
@@ -1418,7 +1429,89 @@ const TextEnd = styled.div`
 `;
 
 const ObstacleBox = styled.div`
-  display: inline-block;
+  padding: auto;
+  margin: auto;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-start;
   margin: 0 auto;
   text-align: center;
+`;
+
+const InputBox = styled.div`
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+
+  input {
+    width: 765px !important;
+    height: 48px;
+    padding: 0 10px 0 5px;
+    border-radius: 5px;
+    border: 1px solid darkgrey;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input::-webkit-input-placeholder {
+    text-align: right;
+  }
+  input::-moz-placeholder {
+    text-align: right;
+  }
+  input:-ms-input-placeholder {
+    text-align: right;
+  }
+  input:-moz-placeholder {
+    text-align: right;
+  }
+  input::placeholder {
+    text-align: right;
+  }
+`;
+
+const BirthBox = styled.div`
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  input {
+    width: 232px;
+    height: 48px;
+    padding: 0 10px 0 2px;
+    border-radius: 5px;
+    border: 1px solid darkgrey;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input::-webkit-input-placeholder {
+    text-align: right;
+  }
+  input::-moz-placeholder {
+    text-align: right;
+  }
+  input:-ms-input-placeholder {
+    text-align: right;
+  }
+  input:-moz-placeholder {
+    text-align: right;
+  }
+  input::placeholder {
+    text-align: right;
+  }
+
+  .middle {
+    margin: 0 20px;
+  }
 `;
