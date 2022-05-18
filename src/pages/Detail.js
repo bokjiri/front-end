@@ -22,20 +22,22 @@ const Detail = (props) => {
   const params = useParams();
   const dataId = params.dataId;
   const detail_post = useSelector((state) => state.post.detail_post);
+  const mark_list = useSelector((state) => state.bookMark.marks_list);
+  console.log("북마크 리스트", mark_list);
 
   useEffect(() => {
     dispatch(postActions.getDetailFB(dataId));
   }, []);
 
-  const [bookClick, setBookclick] = useState(detail_post.bookmarkState);
+  // const [bookClick, setBookclick] = useState(detail_post.bookmarkState);
 
-  const bookmarkState = () => {
-    if (detail_post.bookmarkState === false) {
-      dispatch(bookActions.addBookFB(dataId));
-    } else {
-      dispatch(bookActions.deleteBookFB(dataId));
-    }
-  };
+  // const bookmarkState = () => {
+  //   if (mark_list.bookmarkState === false) {
+  //     dispatch(bookActions.addBookFB(dataId));
+  //   } else {
+  //     dispatch(bookActions.addBookFB(dataId));
+  //   }
+  // };
 
   console.log("현재 주소", window.location.href);
   const url = window.location.href;
@@ -121,10 +123,20 @@ const Detail = (props) => {
               <PolicyName>{detail_post.name}</PolicyName>
               <div style={{ display: "flex" }}>
                 <div style={{ cursor: "pointer" }}>
-                  {detail_post.bookmarkState ? (
-                    <Bookmark_Active onClick={bookmarkState} />
+                  {detail_post.bookmarkState === true ? (
+                    <Bookmark_Active
+                      onClick={() => {
+                        dispatch(bookActions.addBookFB(dataId));
+                        dispatch(postActions.getDetailFB(dataId));
+                      }}
+                    />
                   ) : (
-                    <Bookmark_Disabled onClick={bookmarkState} />
+                    <Bookmark_Disabled
+                      onClick={() => {
+                        dispatch(bookActions.addBookFB(dataId));
+                        dispatch(postActions.getDetailFB(dataId));
+                      }}
+                    />
                   )}
                 </div>
                 <CopyToClipboard text={url}>
@@ -284,13 +296,13 @@ const InfoBox = styled.div`
 
   ::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: #217af4; /* 스크롤바의 색상 */
+    background: #cccccc; /* 스크롤바의 색상 */
 
     border-radius: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, 0.1); /*스크롤바 뒷 배경 색상*/
+    background: #e8e8e8; /*스크롤바 뒷 배경 색상*/
   }
 `;
 

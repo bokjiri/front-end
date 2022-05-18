@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { actionCreators as markActions } from "../redux/modules/bookMark";
 import { actionCreators as bookActions } from "../redux/modules/bookMark";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 import { ReactIcon } from "../Icons/Icon";
 import { ReactComponent as Bookmark_Side_Active } from "../Icons/Bookmark_Side_Active.svg";
@@ -92,9 +93,10 @@ const DndShop = (props) => {
                       </DescBox2>
                       <Bookmark_Side_Active
                         className="deleteBtn2"
-                        onClick={() =>
-                          dispatch(bookActions.deleteBookFB(x.dataId))
-                        }
+                        onClick={() => {
+                          dispatch(bookActions.addBookFB(x.dataId));
+                          dispatch(markActions.getBookFB(userId));
+                        }}
                       />
                     </InBox2>
                   </CardBox2>
@@ -180,9 +182,10 @@ const DndShop = (props) => {
                       </DescBox>
                       <Bookmark_Side_Active
                         className="deleteBtn"
-                        onClick={() =>
-                          dispatch(bookActions.deleteBookFB(x.dataId))
-                        }
+                        onClick={() => {
+                          dispatch(bookActions.addBookFB(x.dataId));
+                          dispatch(markActions.getBookFB(userId));
+                        }}
                       />
                     </InBox>
                   </CardBox>
@@ -245,6 +248,20 @@ const DndBox = styled.div`
   z-index: 100;
   overflow-y: auto;
   overflow-x: hidden;
+  ::-webkit-scrollbar {
+    width: 8px; /* 스크롤바의 너비 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #cccccc; /* 스크롤바의 색상 */
+
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #e8e8e8; /*스크롤바 뒷 배경 색상*/
+  }
 `;
 
 const OpenToggle = styled.div`
@@ -351,6 +368,23 @@ const DndBox2 = styled.div`
   border-radius: 20px 0 0 20px;
   background: #ffffff;
   z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  ::-webkit-scrollbar {
+    width: 8px; /* 스크롤바의 너비 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #cccccc; /* 스크롤바의 색상 */
+
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #e8e8e8; /*스크롤바 뒷 배경 색상*/
+  }
 `;
 
 const CloseToggle = styled.div`

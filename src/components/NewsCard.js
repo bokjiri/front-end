@@ -41,6 +41,7 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   margin-bottom: 100px;
+  margin-left: 40px;
 `;
 
 const NewsBox = styled.div`
@@ -52,7 +53,7 @@ const NewsBox = styled.div`
   margin-bottom: 30px;
   background: #ffffff;
   border-radius: 16px;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   &:hover {
     background: #ffffff;
     color: #0361fb;
