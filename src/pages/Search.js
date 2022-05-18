@@ -8,25 +8,35 @@ import { actionCreators as categoryActions } from "../redux/modules/category";
 import { actionCreators as searchActions } from "../redux/modules/search";
 
 import { RiArrowDownSLine } from "react-icons/ri";
+import { Grid } from "../elements";
 
-const Search = () => {
+const Search = (data) => {
+  const txt = data.location.state?.txt;
 
   const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
   const policy_list = useSelector((state) => state.category);
   const search_list = useSelector((state) => state.search.list);
+
   const searchList = search_list?.searchList;
-  //const allCnt = policy_list?.policyList.length;
+
   const [clearList, setClearList] = useState("");
 
+  const [openSearchSelect, setOpenSearchSelect] = useState(false);
   const [openSelect, setOpenSelect] = useState(false);
 
-  const [category, setCategory] = useState("전체");
   const [searchCategory, setSearchCategory] = useState("전체");
+  const [category, setCategory] = useState("전체");
 
-  const [searchContent, setSearchContent] = useState("");
+  const [searchContent, setSearchContent] = useState({ txt });
 
   const [clear, setClear] = useState(false);
+
+  const selectTopCategory = (value) => {
+    setSearchCategory(value);
+    setOpenSearchSelect(true);
+    setClear(true);
+  };
 
   const selectCategory = (value) => {
     setCategory(value);
@@ -34,18 +44,12 @@ const Search = () => {
     setClear(true);
   };
 
-  const selectSearchCategory = (e) => {
-    setSearchCategory(e.target.value);
-  };
-
   const handleSearchContent = (e) => {
     setSearchContent(e.target.value);
 
-    // if(!e.target.value){
-    //    //window.location.reload();
-    //   //dispatch(categoryActions.getPolicyDB(userId));
-    //   //setClearList("클리어");
-    // } 
+    if (!e.target.value) {
+      return dispatch(searchActions.clearList());
+    }
   };
 
   const handleEvent = (e) => {
@@ -55,36 +59,60 @@ const Search = () => {
     if (e.key !== "Enter" || !searchContent) {
       return;
     }
-
-    dispatch(
-      searchActions.addSearchDB(searchContent, searchCategory)
-    );
+    dispatch(searchActions.addSearchDB(searchContent, searchCategory));
   };
-
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(categoryActions.getPolicyDB(userId));
 
-  }, []);
+    return () => {
+      dispatch(searchActions.clearList());
+    };
+  }, [dispatch]);
 
   return (
+    <Test>
     <Container>
       <SearchContainer>
         <SearchBox>
-          {/* <BiSearchAlt size="20px" color="#999999" /> */}
-          <select
-            onChange={(e) => {
-              selectSearchCategory(e);
-            }}
-          >
-            <option value="전체">전체</option>
-            <option value="정책분야">정책분야</option>
-            <option value="정책명">정책명</option>
-            <option value="내용">내용</option>
-          </select>
+          <TopSelectBox>
+            <TopRebalanceWrap
+              onClick={() => {
+                setOpenSearchSelect(true);
+                if (openSearchSelect === true) {
+                  setOpenSearchSelect(false);
+                }
+              }}
+            >
+              {
+                <TopRebalanceCont>
+                  {searchCategory}
+                  <RiArrowDownSLine />
+                </TopRebalanceCont>
+              }
+              {openSearchSelect && (
+                <TopRebalanceSelect>
+                  <TopSelectItem onClick={() => selectTopCategory("전체")}>
+                    전체
+                  </TopSelectItem>
+                  <TopSelectItem onClick={() => selectTopCategory("정책분야")}>
+                    정책분야
+                  </TopSelectItem>
+                  <TopSelectItem onClick={() => selectTopCategory("정책명")}>
+                    정책명
+                  </TopSelectItem>
+                  <TopSelectItem onClick={() => selectTopCategory("내용")}>
+                    내용
+                  </TopSelectItem>
+                </TopRebalanceSelect>
+              )}
+            </TopRebalanceWrap>
+          </TopSelectBox>
+
           <input
-            placeholder="검색어 입력 (ex. 청년, 주거...)"
+            defaultValue={txt ? txt : null}
+            placeholder="검색어를 입력하세요! (ex. 청년, 주거)"
             onChange={handleSearchContent}
             onKeyDown={handleEvent}
             spellCheck={false}
@@ -103,24 +131,10 @@ const Search = () => {
             </SearchButton>
           )}
         </SearchBox>
-
-          {/* {!searchContent ? (
-            <SearchButton disabled={true}>검색</SearchButton>
-          ) : (
-            <SearchButton
-              onClick={(e) => {
-                dispatch(
-                  searchActions.addSearchDB(searchContent, searchCategory)
-                );
-              }}
-            >
-              검색
-            </SearchButton>
-          )} */}
       </SearchContainer>
 
       {/* 검색 리스트 */}
-      {search_list?.length === 0 || !search_list || !searchContent? (
+      {search_list?.length === 0 || !search_list || !searchContent ? (
         <>
           <SelectBox>
             <RebalanceWrap
@@ -170,10 +184,14 @@ const Search = () => {
           </SelectBox>
 
           <Box>
-            <SearchCard policyList={policy_list} category={category} clear={clear}/>
+            <SearchCard
+              policyList={policy_list}
+              category={category}
+              clear={clear}
+            />
           </Box>
         </>
-      ) : (
+      ) : searchList ? (
         <>
           <SelectBox>
             <RebalanceWrap
@@ -223,16 +241,30 @@ const Search = () => {
           </SelectBox>
 
           <Box>
-            <SearchResultCard clearList={clearList} searchList={searchList} category={category} clear={clear}/>
-          </Box> 
-          
+            <SearchResultCard
+              clearList={clearList}
+              searchList={searchList}
+              category={category}
+              clear={clear}
+            />
+          </Box>
         </>
-      )}
+      ) : null}
     </Container>
+    </Test>
   );
 };
 
 export default Search;
+
+const Test = styled.div`
+  overflow-y:hidden;
+   overflow-x:hidden;
+   width:100%;
+   margin : 0;
+   padding : 0;
+
+`;
 
 const Container = styled.div`
   width: 100vw;
@@ -258,7 +290,7 @@ const Box = styled.div`
   align-items: center;
   flex-direction: column;
   margin-top: 20px;
-  margin-bottom : 82px;
+  margin-bottom: 82px;
 `;
 
 const SearchContainer = styled.div`
@@ -266,10 +298,10 @@ const SearchContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  background: rgba(114,168,254,0.1);
-  transparent : 10%;
-  height : 297px;
-  margin-bottom: 99px;
+  background: rgba(114, 168, 254, 0.1);
+  transparent: 10%;
+  height: 297px;
+  margin-bottom: 40px;
 
   input {
     margin-left: 10px;
@@ -277,11 +309,12 @@ const SearchContainer = styled.div`
     border: none;
     height: 68px;
     border-radius: 10px;
-    padding: 0 0 0 10px;
-    background-color: #FFFFFF;
+    padding: 0 0 0 20px;
+    background-color: #ffffff;
     color: #666666;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   }
 
   input:focus {
@@ -297,7 +330,7 @@ const SearchContainer = styled.div`
 `;
 
 const SearchButton = styled.button`
-  margin-left : 30px;
+  margin-left: 30px;
   width: 174px;
   height: 68px;
   background-color: tomato;
@@ -337,15 +370,15 @@ const SearchBox = styled.div`
   font-weight: 700;
 
   select {
-    width: 80px;
+    width: 84px;
     border: none;
-    height: 60px;
+    height: 93px;
     font-size: 15px;
     background: transparent;
     border-radius: 10px;
     font-weight: 500;
     color: #666666;
-    font-weight : 700;
+    font-weight: 700;
   }
 
   select:focus {
@@ -370,12 +403,12 @@ const RebalanceWrap = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  width: 200px;
+  width: 140px;
   height: 48px;
-  background-color: white;
+  background-color: transparent;
   border-radius: 5px;
   margin: 0 10px;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
 
   &:hover {
     cursor: pointer;
@@ -384,9 +417,9 @@ const RebalanceWrap = styled.div`
 
 const RebalanceCont = styled.p`
   padding: 0 10px;
-  font-size: 15px;
-  font-weight: 400;
-  width: 100%;
+  font-size: 14px;
+  font-weight: 700;
+  width: 130px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -395,24 +428,25 @@ const RebalanceCont = styled.p`
 const RebalanceSelect = styled.ul`
   padding: 4px 0px;
   position: absolute;
-  top: 35px;
+  top: 30px;
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 120px;
   font-size: var(--font-main);
-  font-weight: 400;
+  font-weight: 500;
   border: 2px solid var(--secondary-color);
-  border-radius: 10px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   background-color: #fff;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
 
-  height: 300px;
+  height: 195px;
   z-index: 3000;
 `;
 
 const SelectItem = styled.li`
-  width: 200px;
-  height: 35px;
+  width: 120px;
+  height: 24px;
   display: flex;
   align-items: center;
   font-size: var(--font-main);
@@ -423,11 +457,87 @@ const SelectItem = styled.li`
   list-style: none;
   text-align: center;
   justify-content: center;
+  margin-bottom: 5px;
+
+  &:hover {
+    font-weight: 600;
+    color: #0361fb;
+    background-color: var(--secondary-color);
+  }
+`;
+
+//////////////////////////
+
+const TopSelectBox = styled.div`
+  display: flex;
+  width: 84px;
+  height: 24px;
+  margin-right: 10px;
+`;
+
+const TopRebalanceWrap = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 90px;
+  height: 24px;
+  background-color: transparent;
+  border-radius: 5px;
+  margin: 0 10px;
+  color: black;
+  font-size: 14px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const TopRebalanceCont = styled.p`
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  width: 84px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const TopRebalanceSelect = styled.ul`
+  padding: 8px 0;
+  position: absolute;
+  top: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 84px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 2px solid var(--secondary-color);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+
+  height: 117px;
+  z-index: 3000;
+`;
+
+const TopSelectItem = styled.li`
+  width: 84px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-main);
+  font-weight: 400;
+  z-index: 3000;
+  cursor: pointer;
+  list-style: none;
+  text-align: center;
+  justify-content: center;
   margin-bottom: 10px;
 
   &:hover {
     font-weight: 600;
-    color: var(--primary-color);
+    color: #0361fb;
     background-color: var(--secondary-color);
   }
 `;

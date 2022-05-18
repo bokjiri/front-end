@@ -30,13 +30,12 @@ return(
             <p className="pty1_de2h">3. "회원"이라 함은 "회사"와 이용계약을 체결하고 "이용자" 아이디(ID)를 부여받은 "이용자"로서 "회사"의 정보를 지속적으로 제공받으며 "회사"가 제공하는 서비스를 지속적으로 이용할 수 있는 자를 말합니다.&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">4. "비회원"이라 함은 "회원"이 아니면서 "회사"가 제공하는 서비스를 이용하는 자를 말합니다.&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">6. "아이디(ID)"라 함은 "회원"의 식별과 서비스이용을 위하여 "회원"이 정하고 "회사"가 승인하는 문자 또는 숫자의 조합을 말합니다.&nbsp;<span className="sfon2"></span></p> 
-            <p className="pty1_de2h">7. "비밀번호(PASSWORD)"라 함은 "회원"이 부여받은 "아이디"와 일치되는 "회원"임을 확인하고 비밀보호를 위해 "회원" 자신이 정한 문자 또는 숫자의 조합을 말합니다.&nbsp;<span className="sfon2"></span></p> 
             </div> 
             </div> 
             <div className="pgroup"> 
             <ul className="lawico01"></ul> 
             <div className="lawcon"> 
-            <span className="bl"><label htmlFor="Y000300">제3조(신원정보 등의 제공)</label></span> "회사"는 이 약관의 내용, 상호, 대표자 성명, 영업소 소재지 주소(소비자의 불만을 처리할 수 있는 곳의 주소를 포함), 전화번호, 모사전송번호, 전자우편주소, 사업자등록번호, 통신판매업 신고번호 및 개인정보관리책임자 등을 이용자가 쉽게 알 수 있도록 온라인 서비스초기화면에 게시합니다. 다만, 약관은 이용자가 연결화면을 통하여 볼 수 있도록 할 수 있습니다.&nbsp;<span className="sfon2"></span> 
+            <span className="bl"><label htmlFor="Y000300">제3조(신원정보 등의 제공)</label></span> "회사"는 이 약관의 내용, 상호, 연락처 및 개인정보관리책임 등을 이용자가 쉽게 알 수 있도록 온라인 서비스초기화면에 게시합니다. 다만, 약관은 이용자가 연결화면을 통하여 볼 수 있도록 할 수 있습니다.&nbsp;<span className="sfon2"></span> 
             </div> 
             </div> 
             <div className="pgroup"> 
@@ -71,12 +70,11 @@ return(
             <div className="lawcon"> 
             <span className="bl"><label htmlFor="Y000700">제7조(회원가입)</label></span> &nbsp;<span className="sfon2"></span> ① 회원가입은 "이용자"가 약관의 내용에 대하여 동의를 하고 회원가입신청을 한 후 "회사"가 이러한 신청에 대하여 승낙함으로써 체결됩니다.&nbsp;<span className="sfon2"></span> 
             <p className="pty1_de2_1">② 회원가입신청서에는 다음 사항을 기재해야 합니다. 1호 내지 4호의 사항은 필수사항이며, 그 외의 사항은 선택사항입니다.&nbsp;<span className="sfon2"></span></p> 
-            <p className="pty1_de2h">1. "회원"의 성명과 주민등록번호 또는 인터넷상 개인식별번호&nbsp;<span className="sfon2"></span></p> 
-            <p className="pty1_de2h">2. "아이디"와 "비밀번호"&nbsp;<span className="sfon2"></span></p> 
-            <p className="pty1_de2h">3. 전자우편주소&nbsp;<span className="sfon2"></span></p> 
-            <p className="pty1_de2h">4. 카카오 회원가입 & 로그인 시, 카카오 계정의 "닉네임(이름)", "이메일", "프로필 사진"&nbsp;<span className="sfon2"></span></p> 
-            <p className="pty1_de2h">5. 이용하려는 "콘텐츠"의 종류&nbsp;<span className="sfon2"></span></p> 
-            <p className="pty1_de2h">6. 기타 "회사"가 필요하다고 인정하는 사항&nbsp;<span className="sfon2"></span></p> 
+            <p className="pty1_de2h">1. "회원"의 성명과 생년월일 또는 인터넷상 개인식별번호&nbsp;<span className="sfon2"></span></p> 
+            <p className="pty1_de2h">2. 전자우편주소&nbsp;<span className="sfon2"></span></p> 
+            <p className="pty1_de2h">3. 카카오 회원가입 & 로그인 시, 카카오 계정의 "닉네임(이름)", "이메일", "프로필 사진"&nbsp;<span className="sfon2"></span></p> 
+            <p className="pty1_de2h">4. 이용하려는 "콘텐츠"의 종류&nbsp;<span className="sfon2"></span></p> 
+            <p className="pty1_de2h">5. 기타 "회사"가 필요하다고 인정하는 사항&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2_1">③ "회사"는 상기 "이용자"의 신청에 대하여 회원가입을 승낙함을 원칙으로 합니다. 다만, "회사"는 다음 각 호에 해당하는 신청에 대하여는 승낙을 하지 않을 수 있습니다.&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">1. 가입신청자가 이 약관에 의하여 이전에 회원자격을 상실한 적이 있는 경우&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">2. 실명이 아니거나 타인의 명의를 이용한 경우&nbsp;<span className="sfon2"></span></p> 
@@ -157,7 +155,7 @@ return(
             <div className="lawcon"> 
             <span className="bl"><label htmlFor="Y001400">제14조(이용계약의 성립 등)</label></span> &nbsp;<span className="sfon2"></span> ① "이용자"는 "회사"가 제공하는 다음 또는 이와 유사한 절차에 의하여 이용신청을 합니다. "회사"는 계약 체결 전에 각 호의 사항에 관하여 "이용자"가 정확하게 이해하고 실수 또는 착오 없이 거래할 수 있도록 정보를 제공합니다.&nbsp;<span className="sfon2"></span> 
             <p className="pty1_de2h">1. "콘텐츠" 목록의 열람 및 선택&nbsp;<span className="sfon2"></span></p> 
-            <p className="pty1_de2h">2. 성명, 주소, 전화번호(또는 이동전화번호), 전자우편주소 등의 입력&nbsp;<span className="sfon2"></span></p> 
+            <p className="pty1_de2h">2. 성명, 주소, 전화번호(또는 이동전화번호), 개인정보, 전자우편주소 등의 입력&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">3. 약관내용, 청약철회가 불가능한 "콘텐츠"에 대해 "회사"가 취한 조치에 관련한 내용에 대한 확인&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">4. 이 약관에 동의하고 위 제3호의 사항을 확인하거나 거부하는 표시(예, 마우스 클릭)&nbsp;<span className="sfon2"></span></p> 
             <p className="pty1_de2h">5. "콘텐츠"의 이용신청에 관한 확인 또는 "회사"의 확인에 대한 동의&nbsp;<span className="sfon2"></span></p> 
@@ -395,7 +393,7 @@ return(
         <p className="gtit">제3조 (처리하는 개인정보의 항목)</p>
         ① 복세편살은(는) 다음의 개인정보 항목을 처리하고 있습니다.<br/>
         재화 또는 서비스 제공<br></br>
-        필수항목 : 생년월일, 성별, 주소지, 장애여부, 장애유형, 학력, 취업 여부, 결혼, 가구유형, 월소득, 가구원 수
+        필수항목 : 생년월일, 성별, 주소지, 장애여부, 장애유형, 학력, 업종, 취업 여부, 결혼 여부, 가구유형, 월소득, 가구원 수
 
 
         <p className="gtit">제4조 (개인정보의 파기절차 및 파기방법)</p>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { Text, Grid, Button } from "../elements/index";
+import { Text, Grid } from "../elements/index";
 
 import { history } from "../redux/configureStore";
 
@@ -11,7 +11,12 @@ import { actionCreators as infoActions } from "../redux/modules/info";
 import { birthYear, birthMonth, birthDate } from "../shared/Validation";
 import { apis } from "../shared/axios";
 
+import Loader from "../elements/Loader";
+
 const AddInfo = () => {
+
+  const [loading, setLoading] = useState(null);
+
   const dispatch = useDispatch();
 
   const userId = localStorage.getItem("userId");
@@ -43,11 +48,10 @@ const AddInfo = () => {
   const [open_select_city, setOpenSelectCity] = useState(false);
   const [open_select, setOpenSelect] = useState(false);
 
+  const [worktype, setWorktype] = useState([]);
+
   const click_city = (value) => {
-    // if(value === "-------"){
-    //   setCity(value);
-    //   setOpenSelectCity(false);
-    // }
+
     setTown("시·군을 선택해 주세요");
     setCity(value);
     setOpenSelectCity(false);
@@ -169,17 +173,33 @@ const AddInfo = () => {
     }
   };
 
+  const CreateWorktype = (e, item) => {
+    let newWorkType = worktype.findIndex((i) => i === item);
+
+    if (newWorkType === -1) {
+      setWorktype([...worktype, item]);
+    } else {
+      setWorktype(worktype.filter((g) => g !== item));
+    }
+    return;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const result = await apis.infoGet(userId);
       const data = result.data.data;
 
       if (data.age) {
         history.replace("/main");
       }
+
+      setLoading(false);
     };
     fetchData();
   }, []);
+
+  if(loading) return <Loader type="spin" color="#72A8FE" message={"Loading"} />; 
 
   const categoryList = {
     // lifeCycle: [
@@ -251,6 +271,9 @@ const AddInfo = () => {
       "임신·출산",
       "한부모·조손",
     ],
+
+    //업종
+    workType: ["농업", "광업", "임업", "축산업", "어업"],
 
     //주소(시.도)
     city: [
@@ -1054,6 +1077,32 @@ const AddInfo = () => {
           </CategoryBox>
 
           <Text size="20px" bold margin="40px 0 8px 8px">
+            업종
+          </Text>
+          <TextEnd>*복수 선택 가능</TextEnd>
+          <CategoryBox>
+            {Object.entries(categoryList.workType).map((item, idx) => {
+              return (
+                <Btn
+                  width="178px"
+                  key={idx}
+                  color={
+                    worktype?.findIndex((i) => i === item[1]) === -1
+                      ? "#E8E8E8"
+                      : "#0361FB"
+                  }
+                  value={item[0]}
+                  onClick={(e) => {
+                    CreateWorktype(e, item[1]);
+                  }}
+                >
+                  {item[1]}
+                </Btn>
+              );
+            })}
+          </CategoryBox>
+
+          <Text size="20px" bold margin="40px 0 8px 8px">
             결혼
           </Text>
           <CategoryBox>
@@ -1081,6 +1130,7 @@ const AddInfo = () => {
           <Text size="20px" bold margin="40px 0 8px 8px">
             가구유형
           </Text>
+          <TextEnd>*복수 선택 가능</TextEnd>
           <CategoryBox>
             {Object.entries(categoryList.target).map((item, idx) => {
               return (
@@ -1172,7 +1222,8 @@ const AddInfo = () => {
                 married,
                 target,
                 newIncome,
-                newFamily
+                newFamily,
+                worktype,
               )
             );
           }}
@@ -1195,7 +1246,7 @@ const MainWrap = styled.div`
 `;
 
 const Container = styled.div`
-  margin-top : 100px;
+  margin-top: 100px;
   width: 800px;
   display: flex;
   flex-direction: column;
@@ -1203,7 +1254,7 @@ const Container = styled.div`
   justify-content: center;
   background-color: white;
   margin: 20px 10px;
-  box-shadow: 0px 0px 10px 0px #dfdfde;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   border-radius: 7px;
   padding: 20px;
 `;
@@ -1302,7 +1353,7 @@ const TextBox = styled.div`
   display: flex;
   justify-content: center;
   margin-left: -600px;
-  margin-top : 130px;
+  margin-top: 130px;
 `;
 
 const ValidationBox = styled.div`
@@ -1348,7 +1399,7 @@ export const RebalanceSelect = styled.ul`
   border: 2px solid var(--secondary-color);
   border-radius: 10px;
   background-color: #fff;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
 
   height: 350px;
   overflow-y: scroll;

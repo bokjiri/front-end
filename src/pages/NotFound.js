@@ -16,9 +16,9 @@ const Box = styled.div`
   justify-content : center;
   align-items : center;
   width: 100vw;
+  height : 100vh;
 
   div {
-    margin-top: 100px;
-    height : 400px;
+    color : tomato;
   }
 `;

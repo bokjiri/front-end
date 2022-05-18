@@ -7,7 +7,7 @@ import Pagination from "./Pagination";
 
 const SearchResultCard = (props) => {
   const list = props.searchList;
-  //console.log(props.clearList);
+  const mainSearchList = props.mainSearchList;
 
   const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
@@ -22,8 +22,6 @@ const SearchResultCard = (props) => {
     }
   });
 
-
-
   useEffect(() => {
     if (props.clear === true) {
       setPage(1);
@@ -32,48 +30,101 @@ const SearchResultCard = (props) => {
 
   return (
     <>
-      {resultCard?.slice(offset, offset + limit).map((item, idx) => {
-        return (
-          <React.Fragment key={idx}>
-            <Container
-              onClick={() => {
-                history.push(`/detail/${item.dataId}`);
-              }}
-            >
-              <Category
-                color={
-                  item.desire === "일자리"
-                    ? "#7FAAEE"
-                    : item.desire === "주거 및 일상생활"
-                    ? "#EE5D58"
-                    : item.desire === "건강"
-                    ? "#6DCDC7"
-                    : item.desire === "교육 및 돌봄"
-                    ? "#FF98B7"
-                    : item.desire === "안전 및 권익보장"
-                    ? "#FFA95A"
-                    : item.desire === "기타"
-                    ? "#A397EF"
-                    : null
-                }
-              >
-                {item.desire}
-              </Category>
-              <Text margin="5px 0 10px 25px" bold size="20px" cursor="pointer">
-                {item.name}
-              </Text>
-              <Summary>{item.summary}</Summary>
-            </Container>
-          </React.Fragment>
-        );
-      })}
+      {resultCard
+        ? resultCard &&
+          resultCard?.slice(offset, offset + limit).map((item, idx) => {
+            return (
+              <React.Fragment key={idx}>
+                <Container
+                  onClick={() => {
+                    history.push(`/detail/${item.dataId}`);
+                  }}
+                >
+                  <Category
+                    color={
+                      item.desire === "일자리"
+                        ? "#7FAAEE"
+                        : item.desire === "주거 및 일상생활"
+                        ? "#EE5D58"
+                        : item.desire === "건강"
+                        ? "#6DCDC7"
+                        : item.desire === "교육 및 돌봄"
+                        ? "#FF98B7"
+                        : item.desire === "안전 및 권익보장"
+                        ? "#FFA95A"
+                        : item.desire === "기타"
+                        ? "#A397EF"
+                        : null
+                    }
+                  >
+                    {item.desire}
+                  </Category>
+                  <Text
+                    margin="5px 0 10px 25px"
+                    bold
+                    size="20px"
+                    cursor="pointer"
+                  >
+                    {item.name}
+                  </Text>
+                  <Summary>{item.summary}</Summary>
+                </Container>
+              </React.Fragment>
+            );
+          })
+        : props?.mainSearchList
+        ? props?.mainSearchList
+            .slice(offset, offset + limit)
+            .map((item, idx) => {
+              return (
+                <React.Fragment key={idx}>
+                  <Container
+                    onClick={() => {
+                      history.push(`/detail/${item.dataId}`);
+                    }}
+                  >
+                    <Category
+                      color={
+                        item.desire === "일자리"
+                          ? "#7FAAEE"
+                          : item.desire === "주거 및 일상생활"
+                          ? "#EE5D58"
+                          : item.desire === "건강"
+                          ? "#6DCDC7"
+                          : item.desire === "교육 및 돌봄"
+                          ? "#FF98B7"
+                          : item.desire === "안전 및 권익보장"
+                          ? "#FFA95A"
+                          : item.desire === "기타"
+                          ? "#A397EF"
+                          : null
+                      }
+                    >
+                      {item.desire}
+                    </Category>
+                    <Text
+                      margin="5px 0 10px 25px"
+                      bold
+                      size="20px"
+                      cursor="pointer"
+                    >
+                      {item.name}
+                    </Text>
+                    <Summary>{item.summary}</Summary>
+                  </Container>
+                </React.Fragment>
+              );
+            })
+        : null}
 
-      <Pagination
-        total={resultCard.length}
-        limit={limit}
-        page={page}
-        setPage={setPage}
-      />
+      {
+        <Pagination
+          total={resultCard ? resultCard?.length : mainSearchList?.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      }
     </>
   );
 };
@@ -89,7 +140,7 @@ const Container = styled.div`
   justify-content: center;
 
   background-color: white;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
 
   div {
@@ -99,11 +150,11 @@ const Container = styled.div`
   }
 
   &:hover {
-    cursor : pointer;
+    cursor: pointer;
   }
 
   p:hover {
-    cursor : pointer;
+    cursor: pointer;
   }
 `;
 

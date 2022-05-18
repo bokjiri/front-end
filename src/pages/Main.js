@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Grid, Button } from "../elements/index";
-import { history } from "../redux/configureStore";
-import { BiSearchAlt } from "react-icons/bi";
 import styled from "styled-components";
 import MainCard2 from "../components/MainCard2";
 
 import { actionCreators as infoActions } from "../redux/modules/info";
 import { actionCreators as categoryActions } from "../redux/modules/category";
-import { ReactComponent as Search } from "../Icons/Search.svg";
+import { actionCreators as searchActions } from "../redux/modules/search";
 
 import News1 from "../imgs/Banner_News1.png";
 import News2 from "../imgs/Banner_News2.png";
@@ -18,6 +16,9 @@ import DndShop from "../components/DndShop";
 import Cookies from "universal-cookie";
 import { useHistory, useParams } from "react-router-dom";
 import NewsCard from "../components/NewsCard";
+import { apis } from "../shared/axios";
+
+import Swal from "sweetalert2";
 const cookies = new Cookies();
 
 const Main = () => {
@@ -27,7 +28,6 @@ const Main = () => {
   const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
 
-  const info_list = useSelector((state) => state.info.list);
   const policy_list = useSelector((state) => state.category);
   const policyList = useSelector((state) => state.category.policyList);
   const [category, setCategory] = useState([
@@ -38,6 +38,9 @@ const Main = () => {
     "⛑ 안전 및 권익보장",
     "기타",
   ]);
+
+  const [txt, setTxt] = useState("");
+  const [click, setClick] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,53 +61,94 @@ const Main = () => {
     }
   }, []);
 
+  const onInput = (e) => {
+    setTxt(e.target.value);
+  };
+
+  const handleEvent = (e) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
+    if (e.key !== "Enter" || !txt) {
+      return;
+    }
+
+    dispatch(searchActions.addSearchDB(txt, "전체"));
+    apis
+      .searchAdd(txt, "전체")
+      .then((res) => {
+        history.push({
+          pathname: `/search`,
+          state: {
+            txt: txt,
+            category: "전체",
+            searchList: res.data.searchList,
+          },
+        });
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   if (cookies.get("userToken")) {
     return (
       <Container>
         <SearchContainer>
           <SearchText>🔎 어떤 정책을 찾으세요?</SearchText>
 
-          <SearchButton
-            onClick={() => {
-              history.push("/search");
-            }}
-          >
+          <SearchButton>
             <SearchBox>
-              <Search
-                style={{
-                  margin: "19px 20px 0 20px",
-                }}
+              <input
+                type="text"
+                spellCheck={false}
+                placeholder="검색어를 입력하세요! (ex. 청년, 주거)"
+                onChange={onInput}
+                onKeyPress={handleEvent}
               />
-              <p>검색어를 입력하세요</p>
             </SearchBox>
-            <BoxSearch>검색</BoxSearch>
+            {!txt ? (
+              <SearchBtn disabled={true}>검색</SearchBtn>
+            ) : (
+              <SearchBtn>검색</SearchBtn>
+            )}
           </SearchButton>
         </SearchContainer>
         <MypolicyCheck>나에게 맞는 정책을 확인해보세요!</MypolicyCheck>
         <CategoryBox>
-          <Button
-            backgroundColor="#ffffff"
-            box-shadow="0 4px 14px rgba(0,0,0,0.1)"
-            color="#999999"
-            width="171px"
-            radius="10px"
-            margin="10px"
-            _onClick={() => {
+          <button
+            style={{
+              backgroundColor: click ? "#0361fb" : "#ffffff",
+              color: click ? "#ffffff" : "#999999",
+              boxShadow: "0px 2px 15px rgba(0, 0, 0, 0.05)",
+              width: "153px",
+              height: "48px",
+              border: "none",
+              borderRadius: "10px",
+              fontSize: "13px",
+              fontWeight: "700",
+              lineHeight: "23.17px",
+              margin: "10px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
               history.push("/main");
+              // setClick(!click);
             }}
           >
             전체
-          </Button>
+          </button>
           {category.map((table, index) => (
-            <Button
+            <button
               key={index}
-              backgroundColor="#ffffff"
-              box-shadow="0 4px 14px rgba(0,0,0,0.1)"
-              color="#999999"
-              width="171px"
-              radius="10px"
-              margin="10px"
-              _onClick={() => {
+              // backgroundColor="#ffffff"
+              // box-shadow="0px 2px 15px rgba(0, 0, 0, 0.05)"
+              // color="#999999"
+              // width="153px"
+              // radius="10px"
+              // margin="10px"
+              onClick={() => {
+                setClick(false);
                 history.push(`/main/${table}`);
                 if (table === "📄 일자리") {
                   dispatch(categoryActions.workDB(userId));
@@ -120,27 +164,57 @@ const Main = () => {
                   dispatch(categoryActions.etcDB(userId));
                 }
               }}
+              style={{
+                backgroundColor: categoryName === table ? "#0361fb" : "#ffffff",
+                color: categoryName === table ? "#ffffff" : "#999999",
+                boxShadow: "0px 2px 15px rgba(0, 0, 0, 0.05)",
+                width: "153px",
+                height: "48px",
+
+                border: "none",
+                borderRadius: "10px",
+                fontSize: "13px",
+                fontWeight: "700",
+                lineHeight: "23.17px",
+                margin: "10px",
+                cursor: "pointer",
+              }}
             >
               {table}
-            </Button>
+            </button>
           ))}
         </CategoryBox>
 
         <DndShop policyList={policy_list} userId={userId} />
         {/* <MainCard categoryName={categoryName} /> */}
-        {/* <div
+        <div
           onClick={() => {
             history.push("/search");
           }}
+          style={{
+            position: "absolute",
+            margin: "0 0 1220px 900px",
+            zIndex: "2",
+            fontWeight: "700",
+            fontSize: "16px",
+            color: "#666666",
+            cursor: "pointer",
+          }}
         >
-          전체보기 >
-        </div> */}
+          전체보기 ({policyList.length})
+        </div>
 
         <MainCard2 categoryName={categoryName} policyList={policyList} />
 
         <BannerBox>
           <img src={News1} alt="banner1" />
-          <img src={News2} alt="banner2" />
+          <img
+            src={News2}
+            alt="banner2"
+            onClick={() => {
+              window.open("https://forms.gle/meV9dEsAo9VCZhP17");
+            }}
+          />
         </BannerBox>
 
         <MynewsCheck>새로운 복지 뉴스를 확인해보세요!</MynewsCheck>
@@ -154,6 +228,11 @@ const Main = () => {
 };
 
 export default Main;
+
+const TextBox = styled.div`
+  display: flex;
+  width: 1210px;
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -174,6 +253,10 @@ const Container = styled.div`
 const BannerBox = styled.div`
   display: flex;
   margin-top: 100px;
+
+  img:last-child {
+    cursor: pointer;
+  }
 `;
 
 const SearchContainer = styled.div`
@@ -184,7 +267,7 @@ const SearchContainer = styled.div`
   margin-top: 70px;
   margin-bottom: 100px;
   width: 100vw;
-  height: 297px;
+  height: 227px;
   background: rgba(114, 168, 254, 0.1);
 
   @media screen and (max-width: 767px) {
@@ -204,7 +287,6 @@ const SearchText = styled.div`
 
 const SearchButton = styled.div`
   display: flex;
-  /* width: 500px; */
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -217,12 +299,12 @@ const SearchButton = styled.div`
 const SearchBox = styled.div`
   display: flex;
   text-align: left;
-  width: 786px;
+  width: 770px;
   height: 68px;
   color: #666666;
   font-weight: 700;
   background: #ffffff;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
   p {
     line-height: 37px;
@@ -234,6 +316,17 @@ const SearchBox = styled.div`
     color: #72a8fe;
   }
 
+  input {
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 0 0 0 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    color: #666666;
+    font-size: 14px;
+  }
+
   @media screen and (max-width: 767px) {
     width: 100%;
     display: flex;
@@ -242,20 +335,19 @@ const SearchBox = styled.div`
   }
 `;
 
-const BoxSearch = styled.div`
+const SearchBtn = styled.button`
   margin-left: 30px;
   text-align: center;
   width: 174px;
   height: 68px;
   line-height: 68px;
   background: #0361fb;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   color: white;
-  weight: 700;
-  size: 14px;
-  letter-spacing: 0.0125em;
+  font-weight: 700;
+  font-size: 14px;
   cursor: pointer;
+  border: none;
 `;
 
 const MypolicyCheck = styled.div`
@@ -263,7 +355,7 @@ const MypolicyCheck = styled.div`
   font-size: 30px;
   line-height: 49px;
   letter-spacing: 0.0025em;
-  margin-right: 800px;
+  margin-right: 760px;
 `;
 
 const MynewsCheck = styled.div`
@@ -271,7 +363,7 @@ const MynewsCheck = styled.div`
   font-size: 30px;
   line-height: 49px;
   letter-spacing: 0.0025em;
-  margin: 100px 800px 40px 0;
+  margin: 100px 780px 40px 0;
   align-items: flex-start;
 `;
 

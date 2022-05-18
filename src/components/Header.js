@@ -100,7 +100,7 @@ const Header = () => {
               </div>
             </Box>
             </>
-          ) : null}
+          ) : <Logo className="Logo" />}
         </div>
       </Container>
     </>
@@ -117,7 +117,7 @@ const Box = styled.div`
 
 const Container = styled.div`
   min-width: 100vw;
-  height: 50px;
+  height: 60px;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 24px;
@@ -191,7 +191,6 @@ const Container = styled.div`
         height: var(--alert-size);
         border-radius: var(--alert-size);
         background-color: #de0000;
-        box-shadow: 0 1px 3px 0 rgba(245, 80, 80, 0.25);
       }
     }
   }
