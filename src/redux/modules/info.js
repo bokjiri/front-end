@@ -60,7 +60,8 @@ const addInfoDB = (
   married,
   target,
   newIncome,
-  newFamily
+  newFamily,
+  workType
 ) => {
   return function (dispatch, getState, { history }) {
     const _info = {
@@ -75,7 +76,8 @@ const addInfoDB = (
       married: married,
       target: target,
       newIncome: newIncome,
-      newFamily : newFamily
+      newFamily : newFamily,
+      workType : workType
     };
 
     apis
@@ -91,7 +93,8 @@ const addInfoDB = (
         married,
         target,
         newIncome,
-        newFamily
+        newFamily,
+        workType
       )
       .then((res) => {
         dispatch(addInfo(_info));

@@ -81,7 +81,8 @@ export const apis = {
     married,
     target,
     newIncome,
-    newFamily
+    newFamily,
+    workType
   ) =>
     instance.patch(`/api/users/${userId}`, {
       age: lifeCycle,
@@ -95,6 +96,7 @@ export const apis = {
       target: target,
       salary: newIncome,
       family: newFamily,
+      workType: workType,
     }),
 
   policyGet: (userId) => instance.get(`/api/main/${userId}`),
@@ -102,7 +104,7 @@ export const apis = {
   detailGet: (dataId) => instance.get(`/api/detail/${dataId}`),
   bookGet: (userId) => instance.get(`/api/marks/${userId}`),
   bookAdd: (dataId) =>
-    instance.post(`/api/marks/`, {
+    instance.put(`/api/marks/`, {
       dataId: dataId,
     }),
   bugAdd: (dataId) =>

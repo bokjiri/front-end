@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { history } from "../redux/configureStore";
 import { ConnectedRouter } from "connected-react-router";
 import { useDispatch } from "react-redux";
@@ -31,9 +31,9 @@ function App() {
 
   return (
     <React.Fragment>
-
       <ConnectedRouter history={history}>
       <Header />
+      <Switch>
         <Route path="/" exact component={Login} />
         <Route path="/law" exact component={LoginLaw} />
 
@@ -52,8 +52,9 @@ function App() {
         <Route path="/modal" exact component={Modal} />
         <Route path="/mypage" exact component={Mypage} />
 
-        {/* <Route path="*" exact component={NotFound} /> */}
-
+        <Route component={NotFound} />
+        </Switch>
+        
         <Footer />
       </ConnectedRouter>
     </React.Fragment>
