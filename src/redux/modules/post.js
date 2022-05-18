@@ -6,7 +6,6 @@ import { apis } from "../../shared/axios";
 
 // actions
 
-const GET_POST = "GET_POST";
 const ADD_BUG = "ADD_BUG";
 const GET_DETAIL = "GET_DETAIL";
 
@@ -18,22 +17,8 @@ const initialState = {
 };
 
 //Action Create
-const getPost = createAction(GET_POST, (post) => ({ post }));
 const addBug = createAction(ADD_BUG, (bug) => ({ bug }));
 const getDetail = createAction(GET_DETAIL, (detail_post) => ({ detail_post }));
-
-const getPostFB = () => {
-  return function (dispatch, getState, { history }) {
-    axios
-      .get("http://localhost:3001/post")
-      .then((res) => {
-        dispatch(getPost(res.data));
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-  };
-};
 
 const addBugFB = (dataId) => {
   console.log("데이터아이디", dataId);
@@ -55,7 +40,6 @@ const getDetailFB = (dataId) => {
     apis
       .detailGet(dataId)
       .then((res) => {
-        console.log("ㅇㅇㅇ", res.data);
         dispatch(getDetail(res.data.data));
       })
       .catch((error) => {
@@ -67,10 +51,6 @@ const getDetailFB = (dataId) => {
 //reducer
 export default handleActions(
   {
-    [GET_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.post = action.payload.post;
-      }),
     [GET_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         console.log(action.payload);
@@ -82,9 +62,7 @@ export default handleActions(
 );
 
 const actionCreators = {
-  getPost,
   addBug,
-  getPostFB,
   addBugFB,
   getDetailFB,
 };
