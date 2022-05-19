@@ -8,6 +8,7 @@ import { apis } from "../../shared/axios";
 
 const ADD_BUG = "ADD_BUG";
 const GET_DETAIL = "GET_DETAIL";
+const ADD_BOOK = "ADD_BOOK";
 
 // initialState
 const initialState = {
@@ -19,15 +20,13 @@ const initialState = {
 //Action Create
 const addBug = createAction(ADD_BUG, (bug) => ({ bug }));
 const getDetail = createAction(GET_DETAIL, (detail_post) => ({ detail_post }));
+const addBook = createAction(ADD_BOOK, (marks_list) => ({ marks_list }));
 
 const addBugFB = (dataId) => {
-  console.log("데이터아이디", dataId);
   return function ({ history }) {
     apis
       .bugAdd(dataId)
-      .then((res) => {
-        window.alert("정책 오류 신고가 되었습니다.👍");
-      })
+      .then((res) => {})
       .catch((error) => {
         console.log("error", error);
       });
@@ -35,7 +34,6 @@ const addBugFB = (dataId) => {
 };
 
 const getDetailFB = (dataId) => {
-  console.log(dataId);
   return function (dispatch, getState, { history }) {
     apis
       .detailGet(dataId)
@@ -48,14 +46,33 @@ const getDetailFB = (dataId) => {
   };
 };
 
+const addBookFB = (dataId) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .bookAdd(dataId)
+      .then((res) => {
+        dispatch(addBook(res.data.data.bookmarkState));
+      })
+      .catch((err) => {
+        console.log("북마크 추가 실패", err);
+      });
+  };
+};
+
 //reducer
 export default handleActions(
   {
     [GET_DETAIL]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
-        console.log(state);
         draft.detail_post = action.payload.detail_post;
+        if (action.payload.detail_post.dataId === draft.detail_post.dataId) {
+          draft.detail_post.bookmarkState =
+            action.payload.detail_post.bookmarkState;
+        }
+      }),
+    [ADD_BOOK]: (state, action) =>
+      produce(state, (draft) => {
+        draft.detail_post.bookmarkState = action.payload.marks_list;
       }),
   },
   initialState
@@ -65,6 +82,7 @@ const actionCreators = {
   addBug,
   addBugFB,
   getDetailFB,
+  addBookFB,
 };
 
 export { actionCreators };

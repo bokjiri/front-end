@@ -8,7 +8,7 @@ import { apis } from "../../shared/axios";
 //action
 //bookMark
 const GET_BOOK = "GET_BOOK";
-const ADD_BOOK = "ADD_BOOK";
+const DELETE_BOOK = "DELETE_BOOK";
 //news
 const GET_NEWS = "GET_NEWS";
 
@@ -16,13 +16,13 @@ const GET_NEWS = "GET_NEWS";
 const initialState = {
   marks: [],
   news: [],
-  marks_list: [],
+  bookmarkState: false,
 };
 
 //Action Create
 const getBook = createAction(GET_BOOK, (marks) => ({ marks }));
-const addBook = createAction(ADD_BOOK, (marks_list) => ({ marks_list }));
 const getNews = createAction(GET_NEWS, (news) => ({ news }));
+const deleteBook = createAction(DELETE_BOOK, (dataId) => ({ dataId }));
 
 //middleware actions
 const getBookFB = (userId) => {
@@ -34,25 +34,6 @@ const getBookFB = (userId) => {
       })
       .catch((error) => {
         console.log("북마크 로드 실패", error);
-      });
-  };
-};
-
-const addBookFB = (dataId) => {
-  return function (dispatch, getState, { history }) {
-    apis
-      .bookAdd(dataId)
-      .then((res) => {
-        dispatch(addBook(res.data.data));
-      })
-      .then((res) => {
-        dispatch(postActions.getDetailFB(dataId));
-      })
-      .then((res) => {
-        dispatch(getBook(res.data.userMark));
-      })
-      .catch((err) => {
-        console.log("북마크 추가 실패", err);
       });
   };
 };
@@ -70,6 +51,19 @@ const getNewsFB = () => {
   };
 };
 
+const deleteBookDB = (dataId) => {
+  return function (dispatch) {
+    apis
+      .bookdelete(dataId)
+      .then((res) => {
+        dispatch(deleteBook(dataId));
+      })
+      .catch((err) => {
+        console.log("북마크 삭제 실패", err);
+      });
+  };
+};
+
 //reducer
 export default handleActions(
   {
@@ -81,9 +75,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.news = action.payload.news;
       }),
-    [ADD_BOOK]: (state, action) =>
+    [DELETE_BOOK]: (state, action) =>
       produce(state, (draft) => {
-        draft.marks_list = action.payload.marks_list;
+        draft.marks = draft.marks.filter(
+          (p) => p.dataId !== action.payload.dataId
+        );
       }),
   },
   initialState
@@ -93,7 +89,7 @@ const actionCreators = {
   getBook,
   getBookFB,
   getNewsFB,
-  addBookFB,
+  deleteBookDB,
 };
 
 export { actionCreators };
