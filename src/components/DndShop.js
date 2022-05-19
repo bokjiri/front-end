@@ -4,8 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { actionCreators as markActions } from "../redux/modules/bookMark";
-import { actionCreators as bookActions } from "../redux/modules/bookMark";
-import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as bookActions } from "../redux/modules/post";
 
 import { ReactIcon } from "../Icons/Icon";
 import { ReactComponent as Bookmark_Side_Active } from "../Icons/Bookmark_Side_Active.svg";
@@ -94,8 +93,7 @@ const DndShop = (props) => {
                       <Bookmark_Side_Active
                         className="deleteBtn2"
                         onClick={() => {
-                          dispatch(bookActions.addBookFB(x.dataId));
-                          dispatch(markActions.getBookFB(userId));
+                          dispatch(markActions.deleteBookDB(x.dataId));
                         }}
                       />
                     </InBox2>
@@ -183,8 +181,7 @@ const DndShop = (props) => {
                       <Bookmark_Side_Active
                         className="deleteBtn"
                         onClick={() => {
-                          dispatch(bookActions.addBookFB(x.dataId));
-                          dispatch(markActions.getBookFB(userId));
+                          dispatch(markActions.deleteBookDB(x.dataId));
                         }}
                       />
                     </InBox>
