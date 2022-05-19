@@ -16,6 +16,8 @@ import { ReactComponent as Share_Active } from "../Icons/Share_Active.svg";
 import { ReactComponent as Bookmark_Disabled } from "../Icons/Bookmark_Disabled.svg";
 import { ReactComponent as Bookmark_Active } from "../Icons/Bookmark_Active.svg";
 
+import Swal from "sweetalert2";
+
 const Detail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -23,31 +25,14 @@ const Detail = (props) => {
   const dataId = params.dataId;
   const detail_post = useSelector((state) => state.post.detail_post);
   const mark_list = useSelector((state) => state.bookMark.marks_list);
-  console.log("북마크 리스트", mark_list);
+  const markState = detail_post.bookmarkState;
 
   useEffect(() => {
     dispatch(postActions.getDetailFB(dataId));
   }, []);
 
-  // const [bookClick, setBookclick] = useState(detail_post.bookmarkState);
-
-  // const bookmarkState = () => {
-  //   if (mark_list.bookmarkState === false) {
-  //     dispatch(bookActions.addBookFB(dataId));
-  //   } else {
-  //     dispatch(bookActions.addBookFB(dataId));
-  //   }
-  // };
-
-  console.log("현재 주소", window.location.href);
   const url = window.location.href;
-  let CopyUrl = () => {
-    try {
-      window.alert("클립보드에 주소가 복사되었습니다.");
-    } catch (err) {
-      console.log("클립보드 복사를 실패하였습니다.", err);
-    }
-  };
+
   const [state, setState] = React.useState({
     open: false,
     vertical: "top",
@@ -79,7 +64,6 @@ const Detail = (props) => {
                 }}
               />
             </CloseBtn>
-            {/* onClick={openModal} */}
             <div
               style={{
                 display: "flex",
@@ -107,7 +91,27 @@ const Detail = (props) => {
               >
                 {detail_post.desire}
               </PolicyDesire>
-              <ModalGo onClick={() => dispatch(postActions.addBugFB(dataId))}>
+              <ModalGo
+                onClick={() =>
+                  Swal.fire({
+                    html: "맞지 않는 정책을 신고하시겠습니까? <br> 신고 시, 해당 맞춤 정책은 삭제됩니다.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "확인",
+                    cancelButtonText: "취소",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      dispatch(postActions.addBugFB(dataId));
+                      Swal.fire({
+                        text: "맞지 않는 정책 신고가 완료되었습니다!",
+                      });
+                      history.replace("/main");
+                    }
+                  })
+                }
+              >
                 <PostError />
               </ModalGo>
             </div>
@@ -123,18 +127,16 @@ const Detail = (props) => {
               <PolicyName>{detail_post.name}</PolicyName>
               <div style={{ display: "flex" }}>
                 <div style={{ cursor: "pointer" }}>
-                  {detail_post.bookmarkState === true ? (
+                  {markState === true ? (
                     <Bookmark_Active
                       onClick={() => {
-                        dispatch(bookActions.addBookFB(dataId));
-                        dispatch(postActions.getDetailFB(dataId));
+                        dispatch(postActions.addBookFB(dataId));
                       }}
                     />
                   ) : (
                     <Bookmark_Disabled
                       onClick={() => {
-                        dispatch(bookActions.addBookFB(dataId));
-                        dispatch(postActions.getDetailFB(dataId));
+                        dispatch(postActions.addBookFB(dataId));
                       }}
                     />
                   )}
@@ -146,7 +148,6 @@ const Detail = (props) => {
                       style={{
                         marginTop: "14px",
                       }}
-                      // className="shareIcon"
                       onClick={handleClick({
                         vertical: "bottom",
                         horizontal: "center",
@@ -161,7 +162,6 @@ const Detail = (props) => {
                       onClick={url}
                     />
                   </ShareBtn>
-                  {/* <Share_Disabled onClick={CopyUrl} /> */}
                 </CopyToClipboard>
               </div>
             </div>
@@ -185,12 +185,8 @@ const Detail = (props) => {
               </InfoBox3>
             </InfoBox>
           </div>
-          {/* <InfoBox1>서비스 이용 및 신청 방법 : 이미지 추가</InfoBox1> */}
-
-          {/* <Modal open={modalOpen} close={closeModal} /> */}
         </ModalDetail>
         <div>
-          {/* <ShareIcon /> */}
           <SubmitBtn
             onClick={() => {
               window.open(detail_post.link);

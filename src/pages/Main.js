@@ -40,7 +40,7 @@ const Main = () => {
   ]);
 
   const [txt, setTxt] = useState("");
-  const [click, setClick] = useState(true);
+  const [click, setClick] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -91,6 +91,25 @@ const Main = () => {
       });
   };
 
+  const ClickEvent = (e) => {
+    dispatch(searchActions.addSearchDB(txt, "전체"));
+    apis
+      .searchAdd(txt, "전체")
+      .then((res) => {
+        history.push({
+          pathname: `/search`,
+          state: {
+            txt: txt,
+            category: "전체",
+            searchList: res.data.searchList,
+          },
+        });
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+
   if (cookies.get("userToken")) {
     return (
       <Container>
@@ -109,9 +128,10 @@ const Main = () => {
             </SearchBox>
             {!txt ? (
               <SearchBtn disabled={true}>검색</SearchBtn>
-            ) : (
-              <SearchBtn>검색</SearchBtn>
-            )}
+            ) :
+             (
+              <SearchBtn onClick={ClickEvent}>검색</SearchBtn>
+            )} 
           </SearchButton>
         </SearchContainer>
         <MypolicyCheck>나에게 맞는 정책을 확인해보세요!</MypolicyCheck>
@@ -133,7 +153,7 @@ const Main = () => {
             }}
             onClick={() => {
               history.push("/main");
-              // setClick(!click);
+              setClick(!click);
             }}
           >
             전체
@@ -193,7 +213,7 @@ const Main = () => {
           }}
           style={{
             position: "absolute",
-            margin: "0 0 1220px 900px",
+            margin: "0 0 1310px 900px",
             zIndex: "2",
             fontWeight: "700",
             fontSize: "16px",

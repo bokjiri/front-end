@@ -36,9 +36,8 @@ const FooterTest = () => {
             </Contents>
 
             <IconBox>
-              <Mail />
-              <SNS />
-
+              <a href="mailto:boksei_@naver.com?subject=[복세편살] 문의"><Mail className="mail"/></a>
+              <SNS onClick={()=>{window.open("https://www.instagram.com/boksei_/")}} />
             </IconBox>
           </SecondSection>
         </Wrap>
@@ -103,6 +102,12 @@ const IconBox = styled.div`
   width: 80px;
   justify-content: space-between;
   align-items: center;
+  cursor : pointer;
+
+  .mail{
+    margin-top : 4px;
+  }
+
 `;
 
 const LogoBox = styled.div`
