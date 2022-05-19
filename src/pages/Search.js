@@ -28,7 +28,7 @@ const Search = (data) => {
   const [searchCategory, setSearchCategory] = useState("전체");
   const [category, setCategory] = useState("전체");
 
-  const [searchContent, setSearchContent] = useState({ txt });
+  const [searchContent, setSearchContent] = useState(txt);
 
   const [clear, setClear] = useState(false);
 

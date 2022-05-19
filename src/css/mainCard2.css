@@ -63,7 +63,7 @@ body {
 
 .swiper {
   width: 1210px;
-  height: 342px;
+  height: 365px;
 }
 
 .swiper.wrapper {
@@ -114,4 +114,10 @@ body {
   border-radius: 4px;
   margin: 0 10px;
   font-size: 13px;
+}
+
+.swiper-pagination{
+  font-size : 15px;
+  color : #666666;
+  font-weight: 600;
 }

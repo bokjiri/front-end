@@ -194,7 +194,8 @@ const AddInfo = () => {
         history.replace("/main");
       }
 
-      setLoading(false);
+
+        setLoading(false);
     };
     fetchData();
   }, []);
@@ -572,14 +573,14 @@ const AddInfo = () => {
 
   return (
     <MainWrap>
-      <TextBox>✏️ 정보를 입력해 주세요!</TextBox>
+      <TextBox>✏️ 정보를 입력하시면 맞춤 정책을 추천해 드립니다!</TextBox>
 
       <Container>
         <Grid>
           <Text size="20px" bold margin="20px 8px">
             생년월일
           </Text>
-          <TextEnd>*필수 입력</TextEnd>
+          <TextEnd color="#0361FB">*필수 입력</TextEnd>
           <BirthBox>
             <input
               placeholder="YYYY년"
@@ -965,7 +966,7 @@ const AddInfo = () => {
           <Text size="20px" bold margin="40px 0 8px 8px">
             장애여부
           </Text>
-          <TextEnd>*필수 선택</TextEnd>
+          <TextEnd color="#0361FB">*필수 선택</TextEnd>
           <CategoryBox>
             {Object.entries(categoryList.obstacleYN).map((item, idx) => {
               return (
@@ -1052,6 +1053,33 @@ const AddInfo = () => {
           </CategoryBox>
 
           <Text size="20px" bold margin="40px 0 8px 8px">
+            업종
+          </Text>
+          <TextEnd color="#666666">*복수 선택 가능</TextEnd>
+          <CategoryBox>
+            {Object.entries(categoryList.workType).map((item, idx) => {
+              return (
+                <Btn
+                  width="178px"
+                  key={idx}
+                  color={
+                    worktype?.findIndex((i) => i === item[1]) === -1
+                      ? "#E8E8E8"
+                      : "#0361FB"
+                  }
+                  value={item[0]}
+                  onClick={(e) => {
+                    CreateWorktype(e, item[1]);
+                  }}
+                >
+                  {item[1]}
+                </Btn>
+              );
+            })}
+          </CategoryBox>
+
+
+          <Text size="20px" bold margin="40px 0 8px 8px">
             취업 여부
           </Text>
           <CategoryBox>
@@ -1076,32 +1104,7 @@ const AddInfo = () => {
             })}
           </CategoryBox>
 
-          <Text size="20px" bold margin="40px 0 8px 8px">
-            업종
-          </Text>
-          <TextEnd>*복수 선택 가능</TextEnd>
-          <CategoryBox>
-            {Object.entries(categoryList.workType).map((item, idx) => {
-              return (
-                <Btn
-                  width="178px"
-                  key={idx}
-                  color={
-                    worktype?.findIndex((i) => i === item[1]) === -1
-                      ? "#E8E8E8"
-                      : "#0361FB"
-                  }
-                  value={item[0]}
-                  onClick={(e) => {
-                    CreateWorktype(e, item[1]);
-                  }}
-                >
-                  {item[1]}
-                </Btn>
-              );
-            })}
-          </CategoryBox>
-
+          
           <Text size="20px" bold margin="40px 0 8px 8px">
             결혼
           </Text>
@@ -1130,7 +1133,7 @@ const AddInfo = () => {
           <Text size="20px" bold margin="40px 0 8px 8px">
             가구유형
           </Text>
-          <TextEnd>*복수 선택 가능</TextEnd>
+          <TextEnd color="#666666">*복수 선택 가능</TextEnd>
           <CategoryBox>
             {Object.entries(categoryList.target).map((item, idx) => {
               return (
@@ -1156,7 +1159,7 @@ const AddInfo = () => {
           <Text size="20px" bold margin="20px 8px">
             월 소득
           </Text>
-          <TextEnd>
+          <TextEnd color="#666666">
             *1인 가구 : 개인 월 소득, 2인 이상 가구 : 가구 월 소득
           </TextEnd>
           <InputBox>
@@ -1173,8 +1176,8 @@ const AddInfo = () => {
               <Text size="20px" bold margin="20px 8px">
                 가구원 수
               </Text>
-              <TextEnd>*가구원 수는 중위소득 판별에 활용됩니다.</TextEnd>
-              <TextEnd>*1~8명까지 입력 가능합니다.</TextEnd>
+              <TextEnd color="#666666">*가구원 수는 중위소득 판별에 활용됩니다.</TextEnd>
+              <TextEnd color="#666666">*1~8명까지 입력 가능합니다.</TextEnd>
               <InputBox>
                 <IncomeInput
                   placeholder="명"
@@ -1434,8 +1437,10 @@ const TextEnd = styled.div`
   justify-content: end;
   align-items: center;
   margin-right: 15px;
-  font-size: 7px;
+  font-size: 12px;
   margin-bottom: 5px;
+  font-weight : 700;
+  color :  ${(props) => props.color};
 `;
 
 const ObstacleBox = styled.div`
