@@ -31,6 +31,16 @@ export default function MainCard2(props) {
   const safetyRight = useSelector((state) => state.category.safetyRight);
   const etc = useSelector((state) => state.category.etc);
 
+  const work_length = work.length;
+  const houseLife_length = houseLife.length;
+  const CategoryLength = () => {
+    if (categoryName === "일자리") {
+      Number({ work_length });
+    } else if (categoryName === "🏠 주거 및 일상생활") {
+      Number({ houseLife_length });
+    }
+  };
+
   const [swiperRef, setSwiperRef] = useState(null);
 
   const [slides, setSlides] = useState(
@@ -43,6 +53,19 @@ export default function MainCard2(props) {
 
   return (
     <>
+      <div
+        style={{
+          position: "absolute",
+          margin: "0 0 1350px 1100px",
+          zIndex: "2",
+          fontWeight: "700",
+          fontSize: "16px",
+          color: "#666666",
+          cursor: "pointer",
+        }}
+      >
+        전체보기 ({CategoryLength})
+      </div>
       <Swiper
         onSwiper={setSwiperRef}
         slidesPerView={4}

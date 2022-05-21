@@ -14,7 +14,7 @@ import { ReactComponent as Side_Close } from "../Icons/Side_Close.svg";
 const DndShop = (props) => {
   const history = useHistory();
   const [toggle, setToggle] = useState(false);
-  const [sideBox, setSideBox] = useState(false);
+  const [sideBox, setSideBox] = useState(true);
   const [close, setClose] = useState();
   const dispatch = useDispatch();
   const userId = props.userId;
@@ -209,6 +209,7 @@ const DndShop = (props) => {
           style={{
             position: "fixed",
             right: "0",
+            top: "70%",
             cursor: "pointer",
           }}
           onClick={() => {

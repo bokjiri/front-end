@@ -47,7 +47,7 @@ body {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  transform: translate3d(-455px, 0px, 0px);
+  transform: translate3d(-420px, 0px, 0px);
 }
 .swiper-slide:hover {
   background: #ffffff;
@@ -62,8 +62,8 @@ body {
 }
 
 .swiper {
-  width: 1210px;
-  height: 365px;
+  width: 1510px;
+  height: 400px;
 }
 
 .swiper.wrapper {
@@ -71,31 +71,30 @@ body {
 }
 
 .swiper-button-prev {
-  left: 1110px;
-  top: 30px;
-  width: 40px;
-  height: 40px;
+  left: 0px;
+  /* top: 30px; */
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   background: white;
   font-weight: bold;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
 }
 .swiper-button-prev::after {
-  font-size: 20px;
+  font-size: 40px;
   color: #0361fb;
 }
 .swiper-button-next {
-  left: 1165px;
-  top: 30px;
-  width: 40px;
-  height: 40px;
+  /* left: 1165px; */
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   background: white;
   font-weight: bold;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
 }
 .swiper-button-next::after {
-  font-size: 20px;
+  font-size: 40px;
   color: #0361fb;
 }
 
@@ -116,8 +115,14 @@ body {
   font-size: 13px;
 }
 
-.swiper-pagination{
-  font-size : 15px;
-  color : #666666;
+.swiper-pagination {
+  font-size: 15px;
+  line-height: 38px;
+  color: #72a8fe;
   font-weight: 600;
+  background-color: #ffffff;
+  border-radius: 30px;
+  width: 70px;
+  height: 38px;
+  left: 50%;
 }

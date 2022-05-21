@@ -9,6 +9,7 @@ import { apis } from "../../shared/axios";
 const ADD_BUG = "ADD_BUG";
 const GET_DETAIL = "GET_DETAIL";
 const ADD_BOOK = "ADD_BOOK";
+const RESET_DETAIL = "RESET_DETAIL";
 
 // initialState
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
 const addBug = createAction(ADD_BUG, (bug) => ({ bug }));
 const getDetail = createAction(GET_DETAIL, (detail_post) => ({ detail_post }));
 const addBook = createAction(ADD_BOOK, (marks_list) => ({ marks_list }));
+export const detailsGet = createAction(RESET_DETAIL);
 
 const addBugFB = (dataId) => {
   return function ({ history }) {
@@ -73,6 +75,10 @@ export default handleActions(
     [ADD_BOOK]: (state, action) =>
       produce(state, (draft) => {
         draft.detail_post.bookmarkState = action.payload.marks_list;
+      }),
+    [RESET_DETAIL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.detail_post = [];
       }),
   },
   initialState
