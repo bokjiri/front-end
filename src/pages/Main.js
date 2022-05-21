@@ -18,7 +18,6 @@ import { useHistory, useParams } from "react-router-dom";
 import NewsCard from "../components/NewsCard";
 import { apis } from "../shared/axios";
 
-import Swal from "sweetalert2";
 const cookies = new Cookies();
 
 const Main = () => {
@@ -73,15 +72,15 @@ const Main = () => {
       return;
     }
 
-    dispatch(searchActions.addSearchDB(txt, "전체"));
+    dispatch(searchActions.addSearchDB(txt, "통합검색"));
     apis
-      .searchAdd(txt, "전체")
+      .searchAdd(txt, "통합검색")
       .then((res) => {
         history.push({
           pathname: `/search`,
           state: {
             txt: txt,
-            category: "전체",
+            category: "통합검색",
             searchList: res.data.searchList,
           },
         });
@@ -92,15 +91,15 @@ const Main = () => {
   };
 
   const ClickEvent = (e) => {
-    dispatch(searchActions.addSearchDB(txt, "전체"));
+    dispatch(searchActions.addSearchDB(txt, "통합검색"));
     apis
-      .searchAdd(txt, "전체")
+      .searchAdd(txt, "통합검색")
       .then((res) => {
         history.push({
           pathname: `/search`,
           state: {
             txt: txt,
-            category: "전체",
+            category: "통합검색",
             searchList: res.data.searchList,
           },
         });
@@ -161,12 +160,6 @@ const Main = () => {
           {category.map((table, index) => (
             <button
               key={index}
-              // backgroundColor="#ffffff"
-              // box-shadow="0px 2px 15px rgba(0, 0, 0, 0.05)"
-              // color="#999999"
-              // width="153px"
-              // radius="10px"
-              // margin="10px"
               onClick={() => {
                 setClick(false);
                 history.push(`/main/${table}`);
@@ -206,24 +199,7 @@ const Main = () => {
         </CategoryBox>
 
         <DndShop policyList={policy_list} userId={userId} />
-        {/* <MainCard categoryName={categoryName} /> */}
-        <div
-          onClick={() => {
-            history.push("/search");
-          }}
-          style={{
-            position: "absolute",
-            margin: "0 0 1310px 900px",
-            zIndex: "2",
-            fontWeight: "700",
-            fontSize: "16px",
-            color: "#666666",
-            cursor: "pointer",
-          }}
-        >
-          전체보기 ({policyList.length})
-        </div>
-
+        
         <MainCard2 categoryName={categoryName} policyList={policyList} />
 
         <BannerBox>
@@ -249,10 +225,6 @@ const Main = () => {
 
 export default Main;
 
-const TextBox = styled.div`
-  display: flex;
-  width: 1210px;
-`;
 
 const Container = styled.div`
   width: 100%;

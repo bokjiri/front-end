@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 
@@ -6,7 +6,12 @@ import { Text, Grid } from "../elements/index";
 
 import { actionCreators as infoActions } from "../redux/modules/info";
 
-import { birthYear, birthMonth, birthDate } from "../shared/Validation";
+import {
+  birthYear,
+  birthMonth,
+  birthDate,
+  incomeReg,
+} from "../shared/Validation";
 import { apis } from "../shared/axios";
 
 import Loader from "../elements/Loader";
@@ -43,6 +48,40 @@ const AddInfo = () => {
   let newFamily = Number(family);
 
   const [worktype, setWorktype] = useState([]);
+
+  const [open_select_city, setOpenSelectCity] = useState(false);
+  const [open_select, setOpenSelect] = useState(false);
+
+  //click
+  const wrapperRef = useRef();
+  const __wrapperRef = useRef();
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", __handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", __handleClickOutside);
+    };
+  });
+
+  const handleClickOutside = (event) => {
+    if (wrapperRef && !wrapperRef.current.contains(event.target)) {
+      setOpenSelectCity(false);
+    } else {
+      setOpenSelectCity(true);
+    }
+  };
+
+  const __handleClickOutside = (event) => {
+    if (__wrapperRef && !__wrapperRef.current.contains(event.target)) {
+      setOpenSelect(false);
+    } else {
+      setOpenSelect(true);
+    }
+  };
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -90,8 +129,7 @@ const AddInfo = () => {
     fetchData();
   }, []);
 
-  const [open_select_city, setOpenSelectCity] = useState(false);
-  const [open_select, setOpenSelect] = useState(false);
+
 
   if (loading)
     return <Loader type="spin" color="#72A8FE" message={"Loading"} />;
@@ -207,6 +245,9 @@ const AddInfo = () => {
   };
 
   const CreateIncome = (e) => {
+    if (!e.target.value) {
+      setFamily("");
+    }
     setIncome(e.target.value);
   };
 
@@ -685,13 +726,13 @@ const AddInfo = () => {
             </Text>
             <CategoryBox>
               <RebalanceWrap
-                onClick={() => {
-                  setOpenSelectCity(!open_select_city);
-                }}
+                ref={wrapperRef}
               >
                 {<RebalanceCont>{city}</RebalanceCont>}
                 {open_select_city && (
-                  <RebalanceSelect>
+                  <RebalanceSelect onClick={() => {
+                    setOpenSelectCity(!open_select_city);
+                  }}>
                     {Object.entries(categoryList.city).map((item, idx) => {
                       return (
                         <SelectItem
@@ -708,16 +749,16 @@ const AddInfo = () => {
               </RebalanceWrap>
 
               <RebalanceWrap
-                onClick={() => {
-                  setOpenSelect(!open_select);
-                }}
+                ref={__wrapperRef}
               >
                 <RebalanceCont>{town}</RebalanceCont>
                 {city === "-------" ? null : null}
 
                 {city === "강원도"
                   ? open_select && (
-                      <RebalanceSelect>
+                      <RebalanceSelect onClick={() => {
+                        setOpenSelect(!open_select);
+                      }}>
                         {Object.entries(categoryList.town1).map((item, idx) => {
                           return (
                             <SelectItem
@@ -1199,17 +1240,30 @@ const AddInfo = () => {
               <IncomeInput
                 placeholder="만원"
                 onChange={CreateIncome}
-                maxLength="10"
+                maxLength="5"
                 defaultValue={income}
               ></IncomeInput>
             </InputBox>
+            {income ? (
+              !incomeReg(income) ? (
+                <Grid is_flex margin="0">
+                  <ValidationBox
+                    style={{ color: "#ED6451", marginTop: "-10px" }}
+                  >
+                    올바른 형식으로 입력해 주세요.
+                  </ValidationBox>
+                </Grid>
+              ) : null
+            ) : null}
 
             {income !== 0 && income !== "" ? (
               <>
                 <Text size="20px" bold margin="20px 8px">
                   가구원 수
                 </Text>
-                <TextEnd color="#666666">*가구원 수는 중위소득 판별에 활용됩니다.</TextEnd>
+                <TextEnd color="#666666">
+                  *가구원 수는 중위소득 판별에 활용됩니다.
+                </TextEnd>
                 <TextEnd color="#666666">*1~8명까지 입력 가능합니다.</TextEnd>
                 <InputBox>
                   <IncomeInput
@@ -1224,7 +1278,7 @@ const AddInfo = () => {
 
             {income && !family ? (
               <Grid is_flex>
-                <ValidationBox style={{ color: "#ED6451" }}>
+                <ValidationBox style={{ color: "#ED6451", marginTop: "-10px" }}>
                   월 소득 기입 시, 가구원 수 입력은 필수입니다.
                 </ValidationBox>
               </Grid>
@@ -1239,6 +1293,7 @@ const AddInfo = () => {
         !birthMonth(month) ||
         !date ||
         !birthDate(date) ||
+        (income && !incomeReg(income)) ||
         Number(year) > 2022 ||
         (income && !family) ? (
           <CompleteBtn disabled={true}>완료</CompleteBtn>
@@ -1362,15 +1417,12 @@ const CompleteBtn = styled.button`
   border-radius: 5px;
   border: none;
   background-color: ${(props) =>
-    props.disabled === true ? "#ED6451" : "#E8E8E8"};
-  color: ${(props) => (props.disabled === true ? "#FFFFFF" : "#999999")};
+    props.disabled === true ? "#E8E8E8" : "#0361FB"};
+  color: ${(props) => (props.disabled === true ? "#999999" : "#FFFFFF")};
   font-weight: 900;
 
   &:hover {
     cursor: pointer;
-    background-color: #72a8fe;
-    color: #ffffff;
-    transparent: 0.8;
   }
 
   &:focus {
@@ -1474,8 +1526,8 @@ const TextEnd = styled.div`
   margin-right: 15px;
   font-size: 12px;
   margin-bottom: 5px;
-  font-weight : 700;
-  color :  ${(props) => props.color};
+  font-weight: 700;
+  color: ${(props) => props.color};
 `;
 
 const ObstacleBox = styled.div`

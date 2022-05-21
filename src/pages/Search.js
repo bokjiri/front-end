@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import SearchCard from "../components/SearchCard";
@@ -9,6 +9,8 @@ import { actionCreators as searchActions } from "../redux/modules/search";
 
 import { RiArrowDownSLine } from "react-icons/ri";
 import { Grid } from "../elements";
+
+import DndShop from "../components/DndShop";
 
 const Search = (data) => {
   const txt = data.location.state?.txt;
@@ -25,12 +27,42 @@ const Search = (data) => {
   const [openSearchSelect, setOpenSearchSelect] = useState(false);
   const [openSelect, setOpenSelect] = useState(false);
 
-  const [searchCategory, setSearchCategory] = useState("전체");
+  const [searchCategory, setSearchCategory] = useState("통합검색");
   const [category, setCategory] = useState("전체");
 
   const [searchContent, setSearchContent] = useState(txt);
 
   const [clear, setClear] = useState(false);
+
+  //click
+  const wrapperRef = useRef();
+  const __wrapperRef = useRef();
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", __handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", __handleClickOutside);
+    };
+  });
+
+  const handleClickOutside = (event) => {
+    if (wrapperRef && !wrapperRef.current.contains(event.target)) {
+      setOpenSearchSelect(false);
+    } else {
+      setOpenSearchSelect(true);
+    }
+  };
+
+  const __handleClickOutside = (event) => {
+    if (__wrapperRef && !__wrapperRef.current.contains(event.target)) {
+      setOpenSelect(false);
+    } else {
+      setOpenSelect(true);
+    }
+  };
 
   const selectTopCategory = (value) => {
     setSearchCategory(value);
@@ -72,19 +104,11 @@ const Search = (data) => {
   }, [dispatch]);
 
   return (
-    <Test>
     <Container>
       <SearchContainer>
         <SearchBox>
           <TopSelectBox>
-            <TopRebalanceWrap
-              onClick={() => {
-                setOpenSearchSelect(true);
-                if (openSearchSelect === true) {
-                  setOpenSearchSelect(false);
-                }
-              }}
-            >
+            <TopRebalanceWrap ref={wrapperRef}>
               {
                 <TopRebalanceCont>
                   {searchCategory}
@@ -92,9 +116,16 @@ const Search = (data) => {
                 </TopRebalanceCont>
               }
               {openSearchSelect && (
-                <TopRebalanceSelect>
-                  <TopSelectItem onClick={() => selectTopCategory("전체")}>
-                    전체
+                <TopRebalanceSelect
+                  onClick={() => {
+                    setOpenSearchSelect(true);
+                    if (openSearchSelect === true) {
+                      setOpenSearchSelect(false);
+                    }
+                  }}
+                >
+                  <TopSelectItem onClick={() => selectTopCategory("통합검색")}>
+                    통합검색
                   </TopSelectItem>
                   <TopSelectItem onClick={() => selectTopCategory("정책분야")}>
                     정책분야
@@ -137,14 +168,8 @@ const Search = (data) => {
       {search_list?.length === 0 || !search_list || !searchContent ? (
         <>
           <SelectBox>
-            <RebalanceWrap
-              onClick={() => {
-                setOpenSelect(true);
-                if (openSelect === true) {
-                  setOpenSelect(false);
-                }
-              }}
-            >
+            <RebalanceWrap ref={__wrapperRef}>
+              {/* ref={__wrapperRef} */}
               {
                 <RebalanceCont>
                   {category}
@@ -152,7 +177,14 @@ const Search = (data) => {
                 </RebalanceCont>
               }
               {openSelect && (
-                <RebalanceSelect>
+                <RebalanceSelect
+                  onClick={() => {
+                    setOpenSelect(true);
+                    if (openSelect === true) {
+                      setOpenSelect(false);
+                    }
+                  }}
+                >
                   <SelectItem onClick={() => selectCategory("전체")}>
                     전체
                   </SelectItem>
@@ -194,14 +226,7 @@ const Search = (data) => {
       ) : searchList ? (
         <>
           <SelectBox>
-            <RebalanceWrap
-              onClick={() => {
-                setOpenSelect(true);
-                if (openSelect === true) {
-                  setOpenSelect(false);
-                }
-              }}
-            >
+            <RebalanceWrap ref={__wrapperRef}>
               {
                 <RebalanceCont>
                   {category}
@@ -209,7 +234,14 @@ const Search = (data) => {
                 </RebalanceCont>
               }
               {openSelect && (
-                <RebalanceSelect>
+                <RebalanceSelect
+                  onClick={() => {
+                    setOpenSelect(true);
+                    if (openSelect === true) {
+                      setOpenSelect(false);
+                    }
+                  }}
+                >
                   <SelectItem onClick={() => selectCategory("전체")}>
                     전체
                   </SelectItem>
@@ -250,28 +282,18 @@ const Search = (data) => {
           </Box>
         </>
       ) : null}
+
+      <DndShop userId={userId} />
     </Container>
-    </Test>
   );
 };
 
 export default Search;
 
-const Test = styled.div`
-  overflow-y:hidden;
-   overflow-x:hidden;
-   width:100%;
-   margin : 0;
-   padding : 0;
-
-`;
-
 const Container = styled.div`
   width: 100vw;
   display: flex;
   align-items: center;
-  min-height: 100%;
-
   flex-direction: column;
 
   @media screen and (max-width: 767px) {
@@ -441,7 +463,7 @@ const RebalanceSelect = styled.ul`
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
 
   height: 195px;
-  z-index: 3000;
+  z-index: 0;
 `;
 
 const SelectItem = styled.li`
@@ -518,7 +540,7 @@ const TopRebalanceSelect = styled.ul`
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
 
   height: 117px;
-  z-index: 3000;
+  z-index: 0;
 `;
 
 const TopSelectItem = styled.li`

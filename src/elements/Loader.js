@@ -14,7 +14,7 @@ function Loader({ type, color, message }) {
         }}
       >
         <h2 style={{ fontSize:"10px", color:"#0361FB"}}>{message}</h2>
-        <ReactLoading type={type} color={color} height={"80%"} width={"80%"} />
+        <ReactLoading type={type} color={color} height={"100%"} width={"100%"} />
       </div>
     </div>
   );

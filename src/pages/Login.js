@@ -43,15 +43,16 @@ const Login = () => {
                 bg="none"
                 margin="0 0 43px 0"
               >
-              <LoginText />
+                <LoginText />
               </Grid>
               <img
+                className="kakaoLogin"
                 src={kakaoBtn}
                 alt="kakaoLogin"
                 onClick={() => {
                   if (state === false) {
                     Swal.fire({
-                      text : "이용 약관 동의는 필수입니다!",
+                      text: "이용 약관 동의는 필수입니다!",
                       confirmButtonColor: "#72A8FE",
                     });
                     return;
@@ -64,17 +65,33 @@ const Login = () => {
               <LoginTerms>
                 {state === true ? (
                   <>
-                  <img src={CheckedBox} onClick={onChangeState}/>
-                  <Link to="/law" style={{color : "#0361FB"}}>
-                    <Text color="#0361FB" size="14px" width="266px" margin="0 0 0 10px">디지털콘텐츠 이용 및 개인정보 이용 약관 내용을 확인하였고 동의합니다.</Text>
-                  </Link>
+                    <img src={CheckedBox} onClick={onChangeState} />
+                    <Link to="/law" style={{ color: "#0361FB" }}>
+                      <Text
+                        color="#0361FB"
+                        size="14px"
+                        width="266px"
+                        margin="0 0 0 10px"
+                      >
+                        디지털콘텐츠 이용 및 개인정보 이용 약관 내용을
+                        확인하였고 동의합니다.
+                      </Text>
+                    </Link>
                   </>
                 ) : (
                   <>
-                  <img src={CheckBox} onClick={onChangeState}/>
-                  <Link to="/law">
-                    <Text color="#999999" size="14px" width="266px" margin="0 0 0 10px">디지털콘텐츠 이용 및 개인정보 이용 약관 내용을 확인하였고 동의합니다.</Text>
-                  </Link>
+                    <img src={CheckBox} onClick={onChangeState} />
+                    <Link to="/law">
+                      <Text
+                        color="#999999"
+                        size="14px"
+                        width="266px"
+                        margin="0 0 0 10px"
+                      >
+                        디지털콘텐츠 이용 및 개인정보 이용 약관 내용을
+                        확인하였고 동의합니다.
+                      </Text>
+                    </Link>
                   </>
                 )}
               </LoginTerms>
@@ -91,6 +108,7 @@ const Login = () => {
 };
 
 export default Login;
+
 
 const LoginTerms = styled.div`
   display: flex;
@@ -110,7 +128,21 @@ const LoginTerms = styled.div`
   }
 
   a:focus {
-    color : #0361FB!important;
+    color: #0361fb !important;
+  }
+
+  @media screen and (max-width: 990px) {
+    display : flex;
+    flex-direction: column;
+    align-items : center;
+    justify-content : center;
+
+    width : 100%;
+    height : 100%;
+    margin : 0;
+    padding : 0;
+
+    
   }
 `;
 
@@ -121,10 +153,24 @@ const LoginBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-left : 50px;
+  margin-left: 50px;
 
   img {
-    cursor : pointer;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 990px) {
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    .kakaoLogin {
+     width : 50px;
+    }
   }
 `;
 
@@ -137,7 +183,16 @@ const Container = styled.div`
   align-items: center;
   flex-direction: row;
   background-color: white;
-  box-shadow : 0px 2px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   border-radius: 30px;
-  margin-bottom : 80px;
+  margin-bottom: 80px;
+
+  @media screen and (max-width: 990px) {
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width : 100vw;
+  }
 `;
