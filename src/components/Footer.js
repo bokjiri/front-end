@@ -12,13 +12,7 @@ import { useLocation } from "react-router-dom";
 const FooterTest = () => {
   const isLogin = useSelector((state) => state.user.isLogin);
 
-  const location = useLocation();
-  const path = location.pathname;
-
   return (
-    path.includes("detail")
-    ? null
-    :
     isLogin && (
       <Container>
         <Wrap>
@@ -30,7 +24,7 @@ const FooterTest = () => {
           <SecondSection>
             <Contents>
 
-              <div>복세편살은 복지로의 OPEN API를 사용합니다.</div>
+              <div>복세편살은 복지로, 온라인청년센터의 OPEN API를 사용합니다.</div>
               <div>문의 : boksei_@naver.com</div>
               <div>2022 복세편살 Co.All rights Reserved.</div>
             </Contents>

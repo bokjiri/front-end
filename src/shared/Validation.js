@@ -12,3 +12,11 @@ export const birthDate = (date) => {
   let _reg = /^(0[1-9]|[1-2][0-9]|3[0-1])$/;
   return _reg.test(date);
 };
+
+export const incomeReg = (income) => {
+  // let _reg = /[^0-9]/g;
+  let _reg = /^(0|[1-9]\d*)$/;
+  return _reg.test(income);
+};
+
+

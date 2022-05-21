@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-import { BiSearchAlt } from "react-icons/bi";
-
 import { history } from "../redux/configureStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 import { ReactComponent as Logo } from "../imgs/Logo_Header.svg";
+import { ReactComponent as Search } from "../imgs/Search.svg";
 
 import Cookies from "universal-cookie";
 
@@ -70,8 +69,7 @@ const Header = () => {
           />
             <Box>
               <div className="auth none">
-                <BiSearchAlt
-                  size="30"
+                <Search
                   onClick={() => {
                     history.push("/search");
                   }}
