@@ -30,7 +30,8 @@ const Detail = (props) => {
   const dataId = params.dataId;
   const detail_post = useSelector((state) => state.post.detail_post);
   const markState = detail_post.bookmarkState;
-
+  console.log("써머리줄바꿈", detail_post.summary);
+  console.log("줄바꿈", detail_post.support);
   useEffect(() => {
     dispatch(postActions.getDetailFB(dataId));
     return () => {
@@ -57,7 +58,7 @@ const Detail = (props) => {
   };
   if (cookies.get("userToken")) {
     return (
-      <Grid bg="#E9F2FF">
+      <Container>
         <ModalBox>
           <ModalDetail>
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -207,10 +208,10 @@ const Detail = (props) => {
             </SubmitBtn>
           </div>
         </ModalBox>
-      </Grid>
+      </Container>
     );
   } else {
-    <Grid bg="#E9F2FF">
+    <Container>
       <ModalBox>
         <ModalDetail>
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -366,12 +367,25 @@ const Detail = (props) => {
           </SubmitBtn>
         </div>
       </ModalBox>
-    </Grid>;
+    </Container>;
   }
   return null;
 };
 
 export default Detail;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e9f2ff;
+  @media screen and (max-width: 720px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #e9f2ff;
+  }
+`;
 
 const PolicyDesire = styled.div`
   text-align: center;
@@ -387,9 +401,6 @@ const PolicyDesire = styled.div`
 `;
 
 const ModalBox = styled.div`
-  position: absolute;
-  top: calc(21vh - 100px);
-  left: calc(42vw - 200px);
   background: #f8faff;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   display: flex;
@@ -397,17 +408,26 @@ const ModalBox = styled.div`
   align-items: center;
   border-radius: 30px;
   width: 846px;
-  /* height: 936px; */
   flex-direction: column;
   padding: 10px;
-  margin: 100px 0;
+  margin: 170px 0 100px 0;
+  @media screen and (max-width: 720px) {
+    background: #f8faff;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    width: 546px;
+    flex-direction: column;
+    padding: 10px;
+    margin: 170px 0 100px 0;
+  }
 `;
 
 const ModalDetail = styled.div`
   width: 900px;
   height: max-content;
-  /* margin: 20px 10px 0px 0; */
-  /* border: 1px solid red; */
 `;
 
 const CloseBtn = styled.div`
@@ -471,6 +491,7 @@ const InfoBox = styled.div`
   padding: 10px 20px 20px;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   border-radius: 14px;
+  white-space: pre-wrap;
 `;
 
 const SubmitBtn = styled.div`

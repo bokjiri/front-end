@@ -246,6 +246,7 @@ const DndBox = styled.div`
   z-index: 100;
   overflow-y: auto;
   overflow-x: hidden;
+
   ::-webkit-scrollbar {
     width: 8px; /* 스크롤바의 너비 */
   }
