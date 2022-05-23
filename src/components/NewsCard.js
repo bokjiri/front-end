@@ -18,13 +18,15 @@ const NewsCard = () => {
             window.open(x.link);
           }}
         >
-          <NewsImg src={x.image} />
-          <NewsView>
-            <NewsHead>{x.title}</NewsHead>
-            <NewsDesc>{x.desc}</NewsDesc>
-          </NewsView>
+          <ListBox>
+            <NewsImg src={x.image} />
+            <NewsView>
+              <NewsHead>{x.title}</NewsHead>
+              <NewsDesc>{x.desc}</NewsDesc>
+            </NewsView>
 
-          <NewsCreateAt>{x.date}</NewsCreateAt>
+            <NewsCreateAt>{x.date}</NewsCreateAt>
+          </ListBox>
         </NewsBox>
       ))}
     </Container>
@@ -44,6 +46,13 @@ const Container = styled.div`
   margin-left: 40px;
 `;
 
+const ListBox = styled.div`
+  /* &:hover {
+    background: #ffffff;
+    color: #0361fb;
+  } */
+`;
+
 const NewsBox = styled.div`
   align-items: center;
   width: 276px;
@@ -54,10 +63,10 @@ const NewsBox = styled.div`
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
-  &:hover {
+  /* &:hover {
     background: #ffffff;
     color: #0361fb;
-  }
+  } */
 `;
 
 const NewsImg = styled.img`
@@ -72,6 +81,10 @@ const NewsView = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  &:hover {
+    background: #ffffff;
+    color: #0361fb;
+  }
 `;
 
 const NewsHead = styled.h5`
@@ -100,11 +113,8 @@ const NewsDesc = styled.div`
   line-height: 23.17px;
   font-size: 16px;
   color: #666666;
+
   /* margin-bottom: 10px; */
-  &:hover {
-    background: #ffffff;
-    color: #0361fb;
-  }
 `;
 
 const NewsCreateAt = styled.div`
@@ -115,8 +125,4 @@ const NewsCreateAt = styled.div`
   line-height: 20.27px;
   color: #999999;
   font-weight: 400;
-  &:hover {
-    background: #ffffff;
-    color: #0361fb;
-  }
 `;

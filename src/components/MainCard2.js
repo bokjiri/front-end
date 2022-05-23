@@ -12,6 +12,7 @@ import "swiper/css/navigation";
 
 import "../css/mainCard2.css";
 import { useHistory } from "react-router-dom";
+import { ReactComponent as _noCard } from "../Icons/_noCard.svg";
 
 // install Virtual module
 SwiperCore.use([Virtual, Navigation, Pagination]);
