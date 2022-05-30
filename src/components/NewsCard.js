@@ -56,7 +56,7 @@ const ListBox = styled.div`
 const NewsBox = styled.div`
   align-items: center;
   width: 276px;
-  height: 410px;
+  height: 396px;
   cursor: pointer;
   margin-right: 30px;
   margin-bottom: 30px;
@@ -92,8 +92,8 @@ const NewsHead = styled.h5`
   height: 65px;
   font-weight: bold;
   font-size: 20px;
-  line-height: 34.75px;
-  margin: 20px 0 10px 0;
+  line-height: 28.96px;
+  margin: 10px 0 3px 0;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -118,11 +118,12 @@ const NewsDesc = styled.div`
 `;
 
 const NewsCreateAt = styled.div`
-  width: 73px;
+  width: 100%;
   height: 23px;
   float: right;
   font-size: 14px;
   line-height: 20.27px;
   color: #999999;
   font-weight: 400;
+  text-align: center;
 `;
