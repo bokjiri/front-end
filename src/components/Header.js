@@ -79,13 +79,13 @@ const Header = () => {
                 />
               </div>
 
-              {/* <div className="__auth none">
+              <div className="__auth none">
                 <GuestBook
                   onClick={() => {
                     history.push("/guestbook");
                   }}
                 />
-              </div> */}
+              </div>
 
               <div className="auth none">
                 <span>
