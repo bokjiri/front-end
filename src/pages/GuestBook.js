@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import GuestBookCard from "../components/GuestBookCard";
@@ -14,7 +13,6 @@ import { ReactComponent as Top } from "../Icons/Top.svg";
 const GuestBook = () => {
   const dispatch = useDispatch();
 
-  //
   const _today = new Date();
   const _year = _today.getFullYear();
   const _month = ("0" + (_today.getMonth() + 1)).slice(-2);

@@ -1,19 +1,10 @@
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
-import { actionCreators as markActions } from "../redux/modules/bookMark";
 
 import useSWR from "swr";
-import { apis } from "../shared/axios";
 import Loader from "../elements/Loader";
 import { NewsFetcher } from "../shared/Fetcher";
 
 const NewsCard = () => {
-  const dispatch = useDispatch();
-  const news_list = useSelector((state) => state.bookMark.news);
-  // useEffect(() => {
-  //   dispatch(markActions.getNewsFB());
-  // }, []);
 
   const { data, error } = useSWR(`/api/news/`, NewsFetcher);
 
