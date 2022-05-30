@@ -6,7 +6,6 @@ import jwtDecode from "jwt-decode";
 import { history } from "../configureStore";
 const cookies = new Cookies();
 
-
 //1. Action
 const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
@@ -82,7 +81,6 @@ const SignOutDB = (userId) => {
       .catch((err) => {
         console.log("회원탈퇴 실패", err);
       });
-
   };
 };
 

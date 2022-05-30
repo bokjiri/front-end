@@ -211,6 +211,7 @@ const ContentInput = styled.textarea`
   background-color: #ffffff;
   border-color: #999999;
   outline-color: #666666;
+  resize: none;
 
   ::placeholder {
     color: #999999;

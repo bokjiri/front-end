@@ -3,15 +3,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { actionCreators as markActions } from "../redux/modules/bookMark";
 
+import useSWR from "swr";
+import { apis } from "../shared/axios";
+import Loader from "../elements/Loader";
+import { NewsFetcher } from "../shared/Fetcher";
+
 const NewsCard = () => {
   const dispatch = useDispatch();
   const news_list = useSelector((state) => state.bookMark.news);
-  useEffect(() => {
-    dispatch(markActions.getNewsFB());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(markActions.getNewsFB());
+  // }, []);
+
+  const { data, error } = useSWR(`/api/news/`, NewsFetcher);
+
+  if (error) {
+    return <div>서비스 점검 중입니다.!!</div>;
+  }
+  if (!data) {
+    return <Loader type="spin" color="#72A8FE" message={"Loading"} />;
+  }
   return (
     <Container>
-      {news_list.map((x, idx) => (
+      {data.newsList.map((x, idx) => (
         <NewsBox
           key={idx}
           onClick={() => {
@@ -89,7 +103,7 @@ const NewsView = styled.div`
 
 const NewsHead = styled.h5`
   width: 236px;
-  height: 65px;
+  height: 60px;
   font-weight: bold;
   font-size: 20px;
   line-height: 28.96px;
@@ -118,12 +132,12 @@ const NewsDesc = styled.div`
 `;
 
 const NewsCreateAt = styled.div`
-  width: 100%;
-  height: 23px;
-  float: right;
+  width: max-content;
   font-size: 14px;
   line-height: 20.27px;
   color: #999999;
   font-weight: 400;
-  text-align: center;
+  text-align: right;
+  float: right;
+  margin-right: 20px;
 `;

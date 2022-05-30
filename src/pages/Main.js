@@ -17,6 +17,9 @@ import Cookies from "universal-cookie";
 import { useHistory, useParams } from "react-router-dom";
 import NewsCard from "../components/NewsCard";
 import { apis } from "../shared/axios";
+import useSWR from "swr";
+import Loader from "../elements/Loader";
+import { MainFetcher } from "../shared/Fetcher";
 
 const cookies = new Cookies();
 
@@ -43,21 +46,20 @@ const Main = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(infoActions.getInfoDB(userId));
-    dispatch(categoryActions.getPolicyDB(userId));
-    if (categoryName === "📄 일자리") {
-      dispatch(categoryActions.workDB(userId));
-    } else if (categoryName === "🏠 주거 및 일상생활") {
-      dispatch(categoryActions.houseLifeDB(userId));
-    } else if (categoryName === "💪🏻 건강") {
-      dispatch(categoryActions.healthDB(userId));
-    } else if (categoryName === "👪 교육 및 돌봄") {
-      dispatch(categoryActions.eduCareDB(userId));
-    } else if (categoryName === "⛑ 안전 및 권익보장") {
-      dispatch(categoryActions.safetyRightDB(userId));
-    } else if (categoryName === "기타") {
-      dispatch(categoryActions.etcDB(userId));
-    }
+    // dispatch(infoActions.getInfoDB(userId));
+    // dispatch(categoryActions.getPolicyDB(userId));
+    // if (categoryName === "📄 일자리") {
+    //   dispatch(categoryActions.workDB(userId));
+    // } else if (categoryName === "🏠 주거 및 일상생활") {
+    //   dispatch(categoryActions.houseLifeDB(userId));
+    // } else if (categoryName === "💪🏻 건강") {
+    //   dispatch(categoryActions.healthDB(userId));
+    // } else if (categoryName === "👪 교육 및 돌봄") {
+    //   dispatch(categoryActions.eduCareDB(userId));
+    // } else if (categoryName === "⛑ 안전 및 권익보장") {
+    //   dispatch(categoryActions.safetyRightDB(userId));
+    // } else if (categoryName === "기타") {
+    //   dispatch(categoryActions.etcDB(userId));
   }, []);
 
   const onInput = (e) => {
@@ -107,7 +109,7 @@ const Main = () => {
       .catch((error) => {
         console.log("error", error);
       });
-  }
+  };
 
   if (cookies.get("userToken")) {
     return (
@@ -127,10 +129,9 @@ const Main = () => {
             </SearchBox>
             {!txt ? (
               <SearchBtn disabled={true}>검색</SearchBtn>
-            ) :
-             (
+            ) : (
               <SearchBtn onClick={ClickEvent}>검색</SearchBtn>
-            )} 
+            )}
           </SearchButton>
         </SearchContainer>
         <MypolicyCheck>나에게 맞는 정책을 확인해보세요!</MypolicyCheck>
@@ -199,11 +200,11 @@ const Main = () => {
         </CategoryBox>
 
         <DndShop policyList={policy_list} userId={userId} />
-        
+
         <MainCard2 categoryName={categoryName} policyList={policyList} />
 
         <BannerBox>
-          <img src={News1} alt="banner1"/>
+          <img src={News1} alt="banner1" />
           <img
             src={News2}
             alt="banner2"
@@ -225,7 +226,6 @@ const Main = () => {
 
 export default Main;
 
-
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -246,14 +246,14 @@ const BannerBox = styled.div`
   display: flex;
   margin-top: 100px;
 
-  img{
-    width : 581px;
-    height : 184px;
+  img {
+    width: 581px;
+    height: 184px;
   }
 
   img:last-child {
     cursor: pointer;
-    margin-left : 30px;
+    margin-left: 30px;
   }
 `;
 

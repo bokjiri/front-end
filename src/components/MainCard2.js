@@ -12,6 +12,10 @@ import "swiper/css/navigation";
 import "../css/mainCard2.css";
 import { useHistory } from "react-router-dom";
 
+import useSWR from "swr";
+import Loader from "../elements/Loader";
+import { MainFetcher } from "../shared/Fetcher";
+
 // install Virtual module
 SwiperCore.use([Virtual, Navigation, Pagination]);
 
@@ -30,6 +34,16 @@ export default function MainCard2(props) {
 
   const [swiperRef, setSwiperRef] = useState(null);
 
+  const { data, error } = useSWR(`/api/policies/`, MainFetcher);
+  console.log("Mainswr", data, error);
+
+  if (error) {
+    return <div>서비스 점검 중입니다.!!</div>;
+  }
+  if (!data) {
+    return <Loader type="spin" color="#72A8FE" message={"Loading"} />;
+  }
+
   return (
     <>
       <div
@@ -44,7 +58,7 @@ export default function MainCard2(props) {
         }}
         onClick={() => history.push("/search")}
       >
-        전체보기 ({policy_list.length})
+        전체보기 ({data.dataList.checkedData.length})
       </div>
       <Swiper
         onSwiper={setSwiperRef}
@@ -58,7 +72,7 @@ export default function MainCard2(props) {
         virtual
       >
         {categoryName === "📄 일자리"
-          ? work.map((x, index) => (
+          ? data.dataList.work.map((x, index) => (
               <SwiperSlide
                 key={index}
                 style={{ cursor: "pointer" }}
@@ -81,7 +95,7 @@ export default function MainCard2(props) {
               </SwiperSlide>
             ))
           : categoryName === "🏠 주거 및 일상생활"
-          ? houseLife.map((x, index) => (
+          ? data.dataList.houseLife.map((x, index) => (
               <SwiperSlide
                 key={index}
                 style={{ cursor: "pointer" }}
@@ -104,7 +118,7 @@ export default function MainCard2(props) {
               </SwiperSlide>
             ))
           : categoryName === "💪🏻 건강"
-          ? health.map((x, index) => (
+          ? data.dataList.health.map((x, index) => (
               <SwiperSlide
                 key={index}
                 style={{ cursor: "pointer" }}
@@ -127,7 +141,7 @@ export default function MainCard2(props) {
               </SwiperSlide>
             ))
           : categoryName === "👪 교육 및 돌봄"
-          ? eduCare.map((x, index) => (
+          ? data.dataList.eduCare.map((x, index) => (
               <SwiperSlide
                 key={index}
                 style={{ cursor: "pointer" }}
@@ -150,7 +164,7 @@ export default function MainCard2(props) {
               </SwiperSlide>
             ))
           : categoryName === "⛑ 안전 및 권익보장"
-          ? safetyRight.map((x, index) => (
+          ? data.dataList.safetyRight.map((x, index) => (
               <SwiperSlide
                 key={index}
                 style={{ cursor: "pointer" }}
@@ -173,7 +187,7 @@ export default function MainCard2(props) {
               </SwiperSlide>
             ))
           : categoryName === "기타"
-          ? etc.map((x, index) => (
+          ? data.dataList.etc.map((x, index) => (
               <SwiperSlide
                 key={index}
                 style={{ cursor: "pointer" }}
@@ -195,7 +209,7 @@ export default function MainCard2(props) {
                 </Container>
               </SwiperSlide>
             ))
-          : policy_list.map((x, index) => (
+          : data.dataList.checkedData.map((x, index) => (
               <SwiperSlide
                 key={index}
                 style={{ cursor: "pointer" }}

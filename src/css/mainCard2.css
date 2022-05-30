@@ -71,7 +71,7 @@ body {
 }
 
 .swiper-button-prev {
-  left: 540px;
+  left: 510px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -85,7 +85,7 @@ body {
   color: #0361fb;
 }
 .swiper-button-next {
-  left: 690px;
+  left: 670px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -126,5 +126,5 @@ body {
   border-radius: 30px;
   width: 70px;
   height: 38px;
-  left: 50%;
+  left: 48%;
 }

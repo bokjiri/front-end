@@ -20,6 +20,10 @@ import { ReactComponent as Bookmark_Disabled } from "../Icons/Bookmark_Disabled.
 import { ReactComponent as Bookmark_Active } from "../Icons/Bookmark_Active.svg";
 
 import Cookies from "universal-cookie";
+// import useSWR from "swr";
+// import { apis } from "../shared/axios";
+// import Loader from "../elements/Loader";
+// import { DetailFetcher } from "../shared/Fetcher";
 
 const cookies = new Cookies();
 
@@ -114,12 +118,23 @@ const Detail = (props) => {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
+
+  // const { data, error } = useSWR(`/api/policies/${dataId}`, DetailFetcher);
+  // console.log("detailswr", data);
+
+  // if (error) {
+  //   return <div>서비스 점검 중입니다.!!</div>;
+  // }
+  // if (!data) {
+  //   return <Loader type="spin" color="#72A8FE" message={"Loading"} />;
+  // }
+
   return (
     <Container>
       <ModalBox>
         <ModalDetail>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <CloseBtn onClick={() => history.replace("/main")}>
+            <CloseBtn onClick={() => history.goBack()}>
               <CloseIcon
                 style={{
                   fontSize: "40px",

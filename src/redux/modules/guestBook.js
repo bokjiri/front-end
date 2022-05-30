@@ -85,7 +85,7 @@ export const reportContentDB = (feedId) => {
     apis
       .contentReport(feedId)
       .then((res) => {
-        dispatch(reportContent(feedId));
+        // dispatch(reportContent(feedId));
         Swal.fire("게시글이 신고 되었습니다.");
       })
       .catch((err) => {
@@ -120,12 +120,12 @@ export const guestBook = handleActions(
           (p) => p.feedId !== action.payload.feedId
         );
       }),
-    [REPORT_CONTENT]: (state, action) =>
-      produce(state, (draft) => {
-        draft.content = draft.content.filter(
-          (p) => p.feedId !== action.payload.feedId
-        );
-      }),
+    // [REPORT_CONTENT]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.content = draft.content.filter(
+    //       (p) => p.feedId !== action.payload.feedId
+    //     );
+    //   }),
   },
   initialState
 );
