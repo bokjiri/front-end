@@ -123,7 +123,6 @@ const AddInfo = () => {
   };
 
   const CreateTarget = (e, item) => {
-    console.log(item);
     let newTarget = target.findIndex((i) => i === item);
 
     if (newTarget === -1) {

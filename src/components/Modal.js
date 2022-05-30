@@ -32,7 +32,6 @@ const Modal = (props) => {
                 placeholder="제목을 입력하세요.."
                 onChange={(e) => {
                   setTitle(e.target.value);
-                  console.log(title);
                 }}
               />
               <textarea
@@ -40,7 +39,6 @@ const Modal = (props) => {
                 rows="20"
                 onChange={(e) => {
                   setContent(e.target.value);
-                  console.log(content);
                 }}
               />
               <div style={{ display: "flex", justifyContent: "space-between" }}>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import SwiperCore, { Virtual, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import styled from "styled-components";
@@ -23,19 +22,9 @@ export default function MainCard2(props) {
   const categoryName = props.categoryName;
   const history = useHistory();
 
-  //카테고리
-  const policy_list = useSelector((state) => state.category.policyList);
-  const work = useSelector((state) => state.category.work);
-  const houseLife = useSelector((state) => state.category.houseLife);
-  const health = useSelector((state) => state.category.health);
-  const eduCare = useSelector((state) => state.category.eduCare);
-  const safetyRight = useSelector((state) => state.category.safetyRight);
-  const etc = useSelector((state) => state.category.etc);
-
   const [swiperRef, setSwiperRef] = useState(null);
 
   const { data, error } = useSWR(`/api/policies/`, MainFetcher);
-  console.log("Mainswr", data, error);
 
   if (error) {
     return <div>서비스 점검 중입니다.!!</div>;
