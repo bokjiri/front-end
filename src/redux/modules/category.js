@@ -33,71 +33,71 @@ const setSafetyright = createAction(SET_SAFETYRIGHT, (safetyRight) => ({
 const setEtc = createAction(SET_ETC, (etc) => ({ etc }));
 
 export const getPolicyDB =
-  (userId) =>
+  () =>
   async (dispatch, getState, { history }) => {
     try {
-      const { data } = await apis.policyGet(userId);
-      dispatch(setPolicy(data.checkedData));
+      const { data } = await apis.policyGet();
+      dispatch(setPolicy(data.dataList.checkedData));
     } catch (err) {
       console.log(err);
     }
   };
 export const workDB =
-  (userId) =>
+  () =>
   async (dispatch, getState, { history }) => {
     try {
-      const { data } = await apis.policyGet(userId);
-      dispatch(setWork(data.work));
+      const { data } = await apis.policyGet();
+      dispatch(setWork(data.dataList.work));
     } catch (err) {
       console.log(err);
     }
   };
 export const houseLifeDB =
-  (userId) =>
+  () =>
   async (dispatch, getState, { history }) => {
     try {
-      const { data } = await apis.policyGet(userId);
-      dispatch(setHouselife(data.houseLife));
+      const { data } = await apis.policyGet();
+      dispatch(setHouselife(data.dataList.houseLife));
     } catch (err) {
       console.log(err);
     }
   };
 export const healthDB =
-  (userId) =>
+  () =>
   async (dispatch, getState, { history }) => {
     try {
-      const { data } = await apis.policyGet(userId);
-      dispatch(setHealth(data.health));
+      const { data } = await apis.policyGet();
+      dispatch(setHealth(data.dataList.health));
     } catch (err) {
       console.log(err);
     }
   };
 export const eduCareDB =
-  (userId) =>
+  () =>
   async (dispatch, getState, { history }) => {
     try {
-      const { data } = await apis.policyGet(userId);
-      dispatch(setEducare(data.eduCare));
+      const { data } = await apis.policyGet();
+      dispatch(setEducare(data.dataList.eduCare));
     } catch (err) {
       console.log(err);
     }
   };
 export const safetyRightDB =
-  (userId) =>
+  () =>
   async (dispatch, getState, { history }) => {
     try {
-      const { data } = await apis.policyGet(userId);
-      dispatch(setSafetyright(data.safetyRight));
+      const { data } = await apis.policyGet();
+      dispatch(setSafetyright(data.dataList.safetyRight));
     } catch (err) {
       console.log(err);
     }
   };
 export const etcDB =
-  (userId) =>
+  () =>
   async (dispatch, getState, { history }) => {
     try {
-      const { data } = await apis.policyGet(userId);
-      dispatch(setEtc(data.etc));
+      const { data } = await apis.policyGet();
+      dispatch(setEtc(data.dataList.etc));
     } catch (err) {
       console.log(err);
     }

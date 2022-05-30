@@ -30,14 +30,72 @@ const Detail = (props) => {
   const dataId = params.dataId;
   const detail_post = useSelector((state) => state.post.detail_post);
   const markState = detail_post.bookmarkState;
-  console.log("써머리줄바꿈", detail_post.summary);
-  console.log("줄바꿈", detail_post.support);
   useEffect(() => {
-    dispatch(postActions.getDetailFB(dataId));
-    return () => {
-      dispatch(detailsGet());
-    };
+    window.scrollTo(0, 0);
+    if (cookies.get("userToken")) {
+      dispatch(postActions.getDetailFB(dataId));
+      return () => {
+        dispatch(detailsGet());
+      };
+    } else {
+      dispatch(postActions._getDetailDB(dataId));
+    }
   }, [dispatch, dataId]);
+
+  const BookClick = () => {
+    if (cookies.get("userToken")) {
+      dispatch(postActions.addBookFB(dataId));
+    } else {
+      Swal.fire({
+        html: "로그인 후 이용해주세요. <br> 로그인 하러 가시겠습니까??",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          history.push("/");
+        }
+      });
+    }
+  };
+  const BugClick = () => {
+    if (cookies.get("userToken")) {
+      Swal.fire({
+        html: "맞지 않는 정책을 신고하시겠습니까? <br> 신고 시, 해당 맞춤 정책은 삭제됩니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(postActions.addBugFB(dataId));
+          Swal.fire({
+            text: "맞지 않는 정책 신고가 완료되었습니다!",
+          });
+          history.replace("/main");
+        }
+      });
+    } else {
+      Swal.fire({
+        html: "로그인 후 이용해주세요. <br> 로그인 하러 가시겠습니까??",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          history.push("/");
+        }
+      });
+    }
+  };
 
   const url = window.location.href;
 
@@ -56,166 +114,12 @@ const Detail = (props) => {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
-  if (cookies.get("userToken")) {
-    return (
-      <Container>
-        <ModalBox>
-          <ModalDetail>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <CloseBtn onClick={() => history.replace("/main")}>
-                <CloseIcon
-                  style={{
-                    fontSize: "40px",
-                    float: "right",
-                    color: "#666666",
-                    cursor: "pointer",
-                  }}
-                />
-              </CloseBtn>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginLeft: "25px",
-                }}
-              >
-                <PolicyDesire
-                  style={{
-                    backgroundColor:
-                      `${detail_post.desire}` === "일자리"
-                        ? "#7FAAEE"
-                        : null || `${detail_post.desire}` === "주거 및 일상생활"
-                        ? "#EE5D58"
-                        : null || `${detail_post.desire}` === "건강"
-                        ? "#6DCDC7"
-                        : null || `${detail_post.desire}` === "교육 및 돌봄"
-                        ? "#FF98B7"
-                        : null || `${detail_post.desire}` === "안전 및 권익보장"
-                        ? "#FFA95A"
-                        : null || `${detail_post.desire}` === "기타"
-                        ? "#A397EF"
-                        : null,
-                  }}
-                >
-                  {detail_post.desire}
-                </PolicyDesire>
-                <ModalGo
-                  onClick={() =>
-                    Swal.fire({
-                      html: "맞지 않는 정책을 신고하시겠습니까? <br> 신고 시, 해당 맞춤 정책은 삭제됩니다.",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "#3085d6",
-                      cancelButtonColor: "#d33",
-                      confirmButtonText: "확인",
-                      cancelButtonText: "취소",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        dispatch(postActions.addBugFB(dataId));
-                        Swal.fire({
-                          text: "맞지 않는 정책 신고가 완료되었습니다!",
-                        });
-                        history.replace("/main");
-                      }
-                    })
-                  }
-                >
-                  <PostError />
-                </ModalGo>
-              </div>
-            </div>
-            <div style={{ margin: "0px 0 0 45px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginRight: "59px",
-                }}
-              >
-                <PolicyName>{detail_post.name}</PolicyName>
-                <div style={{ display: "flex" }}>
-                  <div style={{ cursor: "pointer" }}>
-                    {markState === true ? (
-                      <Bookmark_Active
-                        onClick={() => {
-                          dispatch(postActions.addBookFB(dataId));
-                        }}
-                      />
-                    ) : (
-                      <Bookmark_Disabled
-                        onClick={() => {
-                          dispatch(postActions.addBookFB(dataId));
-                        }}
-                      />
-                    )}
-                  </div>
-                  <CopyToClipboard text={url}>
-                    <ShareBtn>
-                      <ReactIcon.BsShare
-                        size="23px"
-                        style={{
-                          marginTop: "14px",
-                        }}
-                        onClick={handleClick({
-                          vertical: "bottom",
-                          horizontal: "center",
-                        })}
-                      ></ReactIcon.BsShare>
-                      <Snackbar
-                        anchorOrigin={{ vertical, horizontal }}
-                        open={open}
-                        onClose={handleClose}
-                        message="클립보드에 복사되었습니다"
-                        key={vertical + horizontal}
-                        onClick={url}
-                      />
-                    </ShareBtn>
-                  </CopyToClipboard>
-                </div>
-              </div>
-              <Info>
-                <Infotitle>지원대상</Infotitle>
-                <InfoBox>
-                  <p>{detail_post.summary}</p>
-                </InfoBox>
-              </Info>
-              <Info>
-                <Infotitle>대상 지역 및 부서</Infotitle>
-                <InfoBox>
-                  <p>
-                    {detail_post.region === undefined ||
-                    detail_post.region.length === 0
-                      ? detail_post.institution
-                      : detail_post.region}
-                  </p>
-                </InfoBox>
-              </Info>
-              <Info>
-                <Infotitle>서비스 내용</Infotitle>
-                <InfoBox>
-                  <p>{detail_post.support}</p>
-                </InfoBox>
-              </Info>
-            </div>
-          </ModalDetail>
-          <div>
-            <SubmitBtn
-              onClick={() => {
-                window.open(detail_post.link);
-              }}
-            >
-              더 알아보기
-            </SubmitBtn>
-          </div>
-        </ModalBox>
-      </Container>
-    );
-  } else {
+  return (
     <Container>
       <ModalBox>
         <ModalDetail>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <CloseBtn onClick={() => history.replace("/")}>
+            <CloseBtn onClick={() => history.replace("/main")}>
               <CloseIcon
                 style={{
                   fontSize: "40px",
@@ -252,26 +156,7 @@ const Detail = (props) => {
               >
                 {detail_post.desire}
               </PolicyDesire>
-              <ModalGo
-                onClick={() =>
-                  Swal.fire({
-                    html: "로그인 후 이용해주세요!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "확인",
-                    cancelButtonText: "취소",
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      Swal.fire({
-                        // text: "로그인 후 이용해주세요!",
-                      });
-                      // history.replace("/");
-                    }
-                  })
-                }
-              >
+              <ModalGo onClick={BugClick}>
                 <PostError />
               </ModalGo>
             </div>
@@ -287,26 +172,11 @@ const Detail = (props) => {
               <PolicyName>{detail_post.name}</PolicyName>
               <div style={{ display: "flex" }}>
                 <div style={{ cursor: "pointer" }}>
-                  <Bookmark_Disabled
-                    onClick={() =>
-                      Swal.fire({
-                        html: "로그인 후 이용해주세요!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "확인",
-                        cancelButtonText: "취소",
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                          Swal.fire({
-                            // text: "로그인 후 이용해주세요!",
-                          });
-                          // history.replace("/");
-                        }
-                      })
-                    }
-                  />
+                  {markState === true ? (
+                    <Bookmark_Active onClick={BookClick} />
+                  ) : (
+                    <Bookmark_Disabled onClick={BookClick} />
+                  )}
                 </div>
                 <CopyToClipboard text={url}>
                   <ShareBtn>
@@ -367,9 +237,8 @@ const Detail = (props) => {
           </SubmitBtn>
         </div>
       </ModalBox>
-    </Container>;
-  }
-  return null;
+    </Container>
+  );
 };
 
 export default Detail;
@@ -402,7 +271,7 @@ const PolicyDesire = styled.div`
 
 const ModalBox = styled.div`
   background: #f8faff;
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+  filter: drop-shadow(0px 2px 15px rgba(0, 0, 0, 0.05));
   display: flex;
   justify-content: center;
   align-items: center;
@@ -431,7 +300,7 @@ const ModalDetail = styled.div`
 `;
 
 const CloseBtn = styled.div`
-  margin-right: 50px;
+  margin: 30px 50px 0 0;
 `;
 
 const ModalGo = styled.div`
@@ -447,7 +316,7 @@ const ShareBtn = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-top: 9px;
+  margin: 9px 0 0 10px;
   cursor: pointer;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
 `;
@@ -483,12 +352,13 @@ const InfoBox = styled.div`
   background-color: white;
   width: 770px;
   font-size: 16px;
+  font-weight: 400;
   line-height: 23px;
   letter-spacing: 0.0015em;
   color: black;
   display: flex;
   flex-direction: column;
-  padding: 10px 20px 20px;
+  padding: 10px 20px 10px;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
   border-radius: 14px;
   white-space: pre-wrap;
@@ -498,7 +368,7 @@ const SubmitBtn = styled.div`
   width: 149px;
   height: 48px;
   cursor: pointer;
-  margin: 20px 0;
+  margin: 45px 0;
   text-align: center;
   line-height: 48px;
   background: #0361fb;

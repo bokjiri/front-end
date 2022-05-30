@@ -14,7 +14,7 @@ import {
   ModifyInfo,
   NotFound,
   Search,
-  Mypage,
+  GuestBook,
 } from "../pages";
 
 import { OAuthRedirect, Header, Modal, Footer } from "../components";
@@ -50,7 +50,7 @@ function App() {
           <Route path="/main/:category" exact component={Main} />
           <Route path="/detail/:dataId" exact component={Detail} />
           <Route path="/modal" exact component={Modal} />
-          <Route path="/mypage" exact component={Mypage} />
+          <Route path="/guestbook" exact component={GuestBook} />
 
           <Route component={NotFound} />
         </Switch>

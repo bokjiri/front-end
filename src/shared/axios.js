@@ -99,9 +99,9 @@ export const apis = {
       workType: workType,
     }),
 
-  policyGet: (userId) => instance.get(`/api/main/${userId}`),
+  policyGet: () => instance.get(`/api/policies/`),
 
-  detailGet: (dataId) => instance.get(`/api/detail/${dataId}`),
+  detailGet: (dataId) => instance.get(`/api/policies/${dataId}`),
   bookGet: (userId) => instance.get(`/api/marks/${userId}`),
   bookAdd: (dataId) =>
     instance.put(`/api/marks/`, {
@@ -119,4 +119,15 @@ export const apis = {
       searchKey: searchKey,
       type: type,
     }),
+  contentGet: () => instance.get(`/api/guestbooks/`),
+  contentAdd: (content) =>
+    instance.post(`/api/guestbooks/`, {
+      content: content,
+    }),
+  contentDelete: (feedId) => instance.delete(`/api/guestbooks/${feedId}`),
+  contentEdit: (feedId, content) =>
+    instance.put(`/api/guestbooks/${feedId}`, {
+      content: content,
+    }),
+  contentReport: (feedId) => instance.patch(`/api/guestbooks/${feedId}`),
 };
