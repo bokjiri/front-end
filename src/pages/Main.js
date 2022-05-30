@@ -203,7 +203,7 @@ const Main = () => {
         <MainCard2 categoryName={categoryName} policyList={policyList} />
 
         <BannerBox>
-          <img src={News1} alt="banner1" />
+          <img src={News1} alt="banner1"/>
           <img
             src={News2}
             alt="banner2"
@@ -246,8 +246,14 @@ const BannerBox = styled.div`
   display: flex;
   margin-top: 100px;
 
+  img{
+    width : 581px;
+    height : 184px;
+  }
+
   img:last-child {
     cursor: pointer;
+    margin-left : 30px;
   }
 `;
 

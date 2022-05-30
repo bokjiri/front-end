@@ -1,9 +1,17 @@
+import { Icon } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Text } from "../elements";
 import { history } from "../redux/configureStore";
 
 import Pagination from "./Pagination";
+
+import Job from "../imgs/Job.png";
+import Health from "../imgs/Health.png";
+import Safe from "../imgs/Safe.png";
+import Home from "../imgs/Home.png";
+import Edu from "../imgs/Edu.png";
+import Etc from "../imgs/Etc.png";
 
 const SearchResultCard = (props) => {
   const list = props.searchList;
@@ -35,6 +43,20 @@ const SearchResultCard = (props) => {
           resultCard?.slice(offset, offset + limit).map((item, idx) => {
             return (
               <React.Fragment key={idx}>
+              <Outter>
+              {item.desire === "일자리" ? (
+                <img src={Job} />
+              ) : item.desire === "주거 및 일상생활" ? (
+                <img src={Home} />
+              ) : item.desire === "건강" ? (
+                <img src={Health} />
+              ) : item.desire === "교육 및 돌봄" ? (
+                <img src={Edu} />
+              ) : item.desire === "안전 및 권익보장" ? (
+                <img src={Safe} />
+              ) : item.desire === "기타" ? (
+                <img src={Etc} />
+              ) : null}
                 <Container
                   onClick={() => {
                     history.push(`/detail/${item.dataId}`);
@@ -69,6 +91,7 @@ const SearchResultCard = (props) => {
                   </Text>
                   <Summary>{item.summary}</Summary>
                 </Container>
+                </Outter>
               </React.Fragment>
             );
           })
@@ -131,9 +154,8 @@ const SearchResultCard = (props) => {
 
 export default SearchResultCard;
 
-const Container = styled.div`
+const Outter = styled.div`
   display: flex;
-  flex-direction: column;
   width: 100%;
   height: 150px;
   margin-bottom: 40px;
@@ -141,6 +163,25 @@ const Container = styled.div`
 
   background-color: white;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+
+  border-radius: 10px;
+
+  img {
+    width: 144px;
+    height: 144px;
+    margin-top : 4px;
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 860px;
+  height: 150px;
+  margin-bottom: 40px;
+  justify-content: center;
+
+  background-color: white;
   border-radius: 10px;
 
   div {

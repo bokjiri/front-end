@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SwiperCore, { Virtual, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { actionCreators as categoryActions } from "../redux/modules/category";
 import styled from "styled-components";
 
 // Import Swiper styles
@@ -12,16 +11,13 @@ import "swiper/css/navigation";
 
 import "../css/mainCard2.css";
 import { useHistory } from "react-router-dom";
-import { ReactComponent as _noCard } from "../Icons/_noCard.svg";
 
 // install Virtual module
 SwiperCore.use([Virtual, Navigation, Pagination]);
 
 export default function MainCard2(props) {
   const categoryName = props.categoryName;
-  const dispatch = useDispatch();
   const history = useHistory();
-  const userId = localStorage.getItem("userId");
 
   //카테고리
   const policy_list = useSelector((state) => state.category.policyList);
@@ -32,40 +28,23 @@ export default function MainCard2(props) {
   const safetyRight = useSelector((state) => state.category.safetyRight);
   const etc = useSelector((state) => state.category.etc);
 
-  const work_length = work.length;
-  const houseLife_length = houseLife.length;
-  const CategoryLength = () => {
-    if (categoryName === "일자리") {
-      Number({ work_length });
-    } else if (categoryName === "🏠 주거 및 일상생활") {
-      Number({ houseLife_length });
-    }
-  };
-
   const [swiperRef, setSwiperRef] = useState(null);
-
-  const [slides, setSlides] = useState(
-    Array.from({ length: 500 }).map((_, index) => `Slide ${index + 1}`)
-  );
-
-  const slideTo = (index) => {
-    swiperRef.slideTo(index - 1, 0);
-  };
 
   return (
     <>
       <div
         style={{
           position: "absolute",
-          margin: "0 0 1350px 1100px",
+          margin: "0 0 1300px 1100px",
           zIndex: "2",
           fontWeight: "700",
           fontSize: "16px",
           color: "#666666",
           cursor: "pointer",
         }}
+        onClick={() => history.push("/search")}
       >
-        전체보기 ({CategoryLength})
+        전체보기 ({policy_list.length})
       </div>
       <Swiper
         onSwiper={setSwiperRef}
