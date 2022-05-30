@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import FeedBtn from "./FeedBtn";
 
+import useSWR from "swr";
+import { apis } from "../shared/axios";
+import Loader from "../elements/Loader";
+import { FeedFetcher } from "../shared/Fetcher";
+
 import { reportContentDB } from "../redux/modules/guestBook";
 
 const GuestBookCard = (props) => {
@@ -23,6 +28,16 @@ const GuestBookCard = (props) => {
     }
     setTextLength(inputLength);
   };
+
+  const { data, error } = useSWR(`/api/guestbooks/`, FeedFetcher);
+  console.log("swr", data, error);
+
+  if (error) {
+    return <div>서비스 점검 중입니다.!!</div>;
+  }
+  if (!data) {
+    return <Loader type="spin" color="#72A8FE" message={"Loading"} />;
+  }
 
   return (
     <>

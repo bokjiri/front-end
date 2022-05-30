@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { deleteContentDB, editContentDB } from "../redux/modules/guestBook";
+import { Text, Grid, Input, Button } from "../elements/index";
+import Swal from "sweetalert2";
 
 const FeedBtn = (props) => {
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ const FeedBtn = (props) => {
     let inputLength = e.target.value.length;
 
     if (inputLength >= 500) {
-      window.alert("500자 이상 작성해주세요.");
+      Swal.fire("500자까지 작성해주세요.");
       return;
     }
     setTextLength(inputLength);
@@ -74,19 +76,23 @@ const FeedBtn = (props) => {
               margin: "10px 20px 0 0",
             }}
           >
-            <div
-              style={{ marginRight: "10px", cursor: "pointer" }}
-              onClick={() => (
+            <text style={{ margin: "0 0 20px 1000px" }}>
+              <text style={{ color: "#0361FB" }}>{textLength}</text> / 500
+            </text>
+          </div>
+          <ClickBtn>
+            <Button
+              width="156px"
+              height="48px"
+              radius="5px"
+              _onClick={() => (
                 dispatch(editContentDB(props.feedId, content)),
                 toggleDisplay(true)
               )}
             >
               수정하기
-            </div>
-            <text>
-              <text style={{ color: "#0361FB" }}>{textLength}</text> / 500
-            </text>
-          </div>
+            </Button>
+          </ClickBtn>
         </ContentDesc>
       )}
     </div>
@@ -197,10 +203,21 @@ const ContentInput = styled.textarea`
   font-weight: 400;
   font-size: 16px;
   padding: 15px;
+  resize: none;
   background-color: #ffffff;
   border-color: #999999;
   outline-color: #666666;
   ::placeholder {
     color: #999999;
+  }
+`;
+
+const ClickBtn = styled.div`
+  margin: 0 0 0 980px;
+  button {
+    &:hover {
+      background-color: #0361fb;
+      color: white;
+    }
   }
 `;
