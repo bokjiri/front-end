@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { history } from "../redux/configureStore";
@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 import { ReactComponent as Logo } from "../imgs/Logo_Header.svg";
-import { ReactComponent as Search } from "../imgs/Search.svg";
+import { ReactComponent as Search } from "../Icons/Header_Search.svg";
+import { ReactComponent as GuestBook } from "../Icons/GuestBook.svg";
 
 import Cookies from "universal-cookie";
 
@@ -17,6 +18,7 @@ import { useLocation } from "react-router-dom";
 const cookies = new Cookies();
 
 const Header = () => {
+
   const location = useLocation();
   const path = location.pathname;
 
@@ -27,6 +29,7 @@ const Header = () => {
 
   const logOut = () => {
     dispatch(userActions.logoutDB());
+    history.replace("/");
   };
 
   const userRemove = () => {
@@ -76,6 +79,14 @@ const Header = () => {
                 />
               </div>
 
+              {/* <div className="__auth none">
+                <GuestBook
+                  onClick={() => {
+                    history.push("/guestbook");
+                  }}
+                />
+              </div> */}
+
               <div className="auth none">
                 <span>
                   <div className="auth my">
@@ -109,7 +120,7 @@ export default Header;
 
 const Box = styled.div`
   display: flex;
-  justfiy-content: center;
+  justifiy-content: center;
   align-items: center;
 `;
 
@@ -193,38 +204,50 @@ const Container = styled.div`
     }
   }
 
-  div.my > .arrow {
-    margin-left: auto;
-    width: 24px;
-    height: 24px;
-  }
-
   div.none {
-    width: 70px;
-    height: 52px;
+    width: 68px;
+    height: 32px;
     display: flex;
-    color: #00092c;
     align-items: center;
     cursor: pointer;
     margin: 0 4px;
   }
 
+  div.none svg:hover path{
+    fill : #72A8FE;
+  }
+
+  div.none svg:focus path{
+    fill : #0361FB;
+  }
+
+  div.__auth {
+    width: 83px;
+    height: 32px;
+    display: flex;
+    color: blue;
+    align-items: center;
+    cursor: pointer;
+    margin : 0 35px;
+  }
+
+
   div.view {
     position: absolute;
     top: 100%;
-    width: 100%;
+    width: 200px;
     z-index: 10;
     height: 100px;
 
     ul {
-      width: auto;
+      width: 200px;
       height: 0;
       transition: height 0.2s ease-out;
       box-shadow: 0 0 10px 0 rgba(172, 168, 203, 0.4);
       overflow: hidden;
       background-color: #fff;
       border-radius: 8px;
-      margin: 0;
+      margin-left: -80px;
       padding: 0;
     }
   }
@@ -234,13 +257,13 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     list-style: none;
-    height: 31px;
+    height: 40px;
     margin-bottom: 6px;
     margin: 0;
     padding: 0;
     text-align: center;
 
-    font-size: 14px !important;
+    font-size: 14px!important;
     text-align: center;
     cursor: pointer;
     color: #333;
@@ -248,8 +271,9 @@ const Container = styled.div`
     border-radius: 2px;
 
     &:first-child {
-      margin-top: 30px;
+      margin-top: 15px;
     }
+
     &:last-child {
       margin-bottom: 30px;
     }

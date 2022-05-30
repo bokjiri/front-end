@@ -445,6 +445,7 @@ const RebalanceCont = styled.p`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left : -20px;
 `;
 
 const RebalanceSelect = styled.ul`
@@ -453,7 +454,7 @@ const RebalanceSelect = styled.ul`
   top: 30px;
   display: flex;
   flex-direction: column;
-  width: 120px;
+  width: 135px;
   font-size: var(--font-main);
   font-weight: 500;
   border: 2px solid var(--secondary-color);
@@ -461,13 +462,14 @@ const RebalanceSelect = styled.ul`
   border-bottom-right-radius: 5px;
   background-color: #fff;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+  margin-left : -20px;
 
   height: 195px;
   z-index: 0;
 `;
 
 const SelectItem = styled.li`
-  width: 120px;
+  width: 100%;
   height: 24px;
   display: flex;
   align-items: center;

@@ -63,7 +63,7 @@ const logoutDB = () => {
     localStorage.clear();
 
     dispatch(logOut());
-    history.replace("/");
+    // history.replace("/");
   };
 };
 

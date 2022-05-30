@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 
 import { ReactComponent as Mail } from "../Icons/Mail_Footer.svg";
 import { ReactComponent as SNS } from "../Icons/Instagram_Footer.svg";
-import { useLocation } from "react-router-dom";
 
 
 const FooterTest = () => {

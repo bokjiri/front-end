@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 
@@ -272,15 +272,6 @@ const AddInfo = () => {
   };
 
   const categoryList = {
-    // lifeCycle: [
-    //   "영유아",
-    //   "아동",
-    //   "청소년",
-    //   "청년",
-    //   "중장년",
-    //   "노년",
-    //   "임신·출산",
-    // ],
 
     //성별
     gender: ["여성", "남성"],
