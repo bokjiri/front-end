@@ -44,61 +44,62 @@ const DndShop = (props) => {
                 </Title2>
               </div>
               <CardList2>
-                {mark_post.map((x, idx) => (
-                  <CardBox2
-                    key={idx}
-                    style={{
-                      backgroundColor:
-                        `${x.desire}` === "일자리"
-                          ? "rgba(127, 170, 238, 0.5)"
-                          : null || `${x.desire}` === "주거 및 일상생활"
-                          ? "rgba(238, 93, 88, 0.5)"
-                          : null || `${x.desire}` === "건강"
-                          ? "rgba(109, 205, 199, 0.5)"
-                          : null || `${x.desire}` === "교육 및 돌봄"
-                          ? "rgba(255, 152, 183, 0.5)"
-                          : null || `${x.desire}` === "안전 및 권익보장"
-                          ? "rgba(255, 169, 90, 0.5)"
-                          : null || `${x.desire}` === "기타"
-                          ? "rgba(163, 151, 239, 0.5)"
-                          : null,
-                    }}
-                  >
-                    <InBox2>
-                      <CateBox2
-                        style={{
-                          color:
-                            `${x.desire}` === "일자리"
-                              ? "#7faaee"
-                              : null || `${x.desire}` === "주거 및 일상생활"
-                              ? "#ee5d58"
-                              : null || `${x.desire}` === "건강"
-                              ? "#6dcdc7"
-                              : null || `${x.desire}` === "교육 및 돌봄"
-                              ? "#ff98b7"
-                              : null || `${x.desire}` === "안전 및 권익보장"
-                              ? "#ffa95a"
-                              : null || `${x.desire}` === "기타"
-                              ? "#a397ef"
-                              : null,
-                        }}
-                      >
-                        {x.desire}
-                      </CateBox2>
-                      <DescBox2
-                        onClick={() => history.push(`/detail/${x.dataId}`)}
-                      >
-                        {x.name}
-                      </DescBox2>
-                      <Bookmark_Side_Active
-                        className="deleteBtn2"
-                        onClick={() => {
-                          dispatch(markActions.deleteBookDB(x.dataId));
-                        }}
-                      />
-                    </InBox2>
-                  </CardBox2>
-                ))}
+                {mark_post &&
+                  mark_post.map((x, idx) => (
+                    <CardBox2
+                      key={idx}
+                      style={{
+                        backgroundColor:
+                          `${x.desire}` === "일자리"
+                            ? "rgba(127, 170, 238, 0.5)"
+                            : null || `${x.desire}` === "주거 및 일상생활"
+                            ? "rgba(238, 93, 88, 0.5)"
+                            : null || `${x.desire}` === "건강"
+                            ? "rgba(109, 205, 199, 0.5)"
+                            : null || `${x.desire}` === "교육 및 돌봄"
+                            ? "rgba(255, 152, 183, 0.5)"
+                            : null || `${x.desire}` === "안전 및 권익보장"
+                            ? "rgba(255, 169, 90, 0.5)"
+                            : null || `${x.desire}` === "기타"
+                            ? "rgba(163, 151, 239, 0.5)"
+                            : null,
+                      }}
+                    >
+                      <InBox2>
+                        <CateBox2
+                          style={{
+                            color:
+                              `${x.desire}` === "일자리"
+                                ? "#7faaee"
+                                : null || `${x.desire}` === "주거 및 일상생활"
+                                ? "#ee5d58"
+                                : null || `${x.desire}` === "건강"
+                                ? "#6dcdc7"
+                                : null || `${x.desire}` === "교육 및 돌봄"
+                                ? "#ff98b7"
+                                : null || `${x.desire}` === "안전 및 권익보장"
+                                ? "#ffa95a"
+                                : null || `${x.desire}` === "기타"
+                                ? "#a397ef"
+                                : null,
+                          }}
+                        >
+                          {x.desire}
+                        </CateBox2>
+                        <DescBox2
+                          onClick={() => history.push(`/detail/${x.dataId}`)}
+                        >
+                          {x.name}
+                        </DescBox2>
+                        <Bookmark_Side_Active
+                          className="deleteBtn2"
+                          onClick={() => {
+                            dispatch(markActions.deleteBookDB(x.dataId));
+                          }}
+                        />
+                      </InBox2>
+                    </CardBox2>
+                  ))}
               </CardList2>
             </DndBox2>
             <Side_Close
@@ -132,61 +133,62 @@ const DndShop = (props) => {
                 </span>
               </Title>
               <CardList>
-                {mark_post.map((x, idx) => (
-                  <CardBox
-                    key={idx}
-                    style={{
-                      backgroundColor:
-                        `${x.desire}` === "일자리"
-                          ? "rgba(127, 170, 238, 0.5)"
-                          : null || `${x.desire}` === "주거 및 일상생활"
-                          ? "rgba(238, 93, 88, 0.5)"
-                          : null || `${x.desire}` === "건강"
-                          ? "rgba(109, 205, 199, 0.5)"
-                          : null || `${x.desire}` === "교육 및 돌봄"
-                          ? "rgba(255, 152, 183, 0.5)"
-                          : null || `${x.desire}` === "안전 및 권익보장"
-                          ? "rgba(255, 169, 90, 0.5)"
-                          : null || `${x.desire}` === "기타"
-                          ? "rgba(163, 151, 239, 0.5)"
-                          : null,
-                    }}
-                  >
-                    <InBox>
-                      <CateBox
-                        style={{
-                          color:
-                            `${x.desire}` === "일자리"
-                              ? "#7faaee"
-                              : null || `${x.desire}` === "주거 및 일상생활"
-                              ? "#ee5d58"
-                              : null || `${x.desire}` === "건강"
-                              ? "#6dcdc7"
-                              : null || `${x.desire}` === "교육 및 돌봄"
-                              ? "#ff98b7"
-                              : null || `${x.desire}` === "안전 및 권익보장"
-                              ? "#ffa95a"
-                              : null || `${x.desire}` === "기타"
-                              ? "#a397ef"
-                              : null,
-                        }}
-                      >
-                        {x.desire}
-                      </CateBox>
-                      <DescBox
-                        onClick={() => history.push(`/detail/${x.dataId}`)}
-                      >
-                        {x.name}
-                      </DescBox>
-                      <Bookmark_Side_Active
-                        className="deleteBtn"
-                        onClick={() => {
-                          dispatch(markActions.deleteBookDB(x.dataId));
-                        }}
-                      />
-                    </InBox>
-                  </CardBox>
-                ))}
+                {mark_post &&
+                  mark_post.map((x, idx) => (
+                    <CardBox
+                      key={idx}
+                      style={{
+                        backgroundColor:
+                          `${x.desire}` === "일자리"
+                            ? "rgba(127, 170, 238, 0.5)"
+                            : null || `${x.desire}` === "주거 및 일상생활"
+                            ? "rgba(238, 93, 88, 0.5)"
+                            : null || `${x.desire}` === "건강"
+                            ? "rgba(109, 205, 199, 0.5)"
+                            : null || `${x.desire}` === "교육 및 돌봄"
+                            ? "rgba(255, 152, 183, 0.5)"
+                            : null || `${x.desire}` === "안전 및 권익보장"
+                            ? "rgba(255, 169, 90, 0.5)"
+                            : null || `${x.desire}` === "기타"
+                            ? "rgba(163, 151, 239, 0.5)"
+                            : null,
+                      }}
+                    >
+                      <InBox>
+                        <CateBox
+                          style={{
+                            color:
+                              `${x.desire}` === "일자리"
+                                ? "#7faaee"
+                                : null || `${x.desire}` === "주거 및 일상생활"
+                                ? "#ee5d58"
+                                : null || `${x.desire}` === "건강"
+                                ? "#6dcdc7"
+                                : null || `${x.desire}` === "교육 및 돌봄"
+                                ? "#ff98b7"
+                                : null || `${x.desire}` === "안전 및 권익보장"
+                                ? "#ffa95a"
+                                : null || `${x.desire}` === "기타"
+                                ? "#a397ef"
+                                : null,
+                          }}
+                        >
+                          {x.desire}
+                        </CateBox>
+                        <DescBox
+                          onClick={() => history.push(`/detail/${x.dataId}`)}
+                        >
+                          {x.name}
+                        </DescBox>
+                        <Bookmark_Side_Active
+                          className="deleteBtn"
+                          onClick={() => {
+                            dispatch(markActions.deleteBookDB(x.dataId));
+                          }}
+                        />
+                      </InBox>
+                    </CardBox>
+                  ))}
               </CardList>
             </DndBox>
             <Side_Close

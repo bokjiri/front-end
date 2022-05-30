@@ -71,31 +71,32 @@ body {
 }
 
 .swiper-button-prev {
-  left: 510px;
-  width: 30px;
-  height: 30px;
+  left: 540px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: white;
   font-weight: bold;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
-  top: 94% !important;
+  top: 93% !important;
 }
 .swiper-button-prev::after {
-  font-size: 20px;
+  font-size: 15px;
   color: #0361fb;
 }
 .swiper-button-next {
-  left: 730px;
-  width: 30px;
-  height: 30px;
+  left: 690px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: white;
   font-weight: bold;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
-  top: 94% !important;
+  top: 93% !important;
 }
 .swiper-button-next::after {
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: bold;
   color: #0361fb;
 }
 

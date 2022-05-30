@@ -4,7 +4,7 @@ import Login from "./Login";
 import LoginLaw from "./LoginLaw";
 import Main from "./Main";
 import ModifyInfo from "./ModifyInfo";
-import Mypage from "./Mypage";
+import GuestBook from "./GuestBook";
 import NotFound from "./NotFound";
 import Search from "./Search";
 
@@ -15,7 +15,7 @@ export {
   LoginLaw,
   Main,
   ModifyInfo,
-  Mypage,
+  GuestBook,
   NotFound,
   Search,
 };
