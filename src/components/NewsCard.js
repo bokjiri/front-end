@@ -1,11 +1,17 @@
+import { useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 import useSWR from "swr";
 import Loader from "../elements/Loader";
 import { NewsFetcher } from "../shared/Fetcher";
+import { actionCreators as markActions } from "../redux/modules/bookMark";
 
 const NewsCard = () => {
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(markActions.getNewsFB());
+  }, []);
   const { data, error } = useSWR(`/api/news/`, NewsFetcher);
 
   if (error) {

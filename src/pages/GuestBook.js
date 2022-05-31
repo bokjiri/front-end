@@ -78,7 +78,7 @@ const GuestBook = () => {
       <ContentWarp>
         <Container>
           <div style={{ display: "flex", alignItems: "flex-start" }}>
-            <TitleText>복세편살에게 한마디</TitleText>
+            <TitleText>💬 복세편살에게 한마디</TitleText>
           </div>
           <ContentWrite>
             <ContentTitle>
@@ -156,7 +156,7 @@ const Container = styled.div`
 
 const TitleText = styled.h1`
   font-size: 34px;
-  margin-right: 900px;
+  margin-right: 860px;
 `;
 
 const ContentWrite = styled.div`
