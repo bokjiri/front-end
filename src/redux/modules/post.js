@@ -6,7 +6,6 @@ import { apis } from "../../shared/axios";
 
 // actions
 
-const ADD_BUG = "ADD_BUG";
 const GET_DETAIL = "GET_DETAIL";
 const _GET_DETAIL = "_GET_DETAIL";
 const ADD_BOOK = "ADD_BOOK";
@@ -20,24 +19,12 @@ const initialState = {
 };
 
 //Action Create
-const addBug = createAction(ADD_BUG, (bug) => ({ bug }));
 const getDetail = createAction(GET_DETAIL, (detail_post) => ({ detail_post }));
 const _getDetail = createAction(_GET_DETAIL, (detail_post) => ({
   detail_post,
 }));
 const addBook = createAction(ADD_BOOK, (marks_list) => ({ marks_list }));
 export const detailsGet = createAction(RESET_DETAIL);
-
-const addBugFB = (dataId) => {
-  return function ({ history }) {
-    apis
-      .bugAdd(dataId)
-      .then((res) => {})
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
-};
 
 const getDetailFB = (dataId) => {
   return function (dispatch, getState, { history }) {
@@ -105,8 +92,6 @@ export default handleActions(
 );
 
 const actionCreators = {
-  addBug,
-  addBugFB,
   getDetailFB,
   addBookFB,
   _getDetailDB,

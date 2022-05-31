@@ -5,6 +5,7 @@ import MainCard2 from "../components/MainCard2";
 
 import { actionCreators as categoryActions } from "../redux/modules/category";
 import { actionCreators as searchActions } from "../redux/modules/search";
+import { actionCreators as infoActions } from "../redux/modules/info";
 
 import News1 from "../imgs/Banner_News1.png";
 import News2 from "../imgs/Banner_News2.png";
@@ -41,6 +42,21 @@ const Main = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    dispatch(infoActions.getInfoDB(userId));
+    dispatch(categoryActions.getPolicyDB(userId));
+    if (categoryName === "📄 일자리") {
+      dispatch(categoryActions.workDB(userId));
+    } else if (categoryName === "🏠 주거 및 일상생활") {
+      dispatch(categoryActions.houseLifeDB(userId));
+    } else if (categoryName === "💪🏻 건강") {
+      dispatch(categoryActions.healthDB(userId));
+    } else if (categoryName === "👪 교육 및 돌봄") {
+      dispatch(categoryActions.eduCareDB(userId));
+    } else if (categoryName === "⛑ 안전 및 권익보장") {
+      dispatch(categoryActions.safetyRightDB(userId));
+    } else if (categoryName === "기타") {
+      dispatch(categoryActions.etcDB(userId));
+    }
   }, []);
 
   const onInput = (e) => {

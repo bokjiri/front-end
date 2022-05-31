@@ -15,6 +15,7 @@ import {
   actionCreators as postActions,
   detailsGet,
 } from "../redux/modules/post";
+import { addBugFB } from "../redux/modules/category";
 import { ReactComponent as PostError } from "../Icons/PostError.svg";
 import { ReactComponent as Bookmark_Disabled } from "../Icons/Bookmark_Disabled.svg";
 import { ReactComponent as Bookmark_Active } from "../Icons/Bookmark_Active.svg";
@@ -77,7 +78,7 @@ const Detail = (props) => {
         cancelButtonText: "취소",
       }).then((result) => {
         if (result.isConfirmed) {
-          dispatch(postActions.addBugFB(dataId));
+          dispatch(addBugFB(dataId));
           Swal.fire({
             text: "맞지 않는 정책 신고가 완료되었습니다!",
           });
