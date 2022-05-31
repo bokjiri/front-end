@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { apis } from "../../shared/axios";
 
+const ADD_BUG = "ADD_BUG";
 const SET_POLICY = "SET_POLICY";
 const SET_WORK = "SET_WORK";
 const SET_HOUSELIFE = "SET_HOUSELIFE";
@@ -20,6 +21,7 @@ const initialState = {
   etc: [],
 };
 
+const addBug = createAction(ADD_BUG, (bug) => ({ bug }));
 const setPolicy = createAction(SET_POLICY, (policy_list) => ({ policy_list }));
 const setWork = createAction(SET_WORK, (work) => ({ work }));
 const setHouselife = createAction(SET_HOUSELIFE, (houseLife) => ({
@@ -31,6 +33,19 @@ const setSafetyright = createAction(SET_SAFETYRIGHT, (safetyRight) => ({
   safetyRight,
 }));
 const setEtc = createAction(SET_ETC, (etc) => ({ etc }));
+
+export const addBugFB = (dataId) => {
+  return function (dispatch, { history }) {
+    apis
+      .bugAdd(dataId)
+      .then((res) => {
+        dispatch(addBug(dataId));
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+};
 
 export const getPolicyDB =
   () =>
@@ -105,6 +120,12 @@ export const etcDB =
 
 export default handleActions(
   {
+    [ADD_BUG]: (state, action) =>
+      produce(state, (draft) => {
+        draft.policyList = draft.policyList.filter(
+          (p) => p.dataId !== action.payload.dataId
+        );
+      }),
     [SET_POLICY]: (state, action) =>
       produce(state, (draft) => {
         draft.policyList = action.payload.policy_list;
@@ -138,6 +159,7 @@ export default handleActions(
 );
 
 const actionCreators = {
+  addBugFB,
   getPolicyDB,
   workDB,
   houseLifeDB,

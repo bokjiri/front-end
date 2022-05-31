@@ -5,6 +5,10 @@ import GuestBookCard from "../components/GuestBookCard";
 
 import styled from "styled-components";
 import Swal from "sweetalert2";
+import useSWR, { useSWRConfig } from "swr";
+import { apis } from "../shared/axios";
+import Loader from "../elements/Loader";
+import { FeedFetcher } from "../shared/Fetcher";
 
 import { Text, Grid, Input, Button } from "../elements/index";
 import { addContentDB, getContentDB } from "../redux/modules/guestBook";
@@ -57,6 +61,17 @@ const GuestBook = () => {
   useEffect(() => {
     dispatch(getContentDB());
   }, []);
+
+  const { mutate } = useSWRConfig();
+  const { data, error } = useSWR(`/api/guestbooks/`, FeedFetcher);
+  console.log("swr", data, error);
+
+  if (error) {
+    return <div>서비스 점검 중입니다.!!</div>;
+  }
+  if (!data) {
+    return <Loader type="spin" color="#72A8FE" message={"Loading"} />;
+  }
 
   return (
     <>

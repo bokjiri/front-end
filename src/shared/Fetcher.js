@@ -5,6 +5,11 @@ export const FeedFetcher = async (url) => {
   return data;
 };
 
+export const FeedAddFetcher = async (url) => {
+  const { data } = await apis.contentAdd(url);
+  return data;
+};
+
 export const NewsFetcher = async (url) => {
   const { data } = await apis.newsGet(url);
   return data;

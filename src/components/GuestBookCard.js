@@ -43,11 +43,7 @@ const GuestBookCard = (props) => {
                   <CardProfile src={x.profileUrl} />
                   <CardName>{x.nickname}</CardName>
                   <ContentCreateAt>{x.date}</ContentCreateAt>
-                  <Report
-                    onClick={
-                      () => dispatch(reportContentDB(x.feedId))
-                    }
-                  >
+                  <Report onClick={() => dispatch(reportContentDB(x.feedId))}>
                     ❘ 신고
                   </Report>
                 </div>
@@ -101,7 +97,6 @@ const ContentCreateAt = styled.div`
   color: #999999;
   margin-right: 10px;
 `;
-
 
 const CardDesc = styled.div`
   width: 1104px;
