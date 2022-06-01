@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 import "../css/modal.css";
 import styled from "styled-components";
 import { Text, Grid, Input, Button } from "../elements/index";
+import { useDispatch } from "react-redux";
 
 const Modal = (props) => {
-  const history = useHistory();
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState();
+  const [content, setContent] = useState();
   const { open, close } = props;
   return (
     <>
@@ -20,13 +24,28 @@ const Modal = (props) => {
                 border: "1px solid red",
                 width: "40vw",
                 padding: "100px",
+                backgroundColor: "#eeeeee",
               }}
             >
-              <InputTitle placeholder="제목을 입력하세요.." />
-              <textarea placeholder="내용을 입력하세요.." rows="20" />
+              <h3>맞지 않는 정책이 있다면 알려주세요!!</h3>
+              <InputTitle
+                placeholder="제목을 입력하세요.."
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              />
+              <textarea
+                placeholder="내용을 입력하세요.."
+                rows="20"
+                onChange={(e) => {
+                  setContent(e.target.value);
+                }}
+              />
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div onClick={close}>취소</div>
-                <button onClick={() => history.push("/mypage")}>
+                <button
+                  onClick={() => dispatch(postActions.addBugFB(title, content))}
+                >
                   등록하기
                 </button>
               </div>

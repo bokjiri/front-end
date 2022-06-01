@@ -2,10 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="./favicon(1).ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
+    <base href="/">
+
+    <meta property="og:title" content="복세편살" />
+    <meta property="og:description" content="복지받고 세상 편하게 살자!"/>
+    <meta property="og:url" content="https://boksei.com" />
+    <meta property="og:image" content="./kakao_meta.png"/>
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="400" />
+
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+        <!--<meta
       name="description"
       content="Web site created using create-react-app"
     />
@@ -14,7 +25,7 @@
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -24,10 +35,23 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%REACT_APP_KAKAO_JS_KEY%"></script> -->
+    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%REACT_APP_KAKAO_JS_KEY%&libraries=services"></script> -->
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N8J9BCHF2M"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-N8J9BCHF2M');
+    </script>
+    <title>복세편살</title>
   </head>
-  <body>
+  <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false" oncontextmenu="return false">
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    
     <div id="root"></div>
     <!--
       This HTML file is a template.

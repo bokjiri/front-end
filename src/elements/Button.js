@@ -15,7 +15,7 @@ const Button = (props) => {
     backgroundColor,
     height,
     fontSize,
-    radius
+    radius,
   } = props;
 
   if (is_float) {
@@ -55,11 +55,10 @@ Button.defaultProps = {
   width: "100px",
   padding: "12px 0px",
   disabled: false,
-  backgroundColor: "#4B7BE5",
+  backgroundColor: "lightgrey",
   height: "50px",
-  color: "white",
+  color: "grey",
 };
-
 
 const ElButton = styled.button`
   width: ${(props) => props.width};
@@ -78,6 +77,7 @@ const ElButton = styled.button`
   background-color: ${(props) => props.backgroundColor};
   &:hover {
     cursor: pointer;
+    color: #72a8fe;
   }
   ${(props) => (props.height ? `height: ${props.height};` : "50px")};
 `;

@@ -1,239 +1,304 @@
-import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
+import { history } from "../redux/configureStore";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
+import { ReactComponent as Logo } from "../imgs/Logo_Header.svg";
+import { ReactComponent as Search } from "../Icons/Header_Search.svg";
+import { ReactComponent as GuestBook } from "../Icons/GuestBook.svg";
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
+import Cookies from "universal-cookie";
 
-export default function Header() {
-  const history = useHistory();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+import Swal from "sweetalert2";
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+import { useLocation } from "react-router-dom";
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+const cookies = new Cookies();
+
+const Header = () => {
+
+  const location = useLocation();
+  const path = location.pathname;
+
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.isLogin);
+
+  const profileUrl = localStorage.getItem("profileUrl");
+
+  const logOut = () => {
+    dispatch(userActions.logoutDB());
+    history.replace("/");
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
+  const userRemove = () => {
+    const userId = localStorage.getItem("userId");
+
+    Swal.fire({
+      text: "회원 탈퇴를 진행하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "탈퇴",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(userActions.SignOutDB(userId));
+
+        Swal.fire(
+          "회원 탈퇴가 완료되었습니다!",
+          "회원 정보가 모두 삭제되었습니다!"
+        );
+      }
+    });
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton> */}
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { sm: "block" } }}
-          >
-            MUI
-          </Typography>
-          {/* <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search> */}
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </Box>
+    <>
+      <Container>
+        <div>
+          {path === "/addinfo" ? (
+            <Logo className="Logo" />
+          ) : isLogin && cookies.get("userToken") ? (
+            <>
+            <Logo
+            className="Logo"
+            onClick={() => {
+              history.push("/main");
+            }}
+          />
+            <Box>
+              <div className="auth none">
+                <Search
+                  onClick={() => {
+                    history.push("/search");
+                  }}
+                />
+              </div>
+
+              <div className="__auth none">
+                <GuestBook
+                  onClick={() => {
+                    history.push("/guestbook");
+                  }}
+                />
+              </div>
+
+              <div className="auth none">
+                <span>
+                  <div className="auth my">
+                    <img className="profile" src={profileUrl} />
+                    <div className="view">
+                      <ul>
+                        <li onClick={() => history.push("/modifyinfo")}>
+                          정보수정
+                        </li>
+                        <li className="userRemove" onClick={userRemove}>
+                          회원탈퇴
+                        </li>
+                        <li className="userRemove" onClick={logOut}>
+                          로그아웃
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </Box>
+            </>
+          ) : <Logo className="Logo" />}
+        </div>
+      </Container>
+    </>
   );
-}
+};
+
+export default Header;
+
+const Box = styled.div`
+  display: flex;
+  justifiy-content: center;
+  align-items: center;
+`;
+
+const Container = styled.div`
+  min-width: 100vw;
+  height: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid lightgrey;
+  display: flex;
+  z-index: 10;
+  position: fixed;
+
+  > div {
+    display: flex;
+    align-items: center;
+    width: 1200px;
+    height: 40px;
+    margin: 5px auto;
+    justify-content: space-between;
+  }
+
+  .auth {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 50px;
+    padding-left: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .profile {
+    flex: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+  }
+
+  .Logo {
+    flex: none;
+    width: 170px;
+    height: 44px;
+    cursor: pointer;
+  }
+
+  div.my {
+    display: flex;
+
+    &:hover div.view ul {
+      height: 150px;
+    }
+
+    i {
+      margin-right: 10px;
+    }
+
+    i.active {
+      span {
+        position: relative;
+      }
+      span:before {
+        --alert-size: 10px;
+        content: "";
+        position: absolute;
+        bottom: 2px;
+        right: -2px;
+        width: var(--alert-size);
+        height: var(--alert-size);
+        border-radius: var(--alert-size);
+        background-color: #de0000;
+      }
+    }
+  }
+
+  div.none {
+    width: 68px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 0 4px;
+  }
+
+  div.none svg:hover path{
+    fill : #72A8FE;
+  }
+
+  div.none svg:focus path{
+    fill : #0361FB;
+  }
+
+  div.__auth {
+    width: 83px;
+    height: 32px;
+    display: flex;
+    color: blue;
+    align-items: center;
+    cursor: pointer;
+    margin : 0 35px;
+  }
+
+
+  div.view {
+    position: absolute;
+    top: 100%;
+    width: 200px;
+    z-index: 10;
+    height: 100px;
+
+    ul {
+      width: 200px;
+      height: 0;
+      transition: height 0.2s ease-out;
+      box-shadow: 0 0 10px 0 rgba(172, 168, 203, 0.4);
+      overflow: hidden;
+      background-color: #fff;
+      border-radius: 8px;
+      margin-left: -80px;
+      padding: 0;
+    }
+  }
+
+  div.view li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    height: 40px;
+    margin-bottom: 6px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+
+    font-size: 14px!important;
+    text-align: center;
+    cursor: pointer;
+    color: #333;
+    font-size: 16px;
+    border-radius: 2px;
+
+    &:first-child {
+      margin-top: 15px;
+    }
+
+    &:last-child {
+      margin-bottom: 30px;
+    }
+
+    &.userRemove {
+      &:hover {
+        color: red;
+      }
+    }
+
+    &:hover {
+      color: #72a8fe;
+    }
+  }
+
+  i {
+    display: inline-flex;
+    margin-right: 12px;
+  }
+
+  button {
+    width: 138px;
+    height: 52px;
+    border-radius: 2rem;
+    font-size: 14px;
+    color: black;
+  }
+`;
