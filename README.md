@@ -14,7 +14,7 @@
 
 ### 🛠 Architecture
 
-![image](https://user-images.githubusercontent.com/100919074/170940007-8bc38f75-2855-4db0-8caf-16a760ba8f1b.png)
+![image]([https://user-images.githubusercontent.com/100919074/170940007-8bc38f75-2855-4db0-8caf-16a760ba8f1b.png](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe598c88f-49df-4c04-9de5-486151bbe335%2F%EC%84%9C%EB%B9%84%EC%8A%A4_%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%901.png?table=block&id=28fd7555-5065-448d-8fe7-060cd4409096&spaceId=2ac5be53-099a-45a5-b3ae-9930377718b8&width=2000&userId=b1122e40-fb3e-4406-8826-bed597fc7d94&cache=v2))
 
 <hr/>
 
