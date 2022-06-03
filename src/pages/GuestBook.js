@@ -64,7 +64,6 @@ const GuestBook = () => {
 
   const { mutate } = useSWRConfig();
   const { data, error } = useSWR(`/api/guestbooks/`, FeedFetcher);
-  console.log("swr", data, error);
 
   if (error) {
     return <div>서비스 점검 중입니다.!!</div>;
