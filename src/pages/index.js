@@ -7,6 +7,7 @@ import ModifyInfo from "./ModifyInfo";
 import GuestBook from "./GuestBook";
 import NotFound from "./NotFound";
 import Search from "./Search";
+import Chat from "./Chat";
 
 export {
   AddInfo,
@@ -18,4 +19,5 @@ export {
   GuestBook,
   NotFound,
   Search,
+  Chat
 };

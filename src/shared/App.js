@@ -15,6 +15,7 @@ import {
   NotFound,
   Search,
   GuestBook,
+  Chat
 } from "../pages";
 
 import { OAuthRedirect, Header, Modal, Footer } from "../components";
@@ -51,6 +52,8 @@ function App() {
           <Route path="/detail/:dataId" exact component={Detail} />
           <Route path="/modal" exact component={Modal} />
           <Route path="/guestbook" exact component={GuestBook} />
+
+          <Route path="/chat" exact component={Chat} />
 
           <Route component={NotFound} />
         </Switch>

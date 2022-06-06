@@ -1,0 +1,110 @@
+.Wrap {
+    width: 100vw;
+    height : 100vh;
+    padding : 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom : 50px;
+  }
+
+  .Box{
+    width:45%;
+    height: 500px;
+  }
+
+  .ChatBox{
+    background: #ffffff;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    height:500px;
+    width: 100%;
+
+   overflow-y : auto;
+   overflow-x: hidden;
+
+  }
+
+  .ChatBox::-webkit-scrollbar{
+    display : none;
+  }
+
+  .InputBox{
+    display: flex;
+    height: 5%;
+    flex:1;
+    justify-content: center;
+    align-items: center; 
+    margin : 30px 0; 
+  }
+
+  .Chat{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width:100%;
+    height:50px;
+    align-self: flex-start;
+    margin : 20px;
+  }
+
+  .__Chat {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width:100%;
+    height:50px;
+    margin : 20px 30px 20px 0;
+}
+
+  .nickname{
+    font-weight: bold;
+  }
+
+  
+  .ChatLog{
+    margin-left:20px;
+  }
+
+  .__ChatLog{
+    margin-right:20px;
+  }
+
+  .enter {
+    color : #999999;
+    font-weight: 600;
+  }
+
+  .MsgInput{
+    border : none;
+    height : 40px;
+    margin-right : 5px;
+    width : 100%;
+
+    background: #ffffff;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+
+    padding : 10px;
+  }
+
+  .MsgInput:focus{
+    outline : none;
+  }
+
+  .profile {
+    flex: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right : 8px;
+  }
+
+.__profile {
+  flex: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right : 20px;
+}
