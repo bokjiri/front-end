@@ -10,6 +10,7 @@ import bookMark from "./modules/bookMark";
 import category from "./modules/category";
 import search from "./modules/search";
 import guestBook from "./modules/guestBook";
+import chat from "./modules/chat";
 
 export const history = createBrowserHistory();
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   category: category,
   search: search,
   guestBook: guestBook,
+  chat : chat,
 
   router: connectRouter(history),
 });

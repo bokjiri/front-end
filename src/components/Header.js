@@ -8,6 +8,8 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { ReactComponent as Logo } from "../imgs/Logo_Header.svg";
 import { ReactComponent as Search } from "../Icons/Header_Search.svg";
 import { ReactComponent as GuestBook } from "../Icons/GuestBook.svg";
+import { HiOutlineChatAlt2 } from 'react-icons/hi';
+
 
 import Cookies from "universal-cookie";
 
@@ -87,6 +89,15 @@ const Header = () => {
                 />
               </div>
 
+              <div className="__Chat">
+                <HiOutlineChatAlt2
+                  size={35}
+                  onClick={() => {
+                    history.push("/chat");
+                  }}
+                />
+              </div>
+
               <div className="auth none">
                 <span>
                   <div className="auth my">
@@ -159,6 +170,19 @@ const Container = styled.div`
 
     font-weight: 700;
     font-size: 15px;
+  }
+
+  .__Chat{
+    margin : 0 10px;
+    color : #999999;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+  }
+
+  .__Chat:hover {
+    cursor : pointer;
+    color : #72A8FE;
   }
 
   .profile {
