@@ -14,7 +14,7 @@
 
 ### 🛠 Architecture
 
-![image](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe598c88f-49df-4c04-9de5-486151bbe335%2F%EC%84%9C%EB%B9%84%EC%8A%A4_%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%901.png?table=block&id=28fd7555-5065-448d-8fe7-060cd4409096&spaceId=2ac5be53-099a-45a5-b3ae-9930377718b8&width=2000&userId=b1122e40-fb3e-4406-8826-bed597fc7d94&cache=v2)
+![image](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/5b6b35ff-22aa-44f7-9bc4-f49e8202c52e/%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3_%E1%84%8B%E1%85%A1%E1%84%8F%E1%85%B5%E1%84%90%E1%85%A6%E1%86%A8%E1%84%8E%E1%85%A7_%282%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220606%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220606T034143Z&X-Amz-Expires=86400&X-Amz-Signature=487c7d40a5990bd334db3724231784edcc69879b16bd3c1d293e51a84b88aca7&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25E1%2584%2589%25E1%2585%25A5%25E1%2584%2587%25E1%2585%25B5%25E1%2584%2589%25E1%2585%25B3%2520%25E1%2584%258B%25E1%2585%25A1%25E1%2584%258F%25E1%2585%25B5%25E1%2584%2590%25E1%2585%25A6%25E1%2586%25A8%25E1%2584%258E%25E1%2585%25A7%2520%282%29.png%22&x-id=GetObject)
 
 <hr/>
 
